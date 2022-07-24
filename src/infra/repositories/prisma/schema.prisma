@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid()) @db.Uuid
-  uid       String
+  uid       String?
   name      String?
   cpf       String?
   rg        String?
@@ -24,11 +24,13 @@ model User {
 }
 
 model Conta {
-  id     String  @id @default(uuid()) @db.Uuid
-  month  Int
-  year   Int
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @map("user_id") @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid
+  month     Int
+  year      Int
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @map("user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("conta")
 }
