@@ -16,19 +16,19 @@ model User {
   name      String?
   cpf       String?
   rg        String?
-  contas    Contas[]
+  contas    Conta[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("user")
 }
 
-model Contas {
+model Conta {
   id     String  @id @default(uuid()) @db.Uuid
   month  Int
   year   Int
   user   User?   @relation(fields: [userId], references: [id])
   userId String? @map("user_id") @db.Uuid
 
-  @@map("contas")
+  @@map("conta")
 }
