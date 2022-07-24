@@ -19,12 +19,7 @@ WORKDIR /home/node
 
 COPY --chown=node:node . .
 
-RUN npm ci
-
-RUN npm run prisma:generate
-
-RUN npm run build:prod
-
+RUN npm ci && npm run prisma:generate && npm run build:prod
 
 # -------------->
 FROM node:16.13-alpine as runner
