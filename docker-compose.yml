@@ -17,21 +17,21 @@ services:
     volumes:
       - ./data/db-dev:/var/lib/postgresql/data
 
-  # db-prod:
-  #   profiles:
-  #     - prod
-  #     - local
-  #   image: postgres:14
-  #   hostname: db-prod
-  #   restart: unless-stopped
-  #   ports:
-  #     - '${DATABASE_PORT:?DATABASE_PORT env var is missing on .env file}:5432'
-  #   environment:
-  #     POSTGRES_DB: ${DATABASE_NAME:?DATABASE_NAME env var is missing on .env file}
-  #     POSTGRES_USER: ${DATABASE_USERNAME:?DATABASE_USERNAME env var is missing on .env file}
-  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD env var is missing on .env file}
-  #   volumes:
-  #     - ./data/db-prod:/var/lib/postgresql/data
+  db-prod:
+    profiles:
+      - prod
+      - local
+    image: postgres:14
+    hostname: db-prod
+    restart: unless-stopped
+    ports:
+      - '${DATABASE_PORT:?DATABASE_PORT env var is missing on .env file}:5432'
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:?DATABASE_NAME env var is missing on .env file}
+      POSTGRES_USER: ${DATABASE_USERNAME:?DATABASE_USERNAME env var is missing on .env file}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD env var is missing on .env file}
+    volumes:
+      - ./data/db-prod:/var/lib/postgresql/data
 
   db-test:
     profiles:
@@ -84,10 +84,10 @@ services:
       - .env
     environment:
       NODE_ENV: 'production'
-    #   DATABASE_HOST: 'db-prod'
-    #   DATABASE_PORT: '5432'
-    #   DATABASE_URL: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db-prod:5432/${DATABASE_NAME}?schema=public'
-    # volumes:
-    #   - ./src:/home/node/src
-    # depends_on:
-    #   - db-prod
+      DATABASE_HOST: 'db-prod'
+      DATABASE_PORT: '5432'
+      DATABASE_URL: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db-prod:5432/${DATABASE_NAME}?schema=public'
+    volumes:
+      - ./src:/home/node/src
+    depends_on:
+      - db-prod

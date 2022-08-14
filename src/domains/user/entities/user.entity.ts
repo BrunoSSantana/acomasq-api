@@ -14,10 +14,10 @@ export type InputUser = {
 
 export type OutputUser = {
   id: string;
-  uid: string;
-  name: string;
-  cpf: string;
-  rg: string;
+  uid?: string;
+  name?: string;
+  cpf?: string;
+  rg?: string;
   contas?: OutputConta[];
   createdAt: Date;
   updatedAt: Date;
