@@ -1,4 +1,4 @@
-import { Conta, OutputConta } from '@/domains/conta/entities/conta.emtity';
+import { Conta } from '@/domains/conta/entities/conta.emtity';
 import { randomUUID } from 'crypto';
 
 export type InputUser = {
@@ -18,7 +18,7 @@ export type OutputUser = {
   name?: string;
   cpf?: string;
   rg?: string;
-  contas?: OutputConta[];
+  // contas?: OutputConta[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -29,7 +29,7 @@ export class User {
   name: string;
   cpf: string;
   rg: string;
-  contas?: Conta[];
+  private contas?: Conta[];
   createdAt: Date;
   updatedAt: Date;
 
