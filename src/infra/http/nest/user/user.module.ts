@@ -4,17 +4,22 @@ import { PrismaRepository } from '@/infra/repositories/prisma/prisma.repository'
 import { ListUserController } from '@/domains/user/implementations/controllers/list-user-controller';
 import {
   ICreateUserUseCase,
+  IDetailUserUseCase,
   IListUsersUseCase,
 } from '@/domains/user/contracts/user-usecases';
 import { ListUsersUseCase } from '@/domains/user/implementations/usecases/user-list-usecase';
 import {
   ICreateUserRepository,
+  IDetailUserRepository,
   IListUsersRepository,
 } from '@/domains/user/contracts/user-repositories';
 import { ListUsersRepository } from '@/domains/user/implementations/repositories/prisma/user-list-repository';
 import { CreateUserUseCase } from '@/domains/user/implementations/usecases/user-create-usecase';
 import { CreateUserController } from '@/domains/user/implementations/controllers/create-user-controller';
 import { CreateUserRepository } from '@/domains/user/implementations/repositories/prisma/user-create-repository';
+import { DetailUserController } from '@/domains/user/implementations/controllers/detail-user-controller';
+import { DetailUserUseCase } from '@/domains/user/implementations/usecases/user-detail-usecase';
+import { UserDetailRepository } from '@/domains/user/implementations/repositories/prisma/user-detail-repository';
 
 @Module({
   controllers: [UserController],
@@ -53,6 +58,24 @@ import { CreateUserRepository } from '@/domains/user/implementations/repositorie
       provide: CreateUserRepository,
       useFactory: (prisma: PrismaRepository) =>
         new CreateUserRepository(prisma),
+      inject: [PrismaRepository],
+    },
+    {
+      provide: DetailUserController,
+      useFactory: (detailUserUseCase: IDetailUserUseCase) =>
+        new DetailUserController(detailUserUseCase),
+      inject: [DetailUserUseCase],
+    },
+    {
+      provide: DetailUserUseCase,
+      useFactory: (userRepository: IDetailUserRepository) =>
+        new DetailUserUseCase(userRepository),
+      inject: [UserDetailRepository],
+    },
+    {
+      provide: UserDetailRepository,
+      useFactory: (prisma: PrismaRepository) =>
+        new UserDetailRepository(prisma),
       inject: [PrismaRepository],
     },
   ],
