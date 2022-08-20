@@ -36,8 +36,9 @@ export function pagination(listUserDto: ListUserDto) {
 export class ListUserController implements IListUserController {
   constructor(private readonly listUsersUseCase: IListUsersUseCase) {}
 
-  list(listUserDto: ListUserDto): Promise<OutputUser[]> {
+  execute(listUserDto: ListUserDto): Promise<OutputUser[]> {
     const listUserDtoHandle = pagination(listUserDto);
+
     return this.listUsersUseCase.list(listUserDtoHandle);
   }
 }

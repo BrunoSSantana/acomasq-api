@@ -1,26 +1,33 @@
+import { OutputUser } from '@/domains/user/entities/user.entity';
+import { CreateUserController } from '@/domains/user/implementations/controllers/create-user-controller';
 import { ListUserController } from '@/domains/user/implementations/controllers/list-user-controller';
 import {
   Controller,
   Get,
-  // Post,
-  // Body,
+  Post,
+  Body,
   // Patch,
   // Param,
   // Delete,
 } from '@nestjs/common';
+import { CreateUserNestDto } from './dtos/create-user.dto';
 import { ListUserNestDto } from './dtos/list-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly listUserController: ListUserController) {}
+  constructor(
+    private readonly listUserController: ListUserController,
+    private readonly createUserController: CreateUserController,
+  ) {}
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
+  @Post()
+  create(@Body() createUserDto: CreateUserNestDto) {
+    return this.createUserController.execute(createUserDto);
+  }
+
   @Get()
-  findAll(listUserDto: ListUserNestDto) {
-    return this.listUserController.list(listUserDto);
+  async findAll(listUserDto: ListUserNestDto): Promise<OutputUser[]> {
+    return this.listUserController.execute(listUserDto);
   }
 
   // @Get(':id')

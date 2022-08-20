@@ -12,22 +12,28 @@ export interface ListUserDto {
   skip?: number;
 }
 
+export interface CreateUserDto {
+  name: string;
+  cpf: string;
+  rg: string;
+}
+
 export interface IListUserController {
-  list(listUserDto: ListUserDto): Promise<OutputUser[]>;
+  execute(listUserDto: ListUserDto): Promise<OutputUser[]>;
 }
 
 export interface ICreateUserController {
-  create(user: OutputUser): Promise<OutputUser>;
+  execute(user: CreateUserDto): Promise<OutputUser>;
 }
 
 export interface IUpdateUserController {
-  update(id: string, paramsToUpdate: InputUpdateUser): Promise<OutputUser>;
+  execute(id: string, paramsToUpdate: InputUpdateUser): Promise<OutputUser>;
 }
 
 export interface IDeleteUserController {
-  delete(id: string): Promise<void>;
+  execute(id: string): Promise<void>;
 }
 
 export interface IDetailUserController {
-  detail(id: string): Promise<OutputUser>;
+  execute(id: string): Promise<OutputUser>;
 }

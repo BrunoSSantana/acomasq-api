@@ -9,14 +9,12 @@ import { PrismaRepository } from '@/infra/repositories/prisma/prisma.repository'
 export class ListUsersRepository implements IListUsersRepository {
   constructor(private readonly prisma: PrismaRepository) {}
 
-  public async list(
+  public async execute(
     params: InputGetUser,
     pagination: InputPagination,
   ): Promise<User[]> {
-    console.log(params);
-    console.log(pagination);
     const users = await this.prisma.user.findMany({
-      where: {},
+      where: params,
       orderBy: pagination.orderby,
       skip: pagination.skip,
       take: pagination.take,

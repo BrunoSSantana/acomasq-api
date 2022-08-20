@@ -16,21 +16,21 @@ export type InputPagination = {
 };
 
 export interface IListUsersRepository {
-  list(params: InputGetUser, pagination: InputPagination): Promise<User[]>;
+  execute(params: InputGetUser, pagination: InputPagination): Promise<User[]>;
 }
 
 export interface ICreateUserRepository {
-  create(user: User): Promise<User>;
+  execute(user: User): Promise<User>;
 }
 
 export interface IUpdateUserRepository {
-  update(user: User): Promise<User>;
+  execute(user: User): Promise<User>;
 }
 
 export interface IDeleteUserRepository {
-  delete(id: string): Promise<void>;
+  execute(id: string): Promise<void>;
 }
 
 export interface IDetailUserRepository {
-  detail(id: string): Promise<User>;
+  execute(id: string): Promise<User>;
 }

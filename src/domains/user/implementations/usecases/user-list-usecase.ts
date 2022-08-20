@@ -9,7 +9,7 @@ export class ListUsersUseCase implements IListUsersUseCase {
   public async list(listUserDto: ListUserDto): Promise<OutputUser[]> {
     const { take, skip, orderby, ...paramsToList } = listUserDto;
 
-    const users = await this.userRepository.list(paramsToList, {
+    const users = await this.userRepository.execute(paramsToList, {
       take,
       skip,
       orderby,

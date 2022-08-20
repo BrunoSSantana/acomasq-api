@@ -1,5 +1,8 @@
 import { OutputUser } from '@/domains/user/entities/user.entity';
-import { ListUserDto } from '@/domains/user/contracts/user-controller';
+import {
+  CreateUserDto,
+  ListUserDto,
+} from '@/domains/user/contracts/user-controller';
 
 export type InputUpdateUser = {
   name?: string;
@@ -12,7 +15,7 @@ export interface IListUsersUseCase {
 }
 
 export interface ICreateUserUseCase {
-  create(user: OutputUser): Promise<OutputUser>;
+  create(user: CreateUserDto): Promise<OutputUser>;
 }
 
 export interface IUpdateUserUseCase {
