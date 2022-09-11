@@ -20,7 +20,6 @@ services:
   db-prod:
     profiles:
       - prod
-      - local
     image: postgres:14
     hostname: db-prod
     restart: unless-stopped

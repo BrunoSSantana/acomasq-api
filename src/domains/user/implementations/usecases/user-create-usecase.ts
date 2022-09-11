@@ -1,7 +1,7 @@
-import { CreateUserDto } from '../../contracts/user-controller';
-import { ICreateUserRepository } from '../../contracts/user-repositories';
-import { ICreateUserUseCase } from '../../contracts/user-usecases';
-import { OutputUser, User } from '../../entities/user.entity';
+import { CreateUserDto } from '@/domains/user/contracts/dtos/create-user-dto';
+import { ICreateUserRepository } from '@/domains/user/contracts/user-repositories';
+import { ICreateUserUseCase } from '@/domains/user/contracts/user-usecases';
+import { OutputUser, User } from '@/domains/user/entities/user.entity';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly userRepository: ICreateUserRepository) {}

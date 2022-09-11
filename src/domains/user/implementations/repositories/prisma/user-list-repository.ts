@@ -15,7 +15,7 @@ export class ListUsersRepository implements IListUsersRepository {
   ): Promise<User[]> {
     const users = await this.prisma.user.findMany({
       where: params,
-      orderBy: pagination.orderby,
+      // orderBy: pagination.orderby,
       skip: pagination.skip,
       take: pagination.take,
     });

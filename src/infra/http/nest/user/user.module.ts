@@ -12,6 +12,7 @@ import {
   ICreateUserRepository,
   IDetailUserRepository,
   IListUsersRepository,
+  IUpdateUserRepository,
 } from '@/domains/user/contracts/user-repositories';
 import { ListUsersRepository } from '@/domains/user/implementations/repositories/prisma/user-list-repository';
 import { CreateUserUseCase } from '@/domains/user/implementations/usecases/user-create-usecase';
@@ -20,6 +21,9 @@ import { CreateUserRepository } from '@/domains/user/implementations/repositorie
 import { DetailUserController } from '@/domains/user/implementations/controllers/detail-user-controller';
 import { DetailUserUseCase } from '@/domains/user/implementations/usecases/user-detail-usecase';
 import { UserDetailRepository } from '@/domains/user/implementations/repositories/prisma/user-detail-repository';
+import { UpdateUserController } from '@/domains/user/implementations/controllers/update-user-controller';
+import { UpdateUserUseCase } from '@/domains/user/implementations/usecases/user-update-usecase';
+import { UpdateUserRepository } from '@/domains/user/implementations/repositories/prisma/user-repository';
 
 @Module({
   controllers: [UserController],
@@ -76,6 +80,24 @@ import { UserDetailRepository } from '@/domains/user/implementations/repositorie
       provide: UserDetailRepository,
       useFactory: (prisma: PrismaRepository) =>
         new UserDetailRepository(prisma),
+      inject: [PrismaRepository],
+    },
+    {
+      provide: UpdateUserController,
+      useFactory: (updateUserUseCase: UpdateUserUseCase) =>
+        new UpdateUserController(updateUserUseCase),
+      inject: [UpdateUserUseCase],
+    },
+    {
+      provide: UpdateUserUseCase,
+      useFactory: (userRepository: IUpdateUserRepository) =>
+        new UpdateUserUseCase(userRepository),
+      inject: [UpdateUserRepository],
+    },
+    {
+      provide: UpdateUserRepository,
+      useFactory: (prisma: PrismaRepository) =>
+        new UpdateUserRepository(prisma),
       inject: [PrismaRepository],
     },
   ],

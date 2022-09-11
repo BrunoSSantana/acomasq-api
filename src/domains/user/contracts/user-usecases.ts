@@ -1,8 +1,6 @@
 import { OutputUser } from '@/domains/user/entities/user.entity';
-import {
-  CreateUserDto,
-  ListUserDto,
-} from '@/domains/user/contracts/user-controller';
+import { CreateUserDto } from './dtos/create-user-dto';
+import { ListUserDto } from './dtos/list-user-dto';
 
 export type InputUpdateUser = {
   name?: string;

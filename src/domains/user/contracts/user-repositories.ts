@@ -1,4 +1,5 @@
 import { User } from '@/domains/user/entities/user.entity';
+import { UpdateUserDto } from './dtos/update-user-dto';
 
 export type InputGetUser = {
   uid?: string;
@@ -24,7 +25,7 @@ export interface ICreateUserRepository {
 }
 
 export interface IUpdateUserRepository {
-  execute(user: User): Promise<User>;
+  execute(id: string, updateUserDto: UpdateUserDto): Promise<User>;
 }
 
 export interface IDeleteUserRepository {

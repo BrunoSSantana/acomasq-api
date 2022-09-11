@@ -1,9 +1,7 @@
-import {
-  CreateUserDto,
-  ICreateUserController,
-} from '../../contracts/user-controller';
-import { ICreateUserUseCase } from '../../contracts/user-usecases';
-import { OutputUser } from '../../entities/user.entity';
+import { CreateUserDto } from '@/domains/user/contracts/dtos/create-user-dto';
+import { ICreateUserController } from '@/domains/user/contracts/user-controller';
+import { ICreateUserUseCase } from '@/domains/user/contracts/user-usecases';
+import { OutputUser } from '@/domains/user/entities/user.entity';
 
 export class CreateUserController implements ICreateUserController {
   constructor(private readonly createUserUseCase: ICreateUserUseCase) {}
