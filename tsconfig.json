@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "module": "commonjs",
+    "target": "es2021",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2021",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
     "sourceMap": true,
-    "outDir": "./dist",
     "rootDirs": [
       "src",
     ],
@@ -18,16 +25,11 @@
         "*"
       ]
     },
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+
   },
   "include": [
     "src",
-    "__tests__"
-  ],
+    "__tests__",
+    "prisma"
+   ],
 }

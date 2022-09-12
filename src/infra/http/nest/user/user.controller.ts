@@ -1,42 +1,56 @@
-import { CreateUserDto } from '@/domains/user/dto/create-user.dto';
-import { UpdateUserDto } from '@/domains/user/dto/update-user.dto';
+import { UpdateUserDto } from '@/domains/user/contracts/dtos/update-user-dto';
+import { OutputUser } from '@/domains/user/entities/user.entity';
+import { CreateUserController } from '@/domains/user/implementations/controllers/create-user-controller';
+import { DetailUserController } from '@/domains/user/implementations/controllers/detail-user-controller';
+import { ListUserController } from '@/domains/user/implementations/controllers/list-user-controller';
+import { UpdateUserController } from '@/domains/user/implementations/controllers/update-user-controller';
 import {
   Controller,
   Get,
   Post,
   Body,
-  Patch,
+  // Patch,
   Param,
-  Delete,
+  Query,
+  Patch,
+  // Delete,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { CreateUserNestDto } from './dtos/create-user.dto';
+import { ListUserNestDto } from './dtos/list-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly listUserController: ListUserController,
+    private readonly createUserController: CreateUserController,
+    private readonly detailUserController: DetailUserController,
+    private readonly updateUserController: UpdateUserController,
+  ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  create(@Body() createUserDto: CreateUserNestDto) {
+    return this.createUserController.execute(createUserDto);
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findAll(@Query() listUserDto: ListUserNestDto): Promise<OutputUser[]> {
+    console.log({ listUserDto });
+
+    return this.listUserController.execute(listUserDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.detailUserController.execute(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.updateUserController.execute(id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.userService.remove(+id);
+  // }
 }
