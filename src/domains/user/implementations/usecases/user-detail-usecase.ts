@@ -1,6 +1,6 @@
-import { IDetailUserRepository } from '../../contracts/user-repositories';
-import { IDetailUserUseCase } from '../../contracts/user-usecases';
-import { OutputUser } from '../../entities/user.entity';
+import { IDetailUserRepository } from '@/domains/user/contracts/user-repositories';
+import { IDetailUserUseCase } from '@/domains/user/contracts/user-usecases';
+import { OutputUser } from '@/domains/user/entities/user.entity';
 
 export class DetailUserUseCase implements IDetailUserUseCase {
   constructor(private readonly userRepository: IDetailUserRepository) {}
