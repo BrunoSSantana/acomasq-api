@@ -1,17 +1,12 @@
-import { IDetailUserRepository } from '@/domains/user/contracts/user-repositories';
-import { User } from '@/domains/user/entities/user.entity';
+import { IDeleteUserRepository } from '@/domains/user/contracts/user-repositories';
 import { PrismaRepository } from '@/infra/repositories/prisma/prisma.repository';
 
-export class UserDetailRepository implements IDetailUserRepository {
-  constructor(private readonly prisma: PrismaRepository) {}
+export class UserDeleteRepository implements IDeleteUserRepository {
+  constructor(private readonly prismaRepositrory: PrismaRepository) {}
 
-  async execute(id: string): Promise<User> {
-    const userFinded = await this.prisma.user.findFirst({
+  async execute(id: string): Promise<void> {
+    await this.prismaRepositrory.user.delete({
       where: { id },
     });
-
-    const user = new User(userFinded);
-
-    return user;
   }
 }
