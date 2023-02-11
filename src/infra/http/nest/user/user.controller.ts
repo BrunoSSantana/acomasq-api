@@ -1,4 +1,5 @@
 import { CreateUserDto } from '@/domains/user/dto/create-user.dto';
+import { ListUserDto } from '@/domains/user/dto/list-user.dto';
 import { UpdateUserDto } from '@/domains/user/dto/update-user.dto';
 import {
   Controller,
@@ -8,6 +9,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 
@@ -21,22 +23,22 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Query() listUserDto: ListUserDto) {
+    return this.userService.findAll(listUserDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }
