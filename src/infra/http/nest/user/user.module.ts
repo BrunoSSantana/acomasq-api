@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { PrismaRepository } from '@/infra/repositories/prisma/prisma.repository';
+import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 @Module({
   controllers: [UserController],
@@ -9,9 +9,9 @@ import { PrismaRepository } from '@/infra/repositories/prisma/prisma.repository'
     {
       provide: UserService,
       useFactory: (prisma) => new UserService(prisma),
-      inject: [PrismaRepository],
+      inject: [PrismaService],
     },
-    PrismaRepository,
+    PrismaService,
   ],
 })
 export class UserModule {}
