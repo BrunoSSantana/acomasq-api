@@ -48,6 +48,7 @@ services:
 
   api-dev:
     profiles:
+      - local
       - dev
     build:
       context: .
