@@ -1,4 +1,4 @@
-import { User, OutputUser } from '@/domains/user/entities/user.entity';
+import { User, OutputUser } from '../../../domains/user/entities/user.entity';
 import { randomUUID } from 'crypto';
 
 type InputPagamento = {

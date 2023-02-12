@@ -3,7 +3,7 @@ import {
   CreatePagamentoDTO,
   ListPagamentoDto,
   UpdatePagamentoDTO,
-} from '@/domains/pagamento/dtos';
+} from '../../../../domains/pagamento/dtos';
 import {
   Controller,
   Get,
@@ -15,7 +15,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { PagamentoService } from './pagamento.service';
-import { Pagamento } from '@/domains/pagamento/entities/pagamento.entity';
+import { Pagamento } from '../../../../domains/pagamento/entities/pagamento.entity';
 
 @ApiTags('Pagamentos')
 @Controller('pagamento')

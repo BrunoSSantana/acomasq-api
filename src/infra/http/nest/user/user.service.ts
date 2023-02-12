@@ -1,5 +1,9 @@
-import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
-import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+import {
+  CreateUserDTO,
+  ListUserDto,
+  UpdateUserDTO,
+} from '../../../../domains/user/dtos';
+import { PrismaService } from '../../../../infra/repositories/prisma/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 

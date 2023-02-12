@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PagamentoService } from '@/infra/http/nest/pagamento/pagamento.service';
-import { PagamentoController } from '@/infra/http/nest/pagamento/pagamento.controller';
-import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+import { PagamentoService } from '../../../../infra/http/nest/pagamento/pagamento.service';
+import { PagamentoController } from '../../../../infra/http/nest/pagamento/pagamento.controller';
+import { PrismaService } from '../../../../infra/repositories/prisma/prisma.service';
 
 @Module({
   controllers: [PagamentoController],
