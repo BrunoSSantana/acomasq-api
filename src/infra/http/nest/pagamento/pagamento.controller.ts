@@ -1,5 +1,7 @@
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
-  CreatePagamentoDto,
+  CreatePagamentoDTO,
+  // CreatePagamentoDTO,
   ListPagamentoDto,
   UpdatePagamentoDto,
 } from '@/domains/pagamento/dtos';
@@ -14,13 +16,18 @@ import {
   Query,
 } from '@nestjs/common';
 import { PagamentoService } from './pagamento.service';
+import { Pagamento } from '@/domains/pagamento/entities/pagamento.entity';
 
+@ApiTags('Pagamentos')
 @Controller('pagamento')
 export class PagamentoController {
   constructor(private readonly pagamentoService: PagamentoService) {}
 
   @Post()
-  create(@Body() createPagamentoDto: CreatePagamentoDto) {
+  @ApiCreatedResponse({
+    type: Pagamento,
+  })
+  create(@Body() createPagamentoDto: CreatePagamentoDTO) {
     return this.pagamentoService.create(createPagamentoDto);
   }
 
