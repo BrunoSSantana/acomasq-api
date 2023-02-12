@@ -1,7 +1,7 @@
 import {
   CreatePagamentoDTO,
   ListPagamentoDto,
-  UpdatePagamentoDto,
+  UpdatePagamentoDTO,
 } from '@/domains/pagamento/dtos';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
@@ -46,10 +46,10 @@ export class PagamentoService {
     return this.prisma.pagamento.findUnique({ where: { id } });
   }
 
-  update(id: string, updatePagamentoDto: UpdatePagamentoDto) {
+  update(id: string, updatePagamentoDTO: UpdatePagamentoDTO) {
     return this.prisma.pagamento.update({
       where: { id },
-      data: { ...updatePagamentoDto },
+      data: updatePagamentoDTO,
     });
   }
 

@@ -1,9 +1,8 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreatePagamentoDTO,
-  // CreatePagamentoDTO,
   ListPagamentoDto,
-  UpdatePagamentoDto,
+  UpdatePagamentoDTO,
 } from '@/domains/pagamento/dtos';
 import {
   Controller,
@@ -44,7 +43,7 @@ export class PagamentoController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updatePagamentoDto: UpdatePagamentoDto,
+    @Body() updatePagamentoDto: UpdatePagamentoDTO,
   ) {
     return this.pagamentoService.update(id, updatePagamentoDto);
   }

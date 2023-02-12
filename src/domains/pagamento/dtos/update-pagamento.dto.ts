@@ -1,9 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { OmitType, PartialType } from '@nestjs/swagger';
+import { CreatePagamentoDTO } from './create-pagamento.dto';
 
-export class UpdatePagamentoDto {
-  @ApiProperty({ example: 1, required: false })
-  month: number;
-
-  @ApiProperty({ example: 2023, required: false })
-  year: number;
-}
+export class UpdatePagamentoDTO extends PartialType(
+  OmitType(CreatePagamentoDTO, ['userId'] as const),
+) {}
