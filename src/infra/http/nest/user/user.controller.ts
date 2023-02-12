@@ -1,6 +1,4 @@
-import { CreateUserDto } from '@/domains/user/dto/create-user.dto';
-import { ListUserDto } from '@/domains/user/dto/list-user.dto';
-import { UpdateUserDto } from '@/domains/user/dto/update-user.dto';
+import { CreateUserDto, ListUserDto, UpdateUserDto } from '@/domains/user/dtos';
 import {
   Controller,
   Get,
