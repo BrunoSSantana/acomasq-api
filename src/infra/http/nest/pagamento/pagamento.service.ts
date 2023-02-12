@@ -4,56 +4,92 @@ import {
   UpdatePagamentoDTO,
 } from '@/domains/pagamento/dtos';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 @Injectable()
 export class PagamentoService {
   constructor(private prisma: PrismaService) {}
 
-  create(createPagamentoDto: CreatePagamentoDTO) {
+  async create(createPagamentoDto: CreatePagamentoDTO) {
     const { month, userId, year } = createPagamentoDto;
 
-    return this.prisma.pagamento.create({
-      data: {
-        id: randomUUID(),
-        month,
-        userId,
-        year,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    });
-  }
-
-  findAll(listPagamentoDto: ListPagamentoDto) {
-    const { skip, take, month, username, year } = listPagamentoDto;
-
-    return this.prisma.pagamento.findMany({
-      take,
-      skip,
-      where: {
-        month: month && +month,
-        year: year && +year,
-        user: {
-          name: { contains: username, mode: 'insensitive' },
+    try {
+      const pagamento = await this.prisma.pagamento.create({
+        data: {
+          id: randomUUID(),
+          month,
+          userId,
+          year,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
-      },
-    });
+      });
+
+      return pagamento;
+    } catch (error) {
+      throw new BadRequestException(error, 'Erro ao tentar criar pagamento');
+    }
   }
 
-  findOne(id: string) {
-    return this.prisma.pagamento.findUnique({ where: { id } });
+  async findAll(listPagamentoDto: ListPagamentoDto) {
+    try {
+      const { skip, take, month, username, year } = listPagamentoDto;
+
+      const pagamentos = await this.prisma.pagamento.findMany({
+        take,
+        skip,
+        where: {
+          month: month && +month,
+          year: year && +year,
+          user: {
+            name: { contains: username, mode: 'insensitive' },
+          },
+        },
+      });
+
+      return pagamentos;
+    } catch (error) {
+      throw new BadRequestException(error, 'Erro ao listar pagamentos');
+    }
   }
 
-  update(id: string, updatePagamentoDTO: UpdatePagamentoDTO) {
-    return this.prisma.pagamento.update({
-      where: { id },
-      data: updatePagamentoDTO,
-    });
+  async findOne(id: string) {
+    try {
+      const pagamento = await this.prisma.pagamento.findUnique({
+        where: { id },
+      });
+
+      return pagamento;
+    } catch (error) {
+      throw new BadRequestException(
+        error,
+        'Error ao tentar buscar um pagamento ',
+      );
+    }
   }
 
-  remove(id: string) {
-    return this.prisma.pagamento.delete({ where: { id } });
+  async update(id: string, updatePagamentoDTO: UpdatePagamentoDTO) {
+    try {
+      const pagamentoUpdated = await this.prisma.pagamento.update({
+        where: { id },
+        data: updatePagamentoDTO,
+      });
+
+      return pagamentoUpdated;
+    } catch (error) {
+      throw new BadRequestException(
+        error,
+        'Erro ao tentar atualizar um pagamento',
+      );
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      await this.prisma.pagamento.delete({ where: { id } });
+    } catch (error) {
+      throw new BadRequestException('Erro ao tentar apagar um pagamento');
+    }
   }
 }

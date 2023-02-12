@@ -1,52 +1,87 @@
 import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDTO) {
+  async create(createUserDto: CreateUserDTO) {
     const { cpf, name, rg } = createUserDto;
 
-    return this.prisma.user.create({
-      data: {
-        id: randomUUID(),
-        rg,
-        name,
-        cpf,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    });
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          id: randomUUID(),
+          rg,
+          name,
+          cpf,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+
+      return user;
+    } catch (error) {
+      throw new BadRequestException(
+        error,
+        'Erro ao tentar cria um novo usuário',
+      );
+    }
   }
 
-  findAll(listUserDto: ListUserDto) {
+  async findAll(listUserDto: ListUserDto) {
     const { skip, take, cpf, name, rg } = listUserDto;
-    return this.prisma.user.findMany({
-      take,
-      skip,
-      where: {
-        name: { contains: name, mode: 'insensitive' },
-        cpf: { contains: cpf, mode: 'insensitive' },
-        rg: { contains: rg, mode: 'insensitive' },
-      },
-    });
+
+    try {
+      const users = await this.prisma.user.findMany({
+        take,
+        skip,
+        where: {
+          name: { contains: name, mode: 'insensitive' },
+          cpf: { contains: cpf, mode: 'insensitive' },
+          rg: { contains: rg, mode: 'insensitive' },
+        },
+      });
+
+      return users;
+    } catch (error) {
+      throw new BadRequestException(error, 'Erro ao listar usuários');
+    }
   }
 
-  findOne(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+  async findOne(id: string) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { id } });
+
+      return user;
+    } catch (error) {
+      throw new BadRequestException(error, 'Erro ao buscar usuário');
+    }
   }
 
-  update(id: string, updateUserDto: UpdateUserDTO) {
-    return this.prisma.user.update({
-      where: { id },
-      data: { ...updateUserDto },
-    });
+  async update(id: string, updateUserDto: UpdateUserDTO) {
+    try {
+      const userUpdated = await this.prisma.user.update({
+        where: { id },
+        data: { ...updateUserDto },
+      });
+
+      return userUpdated;
+    } catch (error) {
+      throw new BadRequestException(
+        error,
+        'Error ao tentar atualizar um usuário',
+      );
+    }
   }
 
-  remove(id: string) {
-    return this.prisma.user.delete({ where: { id } });
+  async remove(id: string) {
+    try {
+      await this.prisma.user.delete({ where: { id } });
+    } catch (error) {
+      throw new BadRequestException(error, 'Erro ao tentar apagar um usuário');
+    }
   }
 }
