@@ -37,6 +37,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  app.enableCors();
+
   /* Running API */
   await app.listen(API_PORT, () => {
     Logger.log(`Listening at http://localhost:${API_PORT}/${GLOBAL_PREFIX}`);
