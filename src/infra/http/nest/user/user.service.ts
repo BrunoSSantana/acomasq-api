@@ -1,4 +1,4 @@
-import { CreateUserDto, ListUserDto, UpdateUserDto } from '@/domains/user/dtos';
+import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
+  create(createUserDto: CreateUserDTO) {
     const { cpf, name, rg } = createUserDto;
 
     return this.prisma.user.create({
@@ -39,7 +39,7 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDTO) {
     return this.prisma.user.update({
       where: { id },
       data: { ...updateUserDto },

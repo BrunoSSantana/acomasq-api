@@ -1,4 +1,4 @@
-import { CreateUserDto, ListUserDto, UpdateUserDto } from '@/domains/user/dtos';
+import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
 import {
   Controller,
   Get,
@@ -18,7 +18,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDTO) {
     return this.userService.create(createUserDto);
   }
 
@@ -33,7 +33,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDTO) {
     return this.userService.update(id, updateUserDto);
   }
 
