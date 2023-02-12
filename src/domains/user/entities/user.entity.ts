@@ -1,4 +1,7 @@
-import { Conta, OutputConta } from '@/domains/conta/entities/conta.emtity';
+import {
+  Pagamento,
+  OutputPagamento,
+} from '@/domains/pagamento/entities/pagamento.entity';
 import { randomUUID } from 'crypto';
 
 export type InputUser = {
@@ -7,7 +10,7 @@ export type InputUser = {
   name?: string;
   cpf?: string;
   rg?: string;
-  contas?: Conta[];
+  pagamentos?: Pagamento[];
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -18,7 +21,7 @@ export type OutputUser = {
   name: string;
   cpf: string;
   rg: string;
-  contas?: OutputConta[];
+  pagamentos?: OutputPagamento[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -29,7 +32,7 @@ export class User {
   name: string;
   cpf: string;
   rg: string;
-  contas?: Conta[];
+  pagamentos?: Pagamento[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -39,7 +42,7 @@ export class User {
     this.name = params.name;
     this.cpf = params.cpf;
     this.rg = params.rg;
-    this.contas = params.contas || [];
+    this.pagamentos = params.pagamentos || [];
     this.createdAt = params.createdAt || new Date();
     this.updatedAt = params.updatedAt || new Date();
   }
@@ -66,7 +69,7 @@ export class User {
       name: this.name,
       cpf: this.cpf,
       rg: this.rg,
-      contas: this.contas.map((conta) => conta.toJSON()),
+      pagamentos: this.pagamentos.map((pagamento) => pagamento.toJSON()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
