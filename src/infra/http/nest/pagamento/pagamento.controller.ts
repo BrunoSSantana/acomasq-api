@@ -1,10 +1,5 @@
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
-  CreatePagamentoDTO,
-  ListPagamentoDto,
-  UpdatePagamentoDTO,
-} from '../../../../domains/pagamento/dtos';
-import {
   Controller,
   Get,
   Post,
@@ -14,8 +9,13 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { PagamentoService } from './pagamento.service';
-import { Pagamento } from '../../../../domains/pagamento/entities/pagamento.entity';
+import { PagamentoService } from '@/infra/http/nest/pagamento/pagamento.service';
+import {
+  CreatePagamentoDTO,
+  ListPagamentoDto,
+  UpdatePagamentoDTO,
+} from '@/domains/pagamento/dtos';
+import { Pagamento } from '@/domains/pagamento/entities/pagamento.entity';
 
 @ApiTags('Pagamentos')
 @Controller('pagamento')

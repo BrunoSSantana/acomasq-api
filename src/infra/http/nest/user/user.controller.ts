@@ -1,8 +1,4 @@
-import {
-  CreateUserDTO,
-  ListUserDto,
-  UpdateUserDTO,
-} from '../../../../domains/user/dtos';
+import { ApiTags } from '@nestjs/swagger';
 import {
   Controller,
   Get,
@@ -13,8 +9,8 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { UserService } from './user.service';
+import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
+import { UserService } from '@/infra/http/nest/user/user.service';
 
 @ApiTags('Usuarios')
 @Controller('user')

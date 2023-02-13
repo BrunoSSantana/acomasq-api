@@ -1,9 +1,10 @@
+import 'module-alias/register';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './infra/http/nest/config/http-filter-exception';
+import { HttpExceptionFilter } from '@/infra/http/nest/config/http-filter-exception';
 
 async function bootstrap() {
   /* Set config initial */

@@ -1,11 +1,11 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import {
   CreatePagamentoDTO,
   ListPagamentoDto,
   UpdatePagamentoDTO,
-} from '../../../../domains/pagamento/dtos';
-import { PrismaService } from '../../../../infra/repositories/prisma/prisma.service';
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+} from '@/domains/pagamento/dtos';
+import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 @Injectable()
 export class PagamentoService {

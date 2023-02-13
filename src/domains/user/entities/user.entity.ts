@@ -1,7 +1,7 @@
 import {
   Pagamento,
   OutputPagamento,
-} from '../../../domains/pagamento/entities/pagamento.entity';
+} from '@/domains/pagamento/entities/pagamento.entity';
 import { randomUUID } from 'crypto';
 
 export type InputUser = {
