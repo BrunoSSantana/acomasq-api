@@ -1,39 +1,42 @@
-import { User, OutputUser } from '@/domains/user/entities/user.entity';
+import {
+  Associado,
+  OutputAssociado,
+} from '@/domains/associado/entities/associado.entity';
 import { randomUUID } from 'crypto';
 
 type InputPagamento = {
   id?: string;
-  month: number;
-  year: number;
-  userId: string;
+  mes: number;
+  ano: number;
+  associadoId: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
 export type OutputPagamento = {
   id: string;
-  month: number;
-  year: number;
-  user?: OutputUser;
-  userId: string;
+  mes: number;
+  ano: number;
+  associado?: OutputAssociado;
+  associadoId: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
 export class Pagamento {
   id: string;
-  month: number;
-  year: number;
-  user?: User;
-  userId: string;
+  mes: number;
+  ano: number;
+  associado?: Associado;
+  associadoId: string;
   createdAt: Date;
   updatedAt: Date;
 
   private constructor(input: InputPagamento) {
     this.id = input.id || randomUUID();
-    this.month = input.month;
-    this.year = input.year;
-    this.userId = input.userId;
+    this.mes = input.mes;
+    this.ano = input.ano;
+    this.associadoId = input.associadoId;
     this.createdAt = input.createdAt || new Date();
     this.updatedAt = input.updatedAt || new Date();
   }
@@ -42,24 +45,24 @@ export class Pagamento {
     return new Pagamento(input);
   }
 
-  updateDate(month: number, year: number): void {
-    this.month = month;
-    this.year = year;
+  updateDate(mes: number, ano: number): void {
+    this.mes = mes;
+    this.ano = ano;
     this.updatedAt = new Date();
   }
 
-  updateUser(userId: string): void {
-    this.userId = userId;
+  updateAssociado(associadoId: string): void {
+    this.associadoId = associadoId;
     this.updatedAt = new Date();
   }
 
   toJSON(): OutputPagamento {
     return {
       id: this.id,
-      month: this.month,
-      year: this.year,
-      user: this.user.toJSON(),
-      userId: this.userId,
+      mes: this.mes,
+      ano: this.ano,
+      associado: this.associado.toJSON(),
+      associadoId: this.associadoId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

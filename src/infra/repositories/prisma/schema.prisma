@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Associado {
   id         String      @id @default(uuid()) @db.Uuid
   uid        String?
   name       String?
@@ -20,18 +20,18 @@ model User {
   createdAt  DateTime    @default(now()) @map("created_at")
   updatedAt  DateTime    @updatedAt @map("updated_at")
 
-  @@map("user")
+  @@map("associado")
 }
 
 model Pagamento {
-  id        String   @id @default(uuid()) @db.Uuid
-  month     Int
-  year      Int
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @map("user_id") @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id          String     @id @default(uuid()) @db.Uuid
+  mes         Int
+  ano         Int
+  associado   Associado? @relation(fields: [associadoId], references: [id])
+  associadoId String?    @map("associado_id") @db.Uuid
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
 
-  @@unique([month, year, userId])
+  @@unique([mes, ano, associadoId])
   @@map("pagamento")
 }

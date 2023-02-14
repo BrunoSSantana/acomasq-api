@@ -4,7 +4,7 @@ import {
 } from '@/domains/pagamento/entities/pagamento.entity';
 import { randomUUID } from 'crypto';
 
-export type InputUser = {
+export type InputAssociado = {
   id?: string;
   uid?: string;
   name?: string;
@@ -15,7 +15,7 @@ export type InputUser = {
   updatedAt?: Date;
 };
 
-export type OutputUser = {
+export type OutputAssociado = {
   id: string;
   uid: string;
   name: string;
@@ -26,7 +26,7 @@ export type OutputUser = {
   updatedAt: Date;
 };
 
-export class User {
+export class Associado {
   id: string;
   uid: string;
   name: string;
@@ -36,7 +36,7 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(params: InputUser) {
+  constructor(params: InputAssociado) {
     this.id = params.id || randomUUID();
     this.uid = params.uid;
     this.name = params.name;
@@ -47,8 +47,8 @@ export class User {
     this.updatedAt = params.updatedAt || new Date();
   }
 
-  static create(params: InputUser): OutputUser {
-    return new User(params);
+  static create(params: InputAssociado): OutputAssociado {
+    return new Associado(params);
   }
 
   updateName(name: string) {
