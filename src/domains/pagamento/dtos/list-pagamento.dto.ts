@@ -5,12 +5,12 @@ export class ListPagamentoDto {
   @ApiProperty({ example: 1, required: false })
   @IsNumber()
   @IsOptional()
-  month?: number;
+  mes?: number;
 
   @ApiProperty({ example: 2023, required: false })
   @IsNumber()
   @IsOptional()
-  year?: number;
+  ano?: number;
 
   @ApiProperty({ example: 'Maria', required: false })
   @IsString()

@@ -5,12 +5,12 @@ export class CreatePagamentoDTO {
   @ApiProperty({ example: 1, required: true })
   @IsNumber()
   @IsNotEmpty()
-  month: number;
+  mes: number;
 
   @ApiProperty({ example: 2023, required: true })
   @IsNumber()
   @IsNotEmpty()
-  year: number;
+  ano: number;
 
   @ApiProperty({
     example: 'c44bc5a9-84e5-43f9-a8ce-e7106d1026f6',
@@ -18,5 +18,5 @@ export class CreatePagamentoDTO {
   })
   @IsUUID('4')
   @IsNotEmpty()
-  userId: string;
+  associadoId: string;
 }

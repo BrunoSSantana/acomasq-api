@@ -1,17 +1,21 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
-import { CreateUserDTO, ListUserDto, UpdateUserDTO } from '@/domains/user/dtos';
+import {
+  CreateAssociadoDTO,
+  ListAssociadoDto,
+  UpdateAssociadoDTO,
+} from '@/domains/associado/dtos';
 
 @Injectable()
-export class UserService {
+export class AssociadoService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDTO) {
-    const { cpf, name, rg } = createUserDto;
+  async create(createAssociadoDto: CreateAssociadoDTO) {
+    const { cpf, name, rg } = createAssociadoDto;
 
     try {
-      const user = await this.prisma.user.create({
+      const associado = await this.prisma.associado.create({
         data: {
           id: randomUUID(),
           rg,
@@ -22,7 +26,7 @@ export class UserService {
         },
       });
 
-      return user;
+      return associado;
     } catch (error) {
       throw new BadRequestException(
         error,
@@ -31,11 +35,11 @@ export class UserService {
     }
   }
 
-  async findAll(listUserDto: ListUserDto) {
-    const { skip, take, cpf, name, rg } = listUserDto;
+  async findAll(listAssociadoDto: ListAssociadoDto) {
+    const { skip, take, cpf, name, rg } = listAssociadoDto;
 
     try {
-      const users = await this.prisma.user.findMany({
+      const users = await this.prisma.associado.findMany({
         take,
         skip,
         where: {
@@ -53,19 +57,21 @@ export class UserService {
 
   async findOne(id: string) {
     try {
-      const user = await this.prisma.user.findUnique({ where: { id } });
+      const associado = await this.prisma.associado.findUnique({
+        where: { id },
+      });
 
-      return user;
+      return associado;
     } catch (error) {
       throw new BadRequestException(error, 'Erro ao buscar usuário');
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDTO) {
+  async update(id: string, updateAssociadoDto: UpdateAssociadoDTO) {
     try {
-      const userUpdated = await this.prisma.user.update({
+      const userUpdated = await this.prisma.associado.update({
         where: { id },
-        data: { ...updateUserDto },
+        data: { ...updateAssociadoDto },
       });
 
       return userUpdated;
@@ -79,7 +85,7 @@ export class UserService {
 
   async remove(id: string) {
     try {
-      await this.prisma.user.delete({ where: { id } });
+      await this.prisma.associado.delete({ where: { id } });
     } catch (error) {
       throw new BadRequestException(error, 'Erro ao tentar apagar um usuário');
     }
