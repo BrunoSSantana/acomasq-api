@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
-export class CreatePagamentoDTO {
+export class CreatePaymentDTO {
   @ApiProperty({ example: 1, required: true })
   @IsNumber()
   @IsNotEmpty()
@@ -18,5 +18,5 @@ export class CreatePagamentoDTO {
   })
   @IsUUID('4')
   @IsNotEmpty()
-  associadoId: string;
+  associateId: string;
 }

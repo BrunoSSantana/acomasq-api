@@ -1,29 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class ListPagamentoDto {
-  @ApiProperty({ example: 1, required: false })
-  @IsNumber()
-  @IsOptional()
-  mes?: number;
-
-  @ApiProperty({ example: 2023, required: false })
-  @IsNumber()
-  @IsOptional()
-  ano?: number;
-
+export class ListAssociateDto {
   @ApiProperty({ example: 'Maria', required: false })
   @IsString()
   @IsOptional()
-  username?: string;
+  name?: string;
+
+  @ApiProperty({ example: '00000000000', required: false })
+  @IsString()
+  @IsOptional()
+  cpf?: string;
+
+  @ApiProperty({ example: '9999137', required: false })
+  @IsString()
+  @IsOptional()
+  rg?: string;
 
   @ApiProperty({ example: 0, required: false })
   @IsNumber()
-  @IsOptional()
   skip?: number = 0;
 
   @ApiProperty({ example: 10, required: false })
   @IsNumber()
-  @IsOptional()
   take?: number = 10;
 }

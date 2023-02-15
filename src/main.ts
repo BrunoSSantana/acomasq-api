@@ -23,7 +23,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('ACOMASQ API')
     .setDescription(
-      'API criada para dacastrar usuarios e pagamentos de agua na ACOMASQ',
+      'API criada para dacastrar usuarios e payments de agua na ACOMASQ',
     )
     .setVersion('1.0')
     .build();

@@ -2,20 +2,20 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import {
-  CreateAssociadoDTO,
-  ListAssociadoDto,
-  UpdateAssociadoDTO,
-} from '@/domains/associado/dtos';
+  CreateAssociateDTO,
+  ListAssociateDto,
+  UpdateAssociateDTO,
+} from '@/domains/associate/dtos';
 
 @Injectable()
-export class AssociadoService {
-  constructor(private prisma: PrismaService) {}
+export class AssociateService {
+  constructor(private repository: PrismaService) {}
 
-  async create(createAssociadoDto: CreateAssociadoDTO) {
-    const { cpf, name, rg } = createAssociadoDto;
+  async create(createAssociateDto: CreateAssociateDTO) {
+    const { cpf, name, rg } = createAssociateDto;
 
     try {
-      const associado = await this.prisma.associado.create({
+      const associate = await this.repository.associate.create({
         data: {
           id: randomUUID(),
           rg,
@@ -26,7 +26,7 @@ export class AssociadoService {
         },
       });
 
-      return associado;
+      return associate;
     } catch (error) {
       throw new BadRequestException(
         error,
@@ -35,11 +35,11 @@ export class AssociadoService {
     }
   }
 
-  async findAll(listAssociadoDto: ListAssociadoDto) {
-    const { skip, take, cpf, name, rg } = listAssociadoDto;
+  async findAll(listAssociateDto: ListAssociateDto) {
+    const { skip, take, cpf, name, rg } = listAssociateDto;
 
     try {
-      const users = await this.prisma.associado.findMany({
+      const users = await this.repository.associate.findMany({
         take,
         skip,
         where: {
@@ -57,21 +57,21 @@ export class AssociadoService {
 
   async findOne(id: string) {
     try {
-      const associado = await this.prisma.associado.findUnique({
+      const associate = await this.repository.associate.findUnique({
         where: { id },
       });
 
-      return associado;
+      return associate;
     } catch (error) {
       throw new BadRequestException(error, 'Erro ao buscar usuário');
     }
   }
 
-  async update(id: string, updateAssociadoDto: UpdateAssociadoDTO) {
+  async update(id: string, updateAssociateDto: UpdateAssociateDTO) {
     try {
-      const userUpdated = await this.prisma.associado.update({
+      const userUpdated = await this.repository.associate.update({
         where: { id },
-        data: { ...updateAssociadoDto },
+        data: { ...updateAssociateDto },
       });
 
       return userUpdated;
@@ -85,7 +85,7 @@ export class AssociadoService {
 
   async remove(id: string) {
     try {
-      await this.prisma.associado.delete({ where: { id } });
+      await this.repository.associate.delete({ where: { id } });
     } catch (error) {
       throw new BadRequestException(error, 'Erro ao tentar apagar um usuário');
     }

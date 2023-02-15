@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateAssociadoDTO {
+export class CreateAssociateDTO {
   @ApiProperty({ example: 'Maria', required: true })
   @IsString()
   @IsNotEmpty()

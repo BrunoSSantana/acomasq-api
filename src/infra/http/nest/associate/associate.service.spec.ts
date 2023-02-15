@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PagamentoService } from '@/infra/http/nest/pagamento/pagamento.service';
+import { AssociateService } from '@/infra/http/nest/associate/associate.service';
 import { describe, beforeEach, it, expect } from 'vitest';
 
-describe('PagamentoService', () => {
-  let service: PagamentoService;
+describe('AssociateService', () => {
+  let service: AssociateService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PagamentoService],
+      providers: [AssociateService],
     }).compile();
 
-    service = module.get<PagamentoService>(PagamentoService);
+    service = module.get<AssociateService>(AssociateService);
   });
 
   it('should be defined', () => {

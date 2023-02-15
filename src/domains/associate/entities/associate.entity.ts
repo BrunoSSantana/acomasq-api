@@ -1,54 +1,54 @@
 import {
-  Pagamento,
-  OutputPagamento,
-} from '@/domains/pagamento/entities/pagamento.entity';
+  Payment,
+  OutputPayment,
+} from '@/domains/payment/entities/payment.entity';
 import { randomUUID } from 'crypto';
 
-export type InputAssociado = {
+export type InputAssociate = {
   id?: string;
   uid?: string;
   name?: string;
   cpf?: string;
   rg?: string;
-  pagamentos?: Pagamento[];
+  payments?: Payment[];
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-export type OutputAssociado = {
+export type OutputAssociate = {
   id: string;
   uid: string;
   name: string;
   cpf: string;
   rg: string;
-  pagamentos?: OutputPagamento[];
+  payments?: OutputPayment[];
   createdAt: Date;
   updatedAt: Date;
 };
 
-export class Associado {
+export class Associate {
   id: string;
   uid: string;
   name: string;
   cpf: string;
   rg: string;
-  pagamentos?: Pagamento[];
+  payments?: Payment[];
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(params: InputAssociado) {
+  constructor(params: InputAssociate) {
     this.id = params.id || randomUUID();
     this.uid = params.uid;
     this.name = params.name;
     this.cpf = params.cpf;
     this.rg = params.rg;
-    this.pagamentos = params.pagamentos || [];
+    this.payments = params.payments || [];
     this.createdAt = params.createdAt || new Date();
     this.updatedAt = params.updatedAt || new Date();
   }
 
-  static create(params: InputAssociado): OutputAssociado {
-    return new Associado(params);
+  static create(params: InputAssociate): OutputAssociate {
+    return new Associate(params);
   }
 
   updateName(name: string) {
@@ -69,7 +69,7 @@ export class Associado {
       name: this.name,
       cpf: this.cpf,
       rg: this.rg,
-      pagamentos: this.pagamentos.map((pagamento) => pagamento.toJSON()),
+      payments: this.payments.map((payment) => payment.toJSON()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

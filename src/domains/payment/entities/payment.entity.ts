@@ -1,48 +1,48 @@
 import {
-  Associado,
-  OutputAssociado,
-} from '@/domains/associado/entities/associado.entity';
+  Associate,
+  OutputAssociate,
+} from '@/domains/associate/entities/associate.entity';
 import { randomUUID } from 'crypto';
 
-type InputPagamento = {
+type InputPayment = {
   id?: string;
   mes: number;
   ano: number;
-  associadoId: string;
+  associateId: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-export type OutputPagamento = {
+export type OutputPayment = {
   id: string;
   mes: number;
   ano: number;
-  associado?: OutputAssociado;
-  associadoId: string;
+  associate?: OutputAssociate;
+  associateId: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export class Pagamento {
+export class Payment {
   id: string;
   mes: number;
   ano: number;
-  associado?: Associado;
-  associadoId: string;
+  associate?: Associate;
+  associateId: string;
   createdAt: Date;
   updatedAt: Date;
 
-  private constructor(input: InputPagamento) {
+  private constructor(input: InputPayment) {
     this.id = input.id || randomUUID();
     this.mes = input.mes;
     this.ano = input.ano;
-    this.associadoId = input.associadoId;
+    this.associateId = input.associateId;
     this.createdAt = input.createdAt || new Date();
     this.updatedAt = input.updatedAt || new Date();
   }
 
-  static create(input: InputPagamento): OutputPagamento {
-    return new Pagamento(input);
+  static create(input: InputPayment): OutputPayment {
+    return new Payment(input);
   }
 
   updateDate(mes: number, ano: number): void {
@@ -51,18 +51,18 @@ export class Pagamento {
     this.updatedAt = new Date();
   }
 
-  updateAssociado(associadoId: string): void {
-    this.associadoId = associadoId;
+  updateAssociate(associateId: string): void {
+    this.associateId = associateId;
     this.updatedAt = new Date();
   }
 
-  toJSON(): OutputPagamento {
+  toJSON(): OutputPayment {
     return {
       id: this.id,
       mes: this.mes,
       ano: this.ano,
-      associado: this.associado.toJSON(),
-      associadoId: this.associadoId,
+      associate: this.associate.toJSON(),
+      associateId: this.associateId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
