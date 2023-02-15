@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PagamentoController } from '@/infra/http/nest/pagamento/pagamento.controller';
 import { PagamentoService } from '@/infra/http/nest/pagamento/pagamento.service';
+import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('PagamentoController', () => {
   let controller: PagamentoController;

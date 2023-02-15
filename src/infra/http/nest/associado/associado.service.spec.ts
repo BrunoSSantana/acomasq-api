@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AssociadoService } from '@/infra/http/nest/associado/associado.service';
+import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('AssociadoService', () => {
   let service: AssociadoService;
