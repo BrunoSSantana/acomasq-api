@@ -1,7 +1,7 @@
 import {
   Associate,
   OutputAssociate,
-} from '@/domains/associate/entities/associate.entity';
+} from '@/domains/associate/entities/associate';
 import { randomUUID } from 'crypto';
 
 type InputPayment = {

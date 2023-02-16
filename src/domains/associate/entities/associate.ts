@@ -6,7 +6,6 @@ import { randomUUID } from 'crypto';
 
 export type InputAssociate = {
   id?: string;
-  uid?: string;
   name?: string;
   cpf?: string;
   rg?: string;
@@ -17,7 +16,6 @@ export type InputAssociate = {
 
 export type OutputAssociate = {
   id: string;
-  uid: string;
   name: string;
   cpf: string;
   rg: string;
@@ -28,7 +26,6 @@ export type OutputAssociate = {
 
 export class Associate {
   id: string;
-  uid: string;
   name: string;
   cpf: string;
   rg: string;
@@ -36,11 +33,12 @@ export class Associate {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(params: InputAssociate) {
+  private constructor(params: InputAssociate) {
+    const cpf = new CPF(params.cpf).value;
+
     this.id = params.id || randomUUID();
-    this.uid = params.uid;
     this.name = params.name;
-    this.cpf = params.cpf;
+    this.cpf = cpf;
     this.rg = params.rg;
     this.payments = params.payments || [];
     this.createdAt = params.createdAt || new Date();
@@ -57,7 +55,7 @@ export class Associate {
   }
 
   updateDouments(cpf?: string, rg?: string) {
-    this.cpf = cpf || this.cpf;
+    this.cpf = new CPF(cpf).value || this.cpf;
     this.rg = rg || this.rg;
     this.updatedAt = new Date();
   }
@@ -65,7 +63,6 @@ export class Associate {
   toJSON() {
     return {
       id: this.id,
-      uid: this.uid,
       name: this.name,
       cpf: this.cpf,
       rg: this.rg,
@@ -73,5 +70,25 @@ export class Associate {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
+  }
+}
+
+export class CPF {
+  private readonly _value: string;
+  constructor(value: string) {
+    const isValidCPFValue =
+      /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})$|^([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})$/.test(
+        value,
+      );
+
+    if (!isValidCPFValue) {
+      throw new Error('invalid CPF value');
+    }
+
+    this._value = value;
+  }
+
+  get value() {
+    return this._value;
   }
 }
