@@ -3,6 +3,7 @@ import {
   OutputAssociate,
 } from '@/domains/associate/entities/associate';
 import { randomUUID } from 'crypto';
+import { z } from 'zod';
 
 type InputPayment = {
   id?: string;
@@ -42,7 +43,12 @@ export class Payment {
   }
 
   static create(input: InputPayment): OutputPayment {
-    return new Payment(input);
+    const id = uuidValidate(input.id);
+    const associateId = uuidValidate(input.associateId);
+    const mes = monthValidate(input.mes);
+    const ano = yearValidate(input.ano);
+
+    return new Payment({ ...input, id, mes, ano, associateId });
   }
 
   updateDate(mes: number, ano: number): void {
@@ -67,4 +73,22 @@ export class Payment {
       updatedAt: this.updatedAt,
     };
   }
+}
+
+function uuidValidate(uuid: string) {
+  const schemaUuid = z.string().uuid();
+
+  return schemaUuid.parse(uuid);
+}
+
+function monthValidate(monoth: number) {
+  const monthSchema = z.number().gte(1).lte(12);
+
+  return monthSchema.parse(monoth);
+}
+
+function yearValidate(year: number) {
+  const yearSchema = z.number().gte(1900);
+
+  return yearSchema.parse(year);
 }
