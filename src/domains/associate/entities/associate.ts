@@ -35,11 +35,12 @@ export class Associate {
 
   private constructor(params: InputAssociate) {
     const cpf = new CPF(params.cpf).value;
+    const rg = new RG(params.rg).value;
 
     this.id = params.id || randomUUID();
     this.name = params.name;
     this.cpf = cpf;
-    this.rg = params.rg;
+    this.rg = rg;
     this.payments = params.payments || [];
     this.createdAt = params.createdAt || new Date();
     this.updatedAt = params.updatedAt || new Date();
@@ -56,7 +57,7 @@ export class Associate {
 
   updateDouments(cpf?: string, rg?: string) {
     this.cpf = new CPF(cpf).value || this.cpf;
-    this.rg = rg || this.rg;
+    this.rg = new RG(rg).value || this.rg;
     this.updatedAt = new Date();
   }
 
@@ -83,6 +84,24 @@ export class CPF {
 
     if (!isValidCPFValue) {
       throw new Error('invalid CPF value');
+    }
+
+    this._value = value;
+  }
+
+  get value() {
+    return this._value;
+  }
+}
+
+export class RG {
+  private readonly _value: string;
+  constructor(value: string) {
+    const isValidRGValue =
+      /(^[0-9]{1,2}).?([0-9]{3}).?([0-9]{3})-?([0-9]{1}|X|x$)?/.test(value);
+
+    if (!isValidRGValue) {
+      throw new Error('invalid RG value');
     }
 
     this._value = value;

@@ -6,7 +6,7 @@ describe('ASSOCIATE - ENTITY', () => {
     const associateProps = {
       cpf: '109.435.574-70',
       name: 'Bruno de Souza Santana',
-      rg: '9.138.137',
+      rg: '9138137',
     };
 
     const associate = Associate.create(associateProps);
@@ -23,6 +23,18 @@ describe('ASSOCIATE - ENTITY', () => {
 
     expect(() => Associate.create(associateProps)).toThrowError(
       /^invalid CPF value$/,
+    );
+  });
+
+  test('should not be able create a associate with invalid rg', () => {
+    const associateProps = {
+      cpf: '109.435.574-70',
+      name: 'Bruno de Souza Santana',
+      rg: '913813X7',
+    };
+
+    expect(() => Associate.create(associateProps)).toThrowError(
+      /^invalid RG value$/,
     );
   });
 });
