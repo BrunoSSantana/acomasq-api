@@ -11,7 +11,7 @@ ALTER TABLE "conta" DROP CONSTRAINT "conta_user_id_fkey";
 DROP TABLE "conta";
 
 -- CreateTable
-CREATE TABLE "pagamento" (
+CREATE TABLE "payment" (
     "id" UUID NOT NULL,
     "month" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
@@ -19,8 +19,8 @@ CREATE TABLE "pagamento" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "pagamento_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "payment_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
-ALTER TABLE "pagamento" ADD CONSTRAINT "pagamento_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "payment" ADD CONSTRAINT "payment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
-import { HttpExceptionFilter } from '@/infra/http/nest/config/http-filter-exception';
+import { HttpExceptionFilter } from '@/infra/http/nest/@config/http-filter-exception';
 
 async function bootstrap() {
   /* Set config initial */
@@ -23,7 +23,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('ACOMASQ API')
     .setDescription(
-      'API criada para dacastrar usuarios e pagamentos de agua na ACOMASQ',
+      'API criada para dacastrar usuarios e payments de agua na ACOMASQ',
     )
     .setVersion('1.0')
     .build();
