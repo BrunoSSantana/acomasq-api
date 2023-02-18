@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import { Payment, OutputPayment } from '@/domains/payment/entities/payment';
-import { randomUUID } from 'crypto';
 
 export type InputAssociate = {
   id?: string;

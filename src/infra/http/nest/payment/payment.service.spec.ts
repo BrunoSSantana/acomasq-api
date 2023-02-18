@@ -19,9 +19,9 @@ describe('PaymentService', () => {
 
   it('should be defined', () => {
     const createPaymentrespose = service.create({
-      ano: 2023,
+      year: 2023,
       associateId: 'associate-id',
-      mes: 1,
+      month: 1,
     });
   });
 });

@@ -7,8 +7,8 @@ import { z } from 'zod';
 
 type InputPayment = {
   id?: string;
-  mes: number;
-  ano: number;
+  month: number;
+  year: number;
   associateId: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -16,8 +16,8 @@ type InputPayment = {
 
 export type OutputPayment = {
   id: string;
-  mes: number;
-  ano: number;
+  month: number;
+  year: number;
   associate?: OutputAssociate;
   associateId: string;
   createdAt: Date;
@@ -26,8 +26,8 @@ export type OutputPayment = {
 
 export class Payment {
   id: string;
-  mes: number;
-  ano: number;
+  month: number;
+  year: number;
   associate?: Associate;
   associateId: string;
   createdAt: Date;
@@ -35,8 +35,8 @@ export class Payment {
 
   private constructor(input: InputPayment) {
     this.id = input.id || randomUUID();
-    this.mes = input.mes;
-    this.ano = input.ano;
+    this.month = input.month;
+    this.year = input.year;
     this.associateId = input.associateId;
     this.createdAt = input.createdAt || new Date();
     this.updatedAt = input.updatedAt || new Date();
@@ -45,15 +45,15 @@ export class Payment {
   static create(input: InputPayment): OutputPayment {
     const id = uuidValidate(input.id);
     const associateId = uuidValidate(input.associateId);
-    const mes = monthValidate(input.mes);
-    const ano = yearValidate(input.ano);
+    const month = monthValidate(input.month);
+    const year = yearValidate(input.year);
 
-    return new Payment({ ...input, id, mes, ano, associateId });
+    return new Payment({ ...input, id, month, year, associateId });
   }
 
-  updateDate(mes: number, ano: number): void {
-    this.mes = mes;
-    this.ano = ano;
+  updateDate(month: number, year: number): void {
+    this.month = month;
+    this.year = year;
     this.updatedAt = new Date();
   }
 
@@ -65,8 +65,8 @@ export class Payment {
   toJSON(): OutputPayment {
     return {
       id: this.id,
-      mes: this.mes,
-      ano: this.ano,
+      month: this.month,
+      year: this.year,
       associate: this.associate.toJSON(),
       associateId: this.associateId,
       createdAt: this.createdAt,

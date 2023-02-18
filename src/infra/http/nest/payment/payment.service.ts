@@ -12,15 +12,15 @@ export class PaymentService {
   constructor(private prisma: PrismaService) {}
 
   async create(createPaymentDto: CreatePaymentDTO) {
-    const { mes, associateId, ano } = createPaymentDto;
+    const { month, associateId, year } = createPaymentDto;
 
     try {
       const payment = await this.prisma.payment.create({
         data: {
           id: randomUUID(),
-          mes,
+          month,
           associateId,
-          ano,
+          year,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -34,14 +34,14 @@ export class PaymentService {
 
   async findAll(listPaymentDto: ListPaymentDto) {
     try {
-      const { skip, take, mes, username, ano } = listPaymentDto;
+      const { skip, take, month, username, year } = listPaymentDto;
 
       const payments = await this.prisma.payment.findMany({
         take,
         skip,
         where: {
-          mes: mes && +mes,
-          ano: ano && +ano,
+          month: month && +month,
+          year: year && +year,
           associate: {
             name: { contains: username, mode: 'insensitive' },
           },

@@ -5,12 +5,12 @@ export class CreatePaymentDTO {
   @ApiProperty({ example: 1, required: true })
   @IsNumber()
   @IsNotEmpty()
-  mes: number;
+  month: number;
 
   @ApiProperty({ example: 2023, required: true })
   @IsNumber()
   @IsNotEmpty()
-  ano: number;
+  year: number;
 
   @ApiProperty({
     example: 'c44bc5a9-84e5-43f9-a8ce-e7106d1026f6',

@@ -5,12 +5,12 @@ export class ListPaymentDto {
   @ApiProperty({ example: 1, required: false })
   @IsNumber()
   @IsOptional()
-  mes?: number;
+  month?: number;
 
   @ApiProperty({ example: 2023, required: false })
   @IsNumber()
   @IsOptional()
-  ano?: number;
+  year?: number;
 
   @ApiProperty({ example: 'Maria', required: false })
   @IsString()
