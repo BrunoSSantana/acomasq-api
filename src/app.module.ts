@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AssociadoModule } from '@/infra/http/nest/associado/associado.module';
-import { PagamentoModule } from '@/infra/http/nest/pagamento/pagamento.module';
+import { AssociateModule } from '@/infra/http/nest/associate/associate.module';
+import { PaymentModule } from '@/infra/http/nest/payment/payment.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AssociadoModule, PagamentoModule],
+  imports: [ConfigModule.forRoot(), AssociateModule, PaymentModule],
   controllers: [],
   providers: [],
 })

@@ -9,7 +9,7 @@
     "target": "es2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDirs": ["src"],
+    "rootDirs": ["src", "test"],
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
@@ -22,5 +22,5 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src", "__tests__"]
+  "include": ["src", "test"]
 }
