@@ -43,7 +43,7 @@ export class Associate {
     this.updatedAt = params.updatedAt || new Date();
   }
 
-  static create(params: InputAssociate): OutputAssociate {
+  static create(params: InputAssociate) {
     return new Associate(params);
   }
 
@@ -58,7 +58,7 @@ export class Associate {
     this.updatedAt = new Date();
   }
 
-  toJSON() {
+  toJSON(): OutputAssociate {
     return {
       id: this.id,
       name: this.name,
