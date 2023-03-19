@@ -1,5 +1,5 @@
 # -------------->
-FROM node:16.13-alpine as builder
+FROM node:18.15-bullseye as builder
 
 USER node
 
@@ -11,7 +11,7 @@ RUN npm ci
 
 
 # -------------->
-FROM node:16.13-alpine as runner
+FROM node:18.15.0-alpine3.17 as runner
 
 USER node
 
