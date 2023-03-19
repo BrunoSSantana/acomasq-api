@@ -14,10 +14,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
 
+    const DEV_INSTANCE = process.env.NODE_ENV === 'development';
+
     response.status(status).json({
       statusCode: status,
       name: exception.name,
-      message: exception['message'],
+      message: exception['response'].description,
+      ...(DEV_INSTANCE && { cause: exception['response'].cause.stack }),
       path: request.url,
       timestamp: new Date().toISOString(),
     });
