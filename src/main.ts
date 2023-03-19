@@ -5,6 +5,15 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
 import { HttpExceptionFilter } from '@/infra/http/nest/@config/http-filter-exception';
+import { ServerVariableObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+
+const nodeEnvServerVariable: ServerVariableObject = {
+  default: 'dev',
+  description: 'Node env variable',
+  enum: ['test', 'dev', 'prod'],
+};
+
+const serversVariable = { NODE_ENV: nodeEnvServerVariable };
 
 async function bootstrap() {
   /* Set config initial */
@@ -25,14 +34,16 @@ async function bootstrap() {
     .setDescription(
       'API criada para dacastrar usuarios e payments de agua na ACOMASQ',
     )
-    .setVersion('1.0')
+    .setVersion('0.0.1')
+    .addServer('http://localhost:3003', 'DEV', serversVariable)
+    .addServer('https://acomasq-api.com', 'STAGE', serversVariable)
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(SWAGGER_PREFIX, app, document);
 
   /* Set validation config */
-
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
