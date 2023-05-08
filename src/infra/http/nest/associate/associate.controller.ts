@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import {
   CreateAssociateDTO,
-  ListAssociateDto,
+  GetAssociatesRequestDTO,
   UpdateAssociateDTO,
 } from '@/domains/associate/dtos';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
@@ -38,7 +38,7 @@ export class AssociateController {
   }
 
   @Get()
-  findAll(@Query() listAssociateDto: ListAssociateDto) {
+  findAll(@Query() listAssociateDto: GetAssociatesRequestDTO) {
     return this.listAssociateService.execute(listAssociateDto);
   }
 

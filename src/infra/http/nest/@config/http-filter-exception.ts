@@ -20,7 +20,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode: status,
       name: exception.name,
       message: exception['response'].description,
-      ...(DEV_INSTANCE && { cause: exception['response'].cause.stack }),
+      ...(DEV_INSTANCE && { cause: exception['response'].cause?.stack }),
       path: request.url,
       timestamp: new Date().toISOString(),
     });
