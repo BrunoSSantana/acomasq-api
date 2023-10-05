@@ -34,7 +34,6 @@ export const GetAssociatesRequestZ = extendApi(
   z.object({
     skip: extendApi(z.number(), {
       description: 'pagination skip',
-      nullable: true,
     }),
     take: extendApi(z.number(), {
       description: 'pagination take',
@@ -42,7 +41,7 @@ export const GetAssociatesRequestZ = extendApi(
       minimum: 1,
       maximum: 100,
       example: 10,
-      nullable: true,
+      required: ['take is required'],
     }),
     name: extendApi(z.string(), {
       description: 'associate name',
@@ -56,7 +55,7 @@ export const GetAssociatesRequestZ = extendApi(
       example: '000.000.000-00',
       minLength: 11,
       maxLength: 11,
-      nullable: true,
+      required: ['cpf is required'],
       pattern: '^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}$',
     }),
     rg: extendApi(z.string(), {
@@ -64,7 +63,7 @@ export const GetAssociatesRequestZ = extendApi(
       example: '00.000.000-0',
       minLength: 9,
       maxLength: 9,
-      nullable: true,
+      required: ['rg is required'],
     }),
   }),
   { title: 'Get Associate Response' },
