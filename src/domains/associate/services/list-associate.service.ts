@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { ListAssociateDto } from '@/domains/associate/dtos';
+import { GetAssociatesRequestDTO } from '@/domains/associate/dtos';
 import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
 
 export class ListAssociateService {
   constructor(private repository: IAssociateRepository) {}
 
-  async execute(listAssociateDto: ListAssociateDto) {
+  async execute(listAssociateDto: GetAssociatesRequestDTO) {
     const { skip, take, cpf, name, rg } = listAssociateDto;
 
     try {
