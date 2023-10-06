@@ -20,7 +20,7 @@ export class PrismaAssociateRepository implements IAssociateRepository {
 
   async findMany(params: ListAssociateInput): Promise<Associate[]> {
     const { take, skip, ...restOfWhere } = params;
-    const associatesFinded = await this.prisma.associate.findMany({
+    const associatesFound = await this.prisma.associate.findMany({
       where: {
         ...restOfWhere,
       },
@@ -28,15 +28,15 @@ export class PrismaAssociateRepository implements IAssociateRepository {
       skip,
     });
 
-    return associatesFinded.map(Associate.create);
+    return associatesFound.map(Associate.create);
   }
 
   async findById(associateId: string): Promise<Associate> {
-    const associateFinded = await this.prisma.associate.findUnique({
+    const associateFound = await this.prisma.associate.findUnique({
       where: { id: associateId },
     });
 
-    return Associate.create(associateFinded);
+    return Associate.create(associateFound);
   }
 
   async delete(associateId: string): Promise<void> {
@@ -48,11 +48,11 @@ export class PrismaAssociateRepository implements IAssociateRepository {
   }
 
   async update(params: UpdateAssociateInput): Promise<Associate> {
-    const { associateId: id, ...dataToupdate } = params;
+    const { associateId: id, ...dataToUpdate } = params;
 
     const associatedUpdated = await this.prisma.associate.update({
       where: { id },
-      data: dataToupdate,
+      data: dataToUpdate,
     });
 
     return Associate.create(associatedUpdated);
