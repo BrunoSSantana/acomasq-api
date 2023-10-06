@@ -4,17 +4,19 @@ import {
   ArgumentsHost,
   HttpException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
+    const configService = new ConfigService();
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
 
-    const DEV_INSTANCE = process.env.NODE_ENV === 'development';
+    const DEV_INSTANCE = configService.getOrThrow('NODE_ENV') === 'development';
 
     response.status(status).json({
       statusCode: status,
