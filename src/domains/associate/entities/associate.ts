@@ -3,9 +3,9 @@ import { Payment, OutputPayment } from '@/domains/payment/entities/payment';
 
 export type InputAssociate = {
   id?: string;
-  name?: string;
-  cpf?: string;
-  rg?: string;
+  name?: string | null;
+  cpf?: string | null;
+  rg?: string | null;
   payments?: Payment[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -13,9 +13,9 @@ export type InputAssociate = {
 
 export type OutputAssociate = {
   id: string;
-  name: string;
-  cpf: string;
-  rg: string;
+  name?: string | null;
+  cpf?: string | null;
+  rg?: string | null;
   payments?: OutputPayment[];
   createdAt: Date;
   updatedAt: Date;
@@ -23,16 +23,16 @@ export type OutputAssociate = {
 
 export class Associate {
   id: string;
-  name: string;
-  cpf: string;
-  rg: string;
+  name?: string | null;
+  cpf?: string | null;
+  rg?: string | null;
   payments?: Payment[];
   createdAt: Date;
   updatedAt: Date;
 
   private constructor(params: InputAssociate) {
-    const cpf = new CPF(params.cpf).value;
-    const rg = new RG(params.rg).value;
+    const cpf = params.cpf && new CPF(params.cpf).value;
+    const rg = params.rg && new RG(params.rg).value;
 
     this.id = params.id || randomUUID();
     this.name = params.name;
@@ -52,9 +52,9 @@ export class Associate {
     this.updatedAt = new Date();
   }
 
-  updateDouments(cpf?: string, rg?: string) {
-    this.cpf = new CPF(cpf).value || this.cpf;
-    this.rg = new RG(rg).value || this.rg;
+  updateDocuments(cpf?: string, rg?: string) {
+    this.cpf = (cpf && new CPF(cpf).value) || this.cpf;
+    this.rg = (rg && new RG(rg).value) || this.rg;
     this.updatedAt = new Date();
   }
 
@@ -64,7 +64,7 @@ export class Associate {
       name: this.name,
       cpf: this.cpf,
       rg: this.rg,
-      payments: this.payments.map((payment) => payment.toJSON()),
+      payments: this.payments?.map((payment) => payment.toJSON()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
@@ -74,10 +74,7 @@ export class Associate {
 export class CPF {
   private readonly _value: string;
   constructor(value: string) {
-    const isValidCPFValue =
-      /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})$|^([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})$/.test(
-        value,
-      );
+    const isValidCPFValue = this.isValidCPF(value);
 
     if (!isValidCPFValue) {
       throw new Error('invalid CPF value');
@@ -88,6 +85,55 @@ export class CPF {
 
   get value() {
     return this._value;
+  }
+
+  isValidCPF(cpf: string) {
+    if (typeof cpf !== 'string') return false;
+
+    cpf = cpf.replace(/[^\d]+/g, '');
+
+    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
+
+    const cpfOnArray = cpf.split('');
+
+    const validator = cpfOnArray
+      .filter((digit, index, array) => index >= array.length - 2 && digit)
+      .map((el) => +el);
+
+    const toValidate = (pop) =>
+      cpfOnArray
+        .filter((digit, index, array) => index < array.length - pop && digit)
+        .map((el) => +el);
+
+    const rest = (count, pop) =>
+      ((toValidate(pop).reduce((soma, el, i) => soma + el * (count - i), 0) *
+        10) %
+        11) %
+      10;
+
+    return !(rest(10, 2) !== validator[0] || rest(11, 1) !== validator[1]);
+  }
+
+  isValidCPF2(cpf: string | number[]) {
+    if (typeof cpf !== 'string') return false;
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
+
+    cpf = cpf.split('').map((el) => +el);
+
+    const rest = (count: number) =>
+      (((cpf as number[])
+        .slice(0, count - 12)
+        .reduce(
+          (soma: number, el: number, index: number) =>
+            soma + el * (count - index),
+          0,
+        ) *
+        10) %
+        11) %
+      10;
+
+    return rest(10) === cpf[9] && rest(11) === cpf[10];
   }
 }
 

@@ -7,19 +7,31 @@ import {
   Param,
   Delete,
   Query,
+  UsePipes,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
 
 import {
   CreateAssociateDTO,
   GetAssociatesRequestDTO,
   UpdateAssociateDTO,
+  createAssociateSchema,
 } from '@/domains/associate/dtos';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
 import { ListAssociateService } from '@/domains/associate/services/list-associate.service';
 import { DeleteAssociateByIdService } from '@/domains/associate/services/delete-associate-by-id.service';
 import { FindAssociateByIdService } from '@/domains/associate/services/find-associate-by-id.service';
+import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+
+class AssociateDTO {
+  id: string;
+  name: string;
+  cpf: string;
+  rg: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 @ApiTags('Associates')
 @Controller('associate')
@@ -33,6 +45,31 @@ export class AssociateController {
   ) {}
 
   @Post()
+  @ApiBody({
+    type: AssociateDTO,
+    schema: {
+      properties: {
+        name: { type: 'string' },
+        cpf: { type: 'string' },
+        rg: { type: 'string' },
+      },
+      required: ['name', 'cpf', 'rg'],
+    },
+    examples: {
+      'Associate 1': {
+        value: {
+          name: 'Associate 1',
+          cpf: '12345678901',
+          rg: '123456789',
+        },
+      },
+    },
+  })
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: AssociateDTO,
+  })
+  @UsePipes(new ZodValidationPipe(createAssociateSchema))
   create(@Body() createAssociateDto: CreateAssociateDTO) {
     return this.createAssociateService.execute(createAssociateDto);
   }

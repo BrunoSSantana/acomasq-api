@@ -1,5 +1,3 @@
-import { ZodValidationPipe } from '@anatine/zod-nestjs';
-
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   Controller,
@@ -15,30 +13,38 @@ import {
 
 import { PaymentService } from '@/infra/http/nest/payment/payment.service';
 import {
-  GetPaymentsDTO,
+  CreatePaymentDTO,
   ListPaymentDto,
-  PaymentDTO,
   UpdatePaymentDTO,
-  UpdatePaymentResponseDTO,
+  createPaymentSchema,
 } from '@/domains/payment/dtos';
+import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+
+class PaymentDTO {
+  id: string;
+  month: number;
+  year: number;
+  associateId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 @ApiTags('Payments')
 @Controller('payment')
-@UsePipes(ZodValidationPipe)
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
-
   @Post()
   @ApiCreatedResponse({
     type: PaymentDTO,
   })
-  create(@Body() createPaymentDto: PaymentDTO) {
+  @UsePipes(new ZodValidationPipe(createPaymentSchema))
+  create(@Body() createPaymentDto: CreatePaymentDTO) {
     return this.paymentService.create(createPaymentDto);
   }
 
   @Get()
   @ApiCreatedResponse({
-    type: GetPaymentsDTO,
+    type: Array<PaymentDTO>,
   })
   findAll(@Query() listPaymentDto: ListPaymentDto) {
     return this.paymentService.findAll(listPaymentDto);
@@ -54,9 +60,9 @@ export class PaymentController {
 
   @Patch(':id')
   @ApiCreatedResponse({
-    type: UpdatePaymentResponseDTO,
+    type: PaymentDTO,
   })
-  update(@Param('id') id: string, @Body() updatePaymentDto: PaymentDTO) {
+  update(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDTO) {
     return this.paymentService.update(id, updatePaymentDto);
   }
 

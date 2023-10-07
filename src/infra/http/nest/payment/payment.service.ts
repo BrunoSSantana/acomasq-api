@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import {
-  PaymentDTO,
+  CreatePaymentDTO,
   ListPaymentDto,
   UpdatePaymentDTO,
 } from '@/domains/payment/dtos';
@@ -11,7 +11,7 @@ import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 export class PaymentService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPaymentDto: PaymentDTO) {
+  async create(createPaymentDto: CreatePaymentDTO) {
     const { month, associateId, year } = createPaymentDto;
 
     try {

@@ -10,11 +10,11 @@ export type CreateAssociateInput = {
 };
 
 export type ListAssociateInput = {
-  rg: string;
-  cpf: string;
-  name: string;
-  take: number;
-  skip: number;
+  rg?: string;
+  cpf?: string;
+  name?: string;
+  take?: number;
+  skip?: number;
 };
 
 export type UpdateAssociateInput = {
@@ -27,7 +27,7 @@ export type UpdateAssociateInput = {
 export interface IAssociateRepository {
   create(params: CreateAssociateInput): Promise<Associate>;
   findMany(params: ListAssociateInput): Promise<Associate[]>;
-  findById(associateId: string): Promise<Associate>;
+  findById(associateId: string): Promise<Associate | null>;
   delete(associateId: string): Promise<void>;
   update(params: UpdateAssociateInput): Promise<Associate>;
 }
