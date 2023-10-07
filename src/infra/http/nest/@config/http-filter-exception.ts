@@ -18,13 +18,20 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const DEV_INSTANCE = configService.getOrThrow('NODE_ENV') === 'development';
 
+    const name = exception.name;
+    const message =
+      exception['response'].description || exception['response'].message;
+    const cause = exception['response'].cause?.stack;
+    const path = request.url;
+    const timestamp = new Date().toISOString();
+
     response.status(status).json({
       statusCode: status,
-      name: exception.name,
-      message: exception['response'].description,
-      ...(DEV_INSTANCE && { cause: exception['response'].cause?.stack }),
-      path: request.url,
-      timestamp: new Date().toISOString(),
+      name,
+      message,
+      ...(DEV_INSTANCE && { cause }),
+      path,
+      timestamp,
     });
   }
 }

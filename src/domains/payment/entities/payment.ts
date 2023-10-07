@@ -43,7 +43,7 @@ export class Payment {
   }
 
   static create(input: InputPayment): OutputPayment {
-    const id = uuidValidate(input.id);
+    const id = input.id && uuidValidate(input.id);
     const associateId = uuidValidate(input.associateId);
     const month = monthValidate(input.month);
     const year = yearValidate(input.year);
@@ -67,7 +67,7 @@ export class Payment {
       id: this.id,
       month: this.month,
       year: this.year,
-      associate: this.associate.toJSON(),
+      associate: this.associate?.toJSON(),
       associateId: this.associateId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

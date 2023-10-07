@@ -31,12 +31,12 @@ export class PrismaAssociateRepository implements IAssociateRepository {
     return associatesFound.map(Associate.create);
   }
 
-  async findById(associateId: string): Promise<Associate> {
+  async findById(associateId: string): Promise<Associate | null> {
     const associateFound = await this.prisma.associate.findUnique({
       where: { id: associateId },
     });
 
-    return Associate.create(associateFound);
+    return associateFound ? Associate.create(associateFound) : null;
   }
 
   async delete(associateId: string): Promise<void> {
