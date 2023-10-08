@@ -19,15 +19,7 @@ import {
   createPaymentSchema,
 } from '@/domains/payment/dtos';
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
-
-class PaymentDTO {
-  id: string;
-  month: number;
-  year: number;
-  associateId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Payment } from '@/domains/payment/entities';
 
 @ApiTags('Payments')
 @Controller('payment')
@@ -35,7 +27,7 @@ export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
   @Post()
   @ApiCreatedResponse({
-    type: PaymentDTO,
+    type: Payment,
   })
   @UsePipes(new ZodValidationPipe(createPaymentSchema))
   create(@Body() createPaymentDto: CreatePaymentDTO) {
@@ -44,7 +36,7 @@ export class PaymentController {
 
   @Get()
   @ApiCreatedResponse({
-    type: Array<PaymentDTO>,
+    type: Array<Payment>,
   })
   findAll(@Query() listPaymentDto: ListPaymentDto) {
     return this.paymentService.findAll(listPaymentDto);
@@ -52,7 +44,7 @@ export class PaymentController {
 
   @Get(':id')
   @ApiCreatedResponse({
-    type: PaymentDTO,
+    type: Payment,
   })
   findOne(@Param('id') id: string) {
     return this.paymentService.findOne(id);
@@ -60,7 +52,7 @@ export class PaymentController {
 
   @Patch(':id')
   @ApiCreatedResponse({
-    type: PaymentDTO,
+    type: Payment,
   })
   update(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDTO) {
     return this.paymentService.update(id, updatePaymentDto);

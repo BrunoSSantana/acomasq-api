@@ -23,15 +23,7 @@ import { ListAssociateService } from '@/domains/associate/services/list-associat
 import { DeleteAssociateByIdService } from '@/domains/associate/services/delete-associate-by-id.service';
 import { FindAssociateByIdService } from '@/domains/associate/services/find-associate-by-id.service';
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
-
-class AssociateDTO {
-  id: string;
-  name: string;
-  cpf: string;
-  rg: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Associate } from '@/domains/associate/entities/associate';
 
 @ApiTags('Associates')
 @Controller('associate')
@@ -46,7 +38,7 @@ export class AssociateController {
 
   @Post()
   @ApiBody({
-    type: AssociateDTO,
+    type: Associate,
     schema: {
       properties: {
         name: { type: 'string' },
@@ -67,7 +59,7 @@ export class AssociateController {
   })
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
-    type: AssociateDTO,
+    type: Associate,
   })
   @UsePipes(new ZodValidationPipe(createAssociateSchema))
   create(@Body() createAssociateDto: CreateAssociateDTO) {

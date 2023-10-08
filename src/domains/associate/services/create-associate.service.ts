@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-
 import { BadRequestException } from '@nestjs/common';
 
 import { CreateAssociateDTO } from '@/domains/associate/dtos';

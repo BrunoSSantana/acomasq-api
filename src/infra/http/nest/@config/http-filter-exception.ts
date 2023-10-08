@@ -22,6 +22,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const message =
       exception['response'].description || exception['response'].message;
     const cause = exception['response'].cause?.stack;
+    const provider = exception['response'].provider;
     const path = request.url;
     const timestamp = new Date().toISOString();
 
@@ -29,7 +30,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode: status,
       name,
       message,
-      ...(DEV_INSTANCE && { cause }),
+      ...(DEV_INSTANCE && { cause, provider }),
       path,
       timestamp,
     });
