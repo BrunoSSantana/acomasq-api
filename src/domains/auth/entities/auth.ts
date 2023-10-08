@@ -5,3 +5,5 @@ export class Auth {
     this.access_token = access_token;
   }
 }
+
+export type Payload<T> = T;

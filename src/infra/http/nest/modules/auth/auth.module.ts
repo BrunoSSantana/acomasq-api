@@ -11,6 +11,7 @@ import { PrismaUserRepository } from '@/infra/repositories/prisma/domains/auth/u
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
 import { AuthService } from './auth.service';
+import { JwtAdapter } from './jwt.service';
 
 @Module({
   imports: [
@@ -54,7 +55,12 @@ import { AuthService } from './auth.service';
       provide: CreateSessionService,
       useFactory: (userRepository, jwtService) =>
         new CreateSessionService(userRepository, jwtService),
-      inject: [PrismaUserRepository, JwtService],
+      inject: [PrismaUserRepository, JwtAdapter],
+    },
+    {
+      provide: JwtAdapter,
+      useFactory: (jwtService) => new JwtAdapter(jwtService),
+      inject: [JwtService],
     },
   ],
 })
