@@ -20,7 +20,7 @@ export class CreateAssociateService {
         updatedAt: new Date(),
       });
 
-      return associate;
+      return { associate };
     } catch (error) {
       throw new BadRequestException({
         description: 'Erro ao tentar cria um novo usuário',

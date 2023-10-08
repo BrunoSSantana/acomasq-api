@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UsePipes,
+  HttpCode,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -109,6 +110,26 @@ export class AssociateController {
   }
 
   @Patch(':id')
+  @ApiBody({
+    type: Associate,
+    schema: {
+      properties: {
+        name: { type: 'string' },
+        cpf: { type: 'string' },
+        rg: { type: 'string' },
+      },
+      required: ['name', 'cpf', 'rg'],
+    },
+    examples: {
+      'Associate 1': {
+        value: {
+          name: 'Associate 1',
+          cpf: '12345678901',
+          rg: '123456789',
+        },
+      },
+    },
+  })
   update(
     @Param('id') id: string,
     @Body() updateAssociateDto: UpdateAssociateDTO,
@@ -117,6 +138,7 @@ export class AssociateController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.deleteAssociateByIdService.execute(id);
   }

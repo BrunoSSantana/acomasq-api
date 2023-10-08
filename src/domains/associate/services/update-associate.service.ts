@@ -8,12 +8,12 @@ export class UpdateAssociateService {
 
   async execute(associateId: string, updateAssociateDto: UpdateAssociateDTO) {
     try {
-      const userUpdated = await this.repository.update({
+      const associateUpdated = await this.repository.update({
         associateId,
         ...updateAssociateDto,
       });
 
-      return userUpdated;
+      return { associate: associateUpdated };
     } catch (error) {
       throw new BadRequestException({
         cause: error,

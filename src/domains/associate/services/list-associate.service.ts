@@ -10,7 +10,7 @@ export class ListAssociateService {
     const { skip, take, cpf, name, rg } = listAssociateDto;
 
     try {
-      const users = await this.repository.findMany({
+      const associates = await this.repository.findMany({
         name,
         cpf,
         rg,
@@ -18,7 +18,7 @@ export class ListAssociateService {
         skip,
       });
 
-      return users;
+      return { associates };
     } catch (error) {
       throw new BadRequestException({
         message: 'Erro ao listar usuários',

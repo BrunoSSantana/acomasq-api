@@ -9,7 +9,7 @@ export class FindAssociateByIdService {
     try {
       const associate = await this.repository.findById(associateId);
 
-      return associate;
+      return { associate };
     } catch (error) {
       throw new BadRequestException({
         message: 'Erro ao buscar usuário',
