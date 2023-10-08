@@ -14,6 +14,8 @@ export const envSchema = z.object({
     .default('postgresql://acomasq:acomasqpass@localhost:5432/acomasq-db'),
   GLOBAL_PREFIX: z.string().optional().default('api'),
   SWAGGER_PREFIX: z.string().optional().default('docs'),
+  JWT_PUBLIC_KEY: z.string(),
+  JWT_PRIVATE_KEY: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

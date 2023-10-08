@@ -5,7 +5,7 @@ import {
   ListAssociateInput,
   UpdateAssociateInput,
 } from '@/domains/associate/repositories/associate.repository';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../../prisma.service';
 
 export class PrismaAssociateRepository implements IAssociateRepository {
   constructor(private readonly prisma: PrismaService) {}
