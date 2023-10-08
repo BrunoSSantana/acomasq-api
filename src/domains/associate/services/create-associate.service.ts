@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto';
 import { BadRequestException } from '@nestjs/common';
 
-import { CreateAssociateDTO } from '@/domains/associate/dtos';
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { CreateAssociateDTO } from '@/domains/associate/dto';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class CreateAssociateService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(createAssociateDto: CreateAssociateDTO) {
     const { cpf, name, rg } = createAssociateDto;
@@ -20,7 +20,7 @@ export class CreateAssociateService {
         updatedAt: new Date(),
       });
 
-      return associate;
+      return { associate };
     } catch (error) {
       throw new BadRequestException({
         description: 'Erro ao tentar cria um novo usuário',

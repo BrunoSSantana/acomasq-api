@@ -1,6 +1,6 @@
 import { User } from '@/domains/auth/entities/user';
 
-export interface IUserRepository {
+export interface IUserRepositoryPort {
   create(params: User): Promise<User>;
   findByUsername(username: User['username']): Promise<User | null>;
   findById(userId: User['id']): Promise<User | null>;

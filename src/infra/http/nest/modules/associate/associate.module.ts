@@ -7,7 +7,7 @@ import { UpdateAssociateService } from '@/domains/associate/services/update-asso
 import { ListAssociateService } from '@/domains/associate/services/list-associate.service';
 import { FindAssociateByIdService } from '@/domains/associate/services/find-associate-by-id.service';
 import { DeleteAssociateByIdService } from '@/domains/associate/services/delete-associate-by-id.service';
-import { PrismaAssociateRepository } from '@/infra/repositories/prisma/domains/associate';
+import { AssociateRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/associate';
 
 @Module({
   controllers: [AssociateController],
@@ -15,32 +15,32 @@ import { PrismaAssociateRepository } from '@/infra/repositories/prisma/domains/a
     {
       provide: CreateAssociateService,
       useFactory: (repository) => new CreateAssociateService(repository),
-      inject: [PrismaAssociateRepository],
+      inject: [AssociateRepositoryPrismaAdapter],
     },
     {
       provide: UpdateAssociateService,
       useFactory: (repository) => new UpdateAssociateService(repository),
-      inject: [PrismaAssociateRepository],
+      inject: [AssociateRepositoryPrismaAdapter],
     },
     {
       provide: ListAssociateService,
       useFactory: (repository) => new ListAssociateService(repository),
-      inject: [PrismaAssociateRepository],
+      inject: [AssociateRepositoryPrismaAdapter],
     },
     {
       provide: FindAssociateByIdService,
       useFactory: (repository) => new FindAssociateByIdService(repository),
-      inject: [PrismaAssociateRepository],
+      inject: [AssociateRepositoryPrismaAdapter],
     },
     {
       provide: DeleteAssociateByIdService,
       useFactory: (repository) => new DeleteAssociateByIdService(repository),
-      inject: [PrismaAssociateRepository],
+      inject: [AssociateRepositoryPrismaAdapter],
     },
     {
-      provide: PrismaAssociateRepository,
+      provide: AssociateRepositoryPrismaAdapter,
       useFactory: (prismaService) =>
-        new PrismaAssociateRepository(prismaService),
+        new AssociateRepositoryPrismaAdapter(prismaService),
       inject: [PrismaService],
     },
     PrismaService,

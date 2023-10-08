@@ -2,9 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import {
   CreatePaymentDTO,
-  ListPaymentDto,
+  // ListPaymentDto,
   UpdatePaymentDTO,
-} from '@/domains/payment/dtos';
+} from '@/domains/payment/dto';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 @Injectable()
@@ -32,27 +32,27 @@ export class PaymentService {
     }
   }
 
-  async findAll(listPaymentDto: ListPaymentDto) {
-    try {
-      const { skip, take, month, username, year } = listPaymentDto;
+  // async findAll(listPaymentDto: ListPaymentDto) {
+  //   try {
+  //     const { skip, take, month, username, year } = listPaymentDto;
 
-      const payments = await this.prisma.payment.findMany({
-        take,
-        skip,
-        where: {
-          month: month && +month,
-          year: year && +year,
-          associate: {
-            name: { contains: username, mode: 'insensitive' },
-          },
-        },
-      });
+  //     const payments = await this.prisma.payment.findMany({
+  //       take,
+  //       skip,
+  //       where: {
+  //         month: month && +month,
+  //         year: year && +year,
+  //         associate: {
+  //           name: { contains: username, mode: 'insensitive' },
+  //         },
+  //       },
+  //     });
 
-      return payments;
-    } catch (error) {
-      throw new BadRequestException(error, 'Erro ao listar payments');
-    }
-  }
+  //     return payments;
+  //   } catch (error) {
+  //     throw new BadRequestException(error, 'Erro ao listar payments');
+  //   }
+  // }
 
   async findOne(id: string) {
     try {

@@ -1,13 +1,15 @@
-import { Associate } from '@/domains/associate/entities/associate';
 import {
-  CreateAssociateInput,
-  IAssociateRepository,
   ListAssociateInput,
   UpdateAssociateInput,
-} from '@/domains/associate/repositories/associate.repository';
-import { PrismaService } from '../../prisma.service';
+  CreateAssociateInput,
+  IAssociateRepositoryPort,
+} from '@/domains/associate/ports';
+import { Associate } from '@/domains/associate/entities/associate';
+import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
-export class PrismaAssociateRepository implements IAssociateRepository {
+export class AssociateRepositoryPrismaAdapter
+  implements IAssociateRepositoryPort
+{
   constructor(private readonly prisma: PrismaService) {}
 
   async create(params: CreateAssociateInput): Promise<Associate> {
@@ -20,9 +22,14 @@ export class PrismaAssociateRepository implements IAssociateRepository {
 
   async findMany(params: ListAssociateInput): Promise<Associate[]> {
     const { take, skip, ...restOfWhere } = params;
+
     const associatesFound = await this.prisma.associate.findMany({
       where: {
         ...restOfWhere,
+        name: {
+          contains: restOfWhere.name,
+          mode: 'insensitive',
+        },
       },
       take,
       skip,

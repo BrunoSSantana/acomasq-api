@@ -3,9 +3,8 @@ import { Auth } from '@/domains/auth/entities/auth';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 
-// TODO: change service name
 @Injectable()
-export class AuthService {
+export class AuthProvider {
   constructor(private readonly authService: CreateSessionService) {}
 
   async auth(params: CreateSessionDTO): Promise<Auth> {

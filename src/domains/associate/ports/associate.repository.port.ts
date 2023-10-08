@@ -24,7 +24,7 @@ export type UpdateAssociateInput = {
   name?: string;
 };
 
-export interface IAssociateRepository {
+export interface IAssociateRepositoryPort {
   create(params: CreateAssociateInput): Promise<Associate>;
   findMany(params: ListAssociateInput): Promise<Associate[]>;
   findById(associateId: string): Promise<Associate | null>;

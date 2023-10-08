@@ -8,15 +8,22 @@ import {
   Delete,
   Query,
   UsePipes,
+  HttpCode,
 } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiTags,
+  ApiCreatedResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 import {
   CreateAssociateDTO,
   GetAssociatesRequestDTO,
   UpdateAssociateDTO,
   createAssociateSchema,
-} from '@/domains/associate/dtos';
+  getAssociatesRequestSchema,
+} from '@/domains/associate/dto';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
 import { ListAssociateService } from '@/domains/associate/services/list-associate.service';
@@ -67,6 +74,32 @@ export class AssociateController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'take',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'skip',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'cpf',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'rg',
+    required: false,
+    type: String,
+  })
+  @UsePipes(new ZodValidationPipe(getAssociatesRequestSchema))
   findAll(@Query() listAssociateDto: GetAssociatesRequestDTO) {
     return this.listAssociateService.execute(listAssociateDto);
   }
@@ -77,6 +110,26 @@ export class AssociateController {
   }
 
   @Patch(':id')
+  @ApiBody({
+    type: Associate,
+    schema: {
+      properties: {
+        name: { type: 'string' },
+        cpf: { type: 'string' },
+        rg: { type: 'string' },
+      },
+      required: ['name', 'cpf', 'rg'],
+    },
+    examples: {
+      'Associate 1': {
+        value: {
+          name: 'Associate 1',
+          cpf: '12345678901',
+          rg: '123456789',
+        },
+      },
+    },
+  })
   update(
     @Param('id') id: string,
     @Body() updateAssociateDto: UpdateAssociateDTO,
@@ -85,6 +138,7 @@ export class AssociateController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.deleteAssociateByIdService.execute(id);
   }

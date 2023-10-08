@@ -42,7 +42,7 @@ export class Payment {
     this.updatedAt = input.updatedAt || new Date();
   }
 
-  static create(input: InputPayment): OutputPayment {
+  static create(input: InputPayment): Payment {
     const id = input.id && uuidValidate(input.id);
     const associateId = uuidValidate(input.associateId);
     const month = monthValidate(input.month);

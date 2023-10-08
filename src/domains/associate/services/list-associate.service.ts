@@ -1,16 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { GetAssociatesRequestDTO } from '@/domains/associate/dtos';
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { GetAssociatesRequestDTO } from '@/domains/associate/dto';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class ListAssociateService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(listAssociateDto: GetAssociatesRequestDTO) {
     const { skip, take, cpf, name, rg } = listAssociateDto;
 
     try {
-      const users = await this.repository.findMany({
+      const associates = await this.repository.findMany({
         name,
         cpf,
         rg,
@@ -18,11 +18,11 @@ export class ListAssociateService {
         skip,
       });
 
-      return users;
+      return { associates };
     } catch (error) {
       throw new BadRequestException({
-        description: 'Erro ao listar usuários',
-        casuse: error,
+        message: 'Erro ao listar usuários',
+        cause: error,
       });
     }
   }

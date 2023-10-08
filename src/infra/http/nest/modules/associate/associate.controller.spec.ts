@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AssociateController } from '@/infra/http/nest/associate/associate.controller';
-import { AssociateService } from '@/infra/http/nest/associate/associate.service';
+
 import { describe, beforeEach, it, expect } from 'vitest';
+import { AssociateController } from './associate.controller';
 
 describe('AssociateController', () => {
   let controller: AssociateController;
@@ -9,7 +9,7 @@ describe('AssociateController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssociateController],
-      providers: [AssociateService],
+      // providers: [AssociateService],
     }).compile();
 
     controller = module.get<AssociateController>(AssociateController);

@@ -1,14 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 
+import { User } from '@/domains/auth/entities';
 import { CreateUserDTO } from '@/domains/auth/dto';
-import { IUserRepository } from '@/domains/auth/repositories';
-import { User } from '../entities';
+import { IUserRepositoryPort } from '@/domains/auth/ports';
 
 const provider = 'CreateUserService.execute';
 
 export class CreateUserService {
-  constructor(private repository: IUserRepository) {}
+  constructor(private repository: IUserRepositoryPort) {}
 
   async execute(createUserDto: CreateUserDTO) {
     const { username, password } = createUserDto;
