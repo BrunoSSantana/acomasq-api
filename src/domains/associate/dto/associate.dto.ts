@@ -29,18 +29,13 @@ export const updateAssociateSchema = AssociateSchema.omit({
 
 export type UpdateAssociateDTO = z.infer<typeof updateAssociateSchema>;
 
-export const getAssociatesRequestSchema = AssociateSchema.omit({
-  payments: true,
-  createdAt: true,
-  updatedAt: true,
-})
-  .partial()
-  .and(
-    z.object({
-      take: z.number().default(10),
-      skip: z.number().default(0),
-    }),
-  );
+export const getAssociatesRequestSchema = z.object({
+  name: z.string().optional(),
+  cpf: z.string().optional(),
+  rg: z.string().optional(),
+  take: z.coerce.number().optional().default(10),
+  skip: z.coerce.number().optional().default(0),
+});
 
 export type GetAssociatesRequestDTO = z.infer<
   typeof getAssociatesRequestSchema
