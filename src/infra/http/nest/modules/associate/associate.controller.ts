@@ -16,7 +16,7 @@ import {
   GetAssociatesRequestDTO,
   UpdateAssociateDTO,
   createAssociateSchema,
-} from '@/domains/associate/dtos';
+} from '@/domains/associate/dto';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
 import { ListAssociateService } from '@/domains/associate/services/list-associate.service';

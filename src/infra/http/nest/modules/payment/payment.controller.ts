@@ -17,7 +17,7 @@ import {
   ListPaymentDto,
   UpdatePaymentDTO,
   createPaymentSchema,
-} from '@/domains/payment/dtos';
+} from '@/domains/payment/dto';
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 import { Payment } from '@/domains/payment/entities';
 

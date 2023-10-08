@@ -4,7 +4,7 @@ import {
   CreatePaymentDTO,
   ListPaymentDto,
   UpdatePaymentDTO,
-} from '@/domains/payment/dtos';
+} from '@/domains/payment/dto';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 @Injectable()

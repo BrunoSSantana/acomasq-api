@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { UpdateAssociateDTO } from '@/domains/associate/dtos';
+import { UpdateAssociateDTO } from '@/domains/associate/dto';
 import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
 
 export class UpdateAssociateService {

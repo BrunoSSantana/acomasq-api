@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PaymentSchema } from '@/domains/payment/dtos';
+import { PaymentSchema } from '@/domains/payment/dto';
 
 export const AssociateSchema = z.object({
   id: z.string().uuid(),

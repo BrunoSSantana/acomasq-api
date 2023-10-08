@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { BadRequestException } from '@nestjs/common';
 
-import { CreateAssociateDTO } from '@/domains/associate/dtos';
+import { CreateAssociateDTO } from '@/domains/associate/dto';
 import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
 
 export class CreateAssociateService {
