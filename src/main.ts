@@ -6,6 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
 import { HttpExceptionFilter } from '@/infra/http/nest/@config/http-filter-exception';
 import { ServerVariableObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { Env } from './env';
 
 const nodeEnvServerVariable: ServerVariableObject = {
   default: 'dev',
@@ -18,12 +19,12 @@ const serversVariable = { NODE_ENV: nodeEnvServerVariable };
 async function bootstrap() {
   /* Set config initial */
   const app = await NestFactory.create(AppModule);
-  const configService: ConfigService = app.get(ConfigService);
+  const configService: ConfigService<Env, true> = app.get(ConfigService);
 
   /* Add consts */
-  const GLOBAL_PREFIX = configService.getOrThrow<string>('GLOBAL_PREFIX');
-  const SWAGGER_PREFIX = configService.getOrThrow<string>('SWAGGER_PREFIX');
-  const API_PORT = configService.getOrThrow<number>('API_PORT');
+  const GLOBAL_PREFIX = configService.get('GLOBAL_PREFIX');
+  const SWAGGER_PREFIX = configService.get('SWAGGER_PREFIX');
+  const API_PORT = configService.get('API_PORT');
 
   /* Set endpoint */
   app.setGlobalPrefix(GLOBAL_PREFIX);
