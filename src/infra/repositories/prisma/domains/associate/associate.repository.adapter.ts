@@ -22,9 +22,14 @@ export class AssociateRepositoryPrismaAdapter
 
   async findMany(params: ListAssociateInput): Promise<Associate[]> {
     const { take, skip, ...restOfWhere } = params;
+
     const associatesFound = await this.prisma.associate.findMany({
       where: {
         ...restOfWhere,
+        name: {
+          contains: restOfWhere.name,
+          mode: 'insensitive',
+        },
       },
       take,
       skip,
