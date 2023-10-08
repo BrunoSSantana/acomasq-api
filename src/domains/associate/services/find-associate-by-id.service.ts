@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class FindAssociateByIdService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(associateId: string) {
     try {
@@ -12,7 +12,7 @@ export class FindAssociateByIdService {
       return associate;
     } catch (error) {
       throw new BadRequestException({
-        description: 'Erro ao buscar usuário',
+        message: 'Erro ao buscar usuário',
         cause: error,
       });
     }

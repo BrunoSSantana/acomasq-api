@@ -1,15 +1,15 @@
-import { BadRequestException } from '@nestjs/common';
 import { compare } from 'bcryptjs';
+import { BadRequestException } from '@nestjs/common';
 
 import { IJwtPort } from '@/domains/auth/ports';
 import { CreateUserDTO } from '@/domains/auth/dto';
-import { IUserRepository } from '@/domains/auth/repositories';
+import { IUserRepositoryPort } from '@/domains/auth/ports';
 
 const provider = 'CreateSessionService.execute';
 
 export class CreateSessionService {
   constructor(
-    private repository: IUserRepository,
+    private repository: IUserRepositoryPort,
     private jwt: IJwtPort,
   ) {}
 

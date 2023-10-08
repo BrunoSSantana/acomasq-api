@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 
 import { GetAssociatesRequestDTO } from '@/domains/associate/dto';
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class ListAssociateService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(listAssociateDto: GetAssociatesRequestDTO) {
     const { skip, take, cpf, name, rg } = listAssociateDto;
@@ -21,8 +21,8 @@ export class ListAssociateService {
       return users;
     } catch (error) {
       throw new BadRequestException({
-        description: 'Erro ao listar usuários',
-        casuse: error,
+        message: 'Erro ao listar usuários',
+        cause: error,
       });
     }
   }

@@ -16,6 +16,7 @@ import {
   GetAssociatesRequestDTO,
   UpdateAssociateDTO,
   createAssociateSchema,
+  getAssociatesRequestSchema,
 } from '@/domains/associate/dto';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
@@ -67,6 +68,7 @@ export class AssociateController {
   }
 
   @Get()
+  @UsePipes(new ZodValidationPipe(getAssociatesRequestSchema))
   findAll(@Query() listAssociateDto: GetAssociatesRequestDTO) {
     return this.listAssociateService.execute(listAssociateDto);
   }

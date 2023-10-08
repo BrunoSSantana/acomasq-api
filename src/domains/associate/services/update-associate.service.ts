@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 
 import { UpdateAssociateDTO } from '@/domains/associate/dto';
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class UpdateAssociateService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(associateId: string, updateAssociateDto: UpdateAssociateDTO) {
     try {
@@ -16,8 +16,8 @@ export class UpdateAssociateService {
       return userUpdated;
     } catch (error) {
       throw new BadRequestException({
-        casuse: error,
-        description: 'Error ao tentar atualizar um usuário',
+        cause: error,
+        message: 'Error ao tentar atualizar um usuário',
       });
     }
   }

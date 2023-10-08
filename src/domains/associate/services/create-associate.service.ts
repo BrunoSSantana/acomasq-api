@@ -2,10 +2,10 @@ import { randomUUID } from 'crypto';
 import { BadRequestException } from '@nestjs/common';
 
 import { CreateAssociateDTO } from '@/domains/associate/dto';
-import { IAssociateRepository } from '@/domains/associate/repositories/associate.repository';
+import { IAssociateRepositoryPort } from '@/domains/associate/ports';
 
 export class CreateAssociateService {
-  constructor(private repository: IAssociateRepository) {}
+  constructor(private repository: IAssociateRepositoryPort) {}
 
   async execute(createAssociateDto: CreateAssociateDTO) {
     const { cpf, name, rg } = createAssociateDto;

@@ -5,13 +5,13 @@ import { ConfigService } from '@nestjs/config';
 import { Env } from '@/env';
 import { AuthController } from './auth.controller';
 import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { UserProvider } from './user.provider';
 import { CreateUserService } from '@/domains/auth/services';
-import { PrismaUserRepository } from '@/infra/repositories/prisma/domains/auth/user.repository';
+import { UserRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/auth/user.repository.adapter';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
-import { AuthService } from './auth.service';
-import { JwtAdapter } from './jwt.service';
+import { AuthProvider } from './auth.provider';
+import { JwtAdapter } from './jwt.provider';
 
 @Module({
   imports: [
@@ -38,24 +38,24 @@ import { JwtAdapter } from './jwt.service';
   ],
   controllers: [AuthController, UserController],
   providers: [
-    UserService,
-    AuthService,
+    UserProvider,
+    AuthProvider,
     PrismaService,
     {
       provide: CreateUserService,
       useFactory: (userRepository) => new CreateUserService(userRepository),
-      inject: [PrismaUserRepository],
+      inject: [UserRepositoryPrismaAdapter],
     },
     {
-      provide: PrismaUserRepository,
-      useFactory: (repository) => new PrismaUserRepository(repository),
+      provide: UserRepositoryPrismaAdapter,
+      useFactory: (repository) => new UserRepositoryPrismaAdapter(repository),
       inject: [PrismaService],
     },
     {
       provide: CreateSessionService,
       useFactory: (userRepository, jwtService) =>
         new CreateSessionService(userRepository, jwtService),
-      inject: [PrismaUserRepository, JwtAdapter],
+      inject: [UserRepositoryPrismaAdapter, JwtAdapter],
     },
     {
       provide: JwtAdapter,

@@ -26,9 +26,21 @@ export const updatePaymentSchema = PaymentSchema.omit({
 
 export type UpdatePaymentDTO = z.infer<typeof updatePaymentSchema>;
 
+export const getPaymentByIdSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export type GetPaymentByIdDTO = z.infer<typeof getPaymentByIdSchema>;
+
 export const getPaymentsSchema = PaymentSchema.omit({
   createdAt: true,
   updatedAt: true,
 }).partial();
 
 export type GetPaymentsDTO = z.infer<typeof getPaymentsSchema>;
+
+export const deletePaymentByIdSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export type DeletePaymentByIdDTO = z.infer<typeof deletePaymentByIdSchema>;

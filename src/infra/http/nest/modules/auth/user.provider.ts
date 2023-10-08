@@ -4,7 +4,7 @@ import { CreateUserService } from '@/domains/auth/services';
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UserService {
+export class UserProvider {
   constructor(private readonly createUserService: CreateUserService) {}
 
   async create(params: CreateUserDTO): Promise<User> {

@@ -3,9 +3,9 @@ import { BadRequestException } from '@nestjs/common';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 import { User } from '@/domains/auth/entities';
-import { IUserRepository } from '@/domains/auth/repositories';
+import { IUserRepositoryPort } from '@/domains/auth/ports';
 
-export class PrismaUserRepository implements IUserRepository {
+export class UserRepositoryPrismaAdapter implements IUserRepositoryPort {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(params: User): Promise<User> {

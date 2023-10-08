@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { IPaymentRepositoryPort } from '@/domains/payment/ports';
 
-export class DeleteAssociateByIdService {
-  constructor(private repository: IAssociateRepositoryPort) {}
+export class DeletePaymentByIdService {
+  constructor(private repository: IPaymentRepositoryPort) {}
 
   async execute(associateId: string) {
     try {
