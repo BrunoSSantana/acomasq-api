@@ -77,7 +77,7 @@ export class CPF {
     const isValidCPFValue = this.isValidCPF(value);
 
     if (!isValidCPFValue) {
-      throw new Error('invalid CPF value');
+      throw new Error(`invalid CPF value: ${value}`);
     }
 
     this._value = value;
@@ -89,6 +89,8 @@ export class CPF {
 
   isValidCPF(cpf: string) {
     if (typeof cpf !== 'string') return false;
+
+    if (cpf.match(/[a-z]/i)) return false;
 
     cpf = cpf.replace(/[^\d]+/g, '');
 
