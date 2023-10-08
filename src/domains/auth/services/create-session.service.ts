@@ -1,18 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 import { compare } from 'bcryptjs';
 
+import { IJwtPort } from '@/domains/auth/ports';
 import { CreateUserDTO } from '@/domains/auth/dto';
 import { IUserRepository } from '@/domains/auth/repositories';
-import { Auth } from '../entities/auth';
-import { JwtService } from '@nestjs/jwt';
 
 const provider = 'CreateSessionService.execute';
 
 export class CreateSessionService {
   constructor(
     private repository: IUserRepository,
-    // TODO: change to a interface service
-    private jwt: JwtService,
+    private jwt: IJwtPort,
   ) {}
 
   async execute(createUserDto: CreateUserDTO) {
@@ -39,8 +37,8 @@ export class CreateSessionService {
       });
     }
 
-    const accessToken = this.jwt.sign({ sub: userAlreadyExists.id });
+    const authToken = this.jwt.sign({ sub: userAlreadyExists.id });
 
-    return new Auth(accessToken);
+    return authToken;
   }
 }
