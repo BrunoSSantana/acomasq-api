@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AssociateModule } from '@/infra/http/nest/associate/associate.module';
-import { PaymentModule } from '@/infra/http/nest/payment/payment.module';
-import { HealthModule } from '@/infra/http/nest/@config/healthcheck/health.module';
+
 import { envSchema } from './env';
+import { PaymentModule } from '@/infra/http/nest/modules/payment/payment.module';
+import { AssociateModule } from '@/infra/http/nest/modules/associate/associate.module';
+import { HealthModule } from '@/infra/http/nest/@config/health-check/health.module';
 
 @Module({
   imports: [

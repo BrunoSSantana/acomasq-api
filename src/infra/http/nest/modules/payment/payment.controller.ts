@@ -11,7 +11,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 
-import { PaymentService } from '@/infra/http/nest/payment/payment.service';
+import { PaymentService } from '@/infra/http/nest/modules/payment/payment.service';
 import {
   CreatePaymentDTO,
   ListPaymentDto,

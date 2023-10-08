@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PaymentService } from '@/infra/http/nest/payment/payment.service';
+import { PaymentService } from '@/infra/http/nest/modules/payment/payment.service';
 import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('PaymentService', () => {
