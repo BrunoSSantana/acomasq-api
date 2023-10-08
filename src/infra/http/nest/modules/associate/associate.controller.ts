@@ -9,7 +9,12 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiTags,
+  ApiCreatedResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 import {
   CreateAssociateDTO,
@@ -68,6 +73,31 @@ export class AssociateController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'take',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'skip',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'cpf',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'rg',
+    required: false,
+    type: String,
+  })
   @UsePipes(new ZodValidationPipe(getAssociatesRequestSchema))
   findAll(@Query() listAssociateDto: GetAssociatesRequestDTO) {
     return this.listAssociateService.execute(listAssociateDto);
