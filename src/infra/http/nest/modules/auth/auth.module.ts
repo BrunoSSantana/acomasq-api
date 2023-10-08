@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Env } from '@/env';
 import { AuthController } from './auth.controller';
@@ -9,6 +9,8 @@ import { UserService } from './user.service';
 import { CreateUserService } from '@/domains/auth/services';
 import { PrismaUserRepository } from '@/infra/repositories/prisma/domains/auth/user.repository';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+import { CreateSessionService } from '@/domains/auth/services/create-session.service';
+import { AuthService } from './auth.service';
 
 @Module({
   imports: [
@@ -36,6 +38,7 @@ import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
   controllers: [AuthController, UserController],
   providers: [
     UserService,
+    AuthService,
     PrismaService,
     {
       provide: CreateUserService,
@@ -46,6 +49,12 @@ import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
       provide: PrismaUserRepository,
       useFactory: (repository) => new PrismaUserRepository(repository),
       inject: [PrismaService],
+    },
+    {
+      provide: CreateSessionService,
+      useFactory: (userRepository, jwtService) =>
+        new CreateSessionService(userRepository, jwtService),
+      inject: [PrismaUserRepository, JwtService],
     },
   ],
 })

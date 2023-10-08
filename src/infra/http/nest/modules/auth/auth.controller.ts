@@ -1,28 +1,37 @@
-import { Controller, Post } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-class AuthDTO {
-  access_token: string;
+import { AuthService } from '@/infra/http/nest/modules/auth/auth.service';
+import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 
-  constructor(access_token: string) {
-    this.access_token = access_token;
-  }
-}
+import { Auth } from '@/domains/auth/entities/auth';
+import { CreateSessionDTO, CreateSessionSchema } from '@/domains/auth/dto/auth';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private jwt: JwtService) {}
+  constructor(private authService: AuthService) {}
 
   @Post('session')
   @ApiResponse({
     status: 201,
     description: 'The session has been successfully created.',
-    type: AuthDTO,
+    type: Auth,
   })
-  async session() {
-    const access_token = this.jwt.sign({ sub: 'user-id' });
+  @ApiBody({
+    schema: {},
+    examples: {
+      'request-body': {
+        value: {
+          username: 'string',
+          password: 'string',
+        },
+      },
+    },
+  })
+  @UsePipes(new ZodValidationPipe(CreateSessionSchema))
+  async createSession(@Body() params: CreateSessionDTO) {
+    const { access_token } = await this.authService.auth(params);
 
     return {
       access_token,
