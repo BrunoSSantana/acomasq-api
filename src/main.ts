@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
-import { HttpExceptionFilter } from '@/infra/http/nest/@config/http-filter-exception';
+import { HttpExceptionFilter } from '@/infra/http/nest/@config/filter-exceptions';
 import { ServerVariableObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { Env } from './env';
 
@@ -33,22 +33,21 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('ACOMASQ API')
     .setDescription(
-      'API criada para dacastrar usuarios e payments de agua na ACOMASQ',
+      'API criada para cadastro e gerenciamento de usuários e pagamentos de água na ACOMASQ',
     )
     .setVersion('0.0.1')
-    .addServer(`http://localhost:3003/${GLOBAL_PREFIX}`, 'DEV', serversVariable)
+    .addServer(`http://localhost:3003`, 'DEV', serversVariable)
     .addServer('https://acomasq-api.com', 'STAGE', serversVariable)
     .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup(SWAGGER_PREFIX, app, document);
 
   /* Set validation config */
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.enableCors();
 
