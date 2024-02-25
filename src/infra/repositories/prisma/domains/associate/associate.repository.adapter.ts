@@ -12,12 +12,10 @@ export class AssociateRepositoryPrismaAdapter
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(params: CreateAssociateInput): Promise<Associate> {
-    const associateCreated = await this.prisma.associate.create({
+  async create(params: CreateAssociateInput): Promise<void> {
+    await this.prisma.associate.create({
       data: params,
     });
-
-    return Associate.create(associateCreated);
   }
 
   async findMany(params: ListAssociateInput): Promise<Associate[]> {
@@ -39,11 +37,11 @@ export class AssociateRepositoryPrismaAdapter
   }
 
   async findById(associateId: string): Promise<Associate | null> {
-    const associateFound = await this.prisma.associate.findUnique({
+    const associateFound = await this.prisma.associate.findUniqueOrThrow({
       where: { id: associateId },
     });
 
-    return associateFound ? Associate.create(associateFound) : null;
+    return Associate.create(associateFound);
   }
 
   async delete(associateId: string): Promise<void> {
@@ -54,14 +52,12 @@ export class AssociateRepositoryPrismaAdapter
     });
   }
 
-  async update(params: UpdateAssociateInput): Promise<Associate> {
+  async update(params: UpdateAssociateInput): Promise<void> {
     const { associateId: id, ...dataToUpdate } = params;
 
-    const associatedUpdated = await this.prisma.associate.update({
+    await this.prisma.associate.update({
       where: { id },
       data: dataToUpdate,
     });
-
-    return Associate.create(associatedUpdated);
   }
 }

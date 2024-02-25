@@ -19,15 +19,15 @@ export type ListAssociateInput = {
 
 export type UpdateAssociateInput = {
   associateId: string;
-  rg?: string;
-  cpf?: string;
-  name?: string;
+  rg?: string | null;
+  cpf?: string | null;
+  name?: string | null;
 };
 
 export interface IAssociateRepositoryPort {
-  create(params: CreateAssociateInput): Promise<Associate>;
+  create(params: CreateAssociateInput): Promise<void>;
   findMany(params: ListAssociateInput): Promise<Associate[]>;
   findById(associateId: string): Promise<Associate | null>;
   delete(associateId: string): Promise<void>;
-  update(params: UpdateAssociateInput): Promise<Associate>;
+  update(params: UpdateAssociateInput): Promise<void>;
 }
