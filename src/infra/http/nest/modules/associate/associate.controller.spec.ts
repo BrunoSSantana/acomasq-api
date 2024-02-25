@@ -9,7 +9,6 @@ describe('AssociateController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssociateController],
-      // providers: [AssociateService],
     }).compile();
 
     controller = module.get<AssociateController>(AssociateController);
