@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   Controller,
   Get,
@@ -22,7 +23,9 @@ import {
   GetAssociatesRequestDTO,
   UpdateAssociateDTO,
   createAssociateSchema,
+  findAssociateByIdSchema,
   getAssociatesRequestSchema,
+  updateAssociateSchema,
 } from '@/domains/associate/dto';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
@@ -32,6 +35,12 @@ import { FindAssociateByIdService } from '@/domains/associate/services/find-asso
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 import { Associate } from '@/domains/associate/entities/associate';
 
+const createAssociateValidate = new ZodValidationPipe(createAssociateSchema);
+const associateByIdValidate = new ZodValidationPipe(findAssociateByIdSchema);
+const findAssociateValidate = new ZodValidationPipe(getAssociatesRequestSchema);
+const updateAssociateValidate = new ZodValidationPipe(updateAssociateSchema);
+
+type AssociateById = z.infer<typeof findAssociateByIdSchema>;
 @ApiTags('Associates')
 @Controller('associate')
 export class AssociateController {
@@ -68,7 +77,7 @@ export class AssociateController {
     description: 'The record has been successfully created.',
     type: Associate,
   })
-  @UsePipes(new ZodValidationPipe(createAssociateSchema))
+  @UsePipes(createAssociateValidate)
   create(@Body() createAssociateDto: CreateAssociateDTO) {
     return this.createAssociateService.execute(createAssociateDto);
   }
@@ -99,14 +108,15 @@ export class AssociateController {
     required: false,
     type: String,
   })
-  @UsePipes(new ZodValidationPipe(getAssociatesRequestSchema))
+  @UsePipes(findAssociateValidate)
   findAll(@Query() listAssociateDto: GetAssociatesRequestDTO) {
     return this.listAssociateService.execute(listAssociateDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.findAssociateByIdService.execute(id);
+  @UsePipes(associateByIdValidate)
+  findOne(@Param(associateByIdValidate) associateById: AssociateById) {
+    return this.findAssociateByIdService.execute(associateById.id);
   }
 
   @Patch(':id')
@@ -130,16 +140,21 @@ export class AssociateController {
       },
     },
   })
-  update(
-    @Param('id') id: string,
-    @Body() updateAssociateDto: UpdateAssociateDTO,
+  @HttpCode(204)
+  async update(
+    @Param(associateByIdValidate) associateById: AssociateById,
+    @Body(updateAssociateValidate) updateAssociateDto: UpdateAssociateDTO,
   ) {
-    return this.updateAssociateService.execute(id, updateAssociateDto);
+    await this.updateAssociateService.execute(
+      associateById.id,
+      updateAssociateDto,
+    );
   }
 
   @Delete(':id')
+  @UsePipes(associateByIdValidate)
   @HttpCode(204)
-  remove(@Param('id') id: string) {
-    return this.deleteAssociateByIdService.execute(id);
+  remove(@Param(associateByIdValidate) associateById: AssociateById) {
+    return this.deleteAssociateByIdService.execute(associateById.id);
   }
 }
