@@ -36,7 +36,7 @@ async function bootstrap() {
       'API criada para dacastrar usuarios e payments de agua na ACOMASQ',
     )
     .setVersion('0.0.1')
-    .addServer('http://localhost:3003', 'DEV', serversVariable)
+    .addServer(`http://localhost:3003/${GLOBAL_PREFIX}`, 'DEV', serversVariable)
     .addServer('https://acomasq-api.com', 'STAGE', serversVariable)
     .addBearerAuth()
     .build();
