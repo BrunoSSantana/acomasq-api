@@ -87,63 +87,15 @@ export class CPF {
     return this._value;
   }
 
-  isValidCPF(cpf: string) {
-    if (typeof cpf !== 'string') return false;
-
-    if (cpf.match(/[a-z]/i)) return false;
-
-    cpf = cpf.replace(/[^\d]+/g, '');
-
-    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
-
-    const cpfOnArray = cpf.split('');
-
-    const validator = cpfOnArray
-      .filter((digit, index, array) => index >= array.length - 2 && digit)
-      .map((el) => +el);
-
-    const toValidate = (pop) =>
-      cpfOnArray
-        .filter((digit, index, array) => index < array.length - pop && digit)
-        .map((el) => +el);
-
-    const rest = (count, pop) =>
-      ((toValidate(pop).reduce((soma, el, i) => soma + el * (count - i), 0) *
-        10) %
-        11) %
-      10;
-
-    return !(rest(10, 2) !== validator[0] || rest(11, 1) !== validator[1]);
-  }
-
-  isValidCPF2(cpf: string | number[]) {
-    if (typeof cpf !== 'string') return false;
-    cpf = cpf.replace(/[^\d]+/g, '');
-    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
-
-    cpf = cpf.split('').map((el) => +el);
-
-    const rest = (count: number) =>
-      (((cpf as number[])
-        .slice(0, count - 12)
-        .reduce(
-          (soma: number, el: number, index: number) =>
-            soma + el * (count - index),
-          0,
-        ) *
-        10) %
-        11) %
-      10;
-
-    return rest(10) === cpf[9] && rest(11) === cpf[10];
+  public isValidCPF(cpf: string | number[]) {
+    return isValidCPF(cpf);
   }
 }
 
 export class RG {
   private readonly _value: string;
   constructor(value: string) {
-    const isValidRGValue =
-      /(^[0-9]{1,2}).?([0-9]{3}).?([0-9]{3})-?([0-9]{1}|X|x$)?/.test(value);
+    const isValidRGValue = RGRegex.test(value);
 
     if (!isValidRGValue) {
       throw new Error('invalid RG value');
@@ -156,3 +108,49 @@ export class RG {
     return this._value;
   }
 }
+
+export const isValidCPF = (cpf: string | number[]) => {
+  if (typeof cpf !== 'string') return false;
+  cpf = cpf.replace(/[^\d]+/g, '');
+  if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
+
+  cpf = cpf.split('').map((el) => +el);
+
+  const rest = (count: number) =>
+    (((cpf as number[])
+      .slice(0, count - 12)
+      .reduce(
+        (soma: number, el: number, index: number) =>
+          soma + el * (count - index),
+        0,
+      ) *
+      10) %
+      11) %
+    10;
+
+  return rest(10) === cpf[9] && rest(11) === cpf[10];
+};
+
+export const RGRegex =
+  /(^[0-9]{1,2}).?([0-9]{3}).?([0-9]{3})-?([0-9]{1}|X|x$)?/;
+
+// isValidCPF(cpf: string) {
+//   if (typeof cpf !== 'string') return false;
+//   if (cpf.match(/[a-z]/i)) return false;
+//   cpf = cpf.replace(/[^\d]+/g, '');
+//   if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
+//   const cpfOnArray = cpf.split('');
+//   const validator = cpfOnArray
+//     .filter((digit, index, array) => index >= array.length - 2 && digit)
+//     .map((el) => +el);
+//   const toValidate = (pop: number) =>
+//     cpfOnArray
+//       .filter((digit, index, array) => index < array.length - pop && digit)
+//       .map((el) => +el);
+//   const rest = (count: number, pop: number) =>
+//     ((toValidate(pop).reduce((soma, el, i) => soma + el * (count - i), 0) *
+//       10) %
+//       11) %
+//     10;
+//   return !(rest(10, 2) !== validator[0] || rest(11, 1) !== validator[1]);
+// }
