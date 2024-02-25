@@ -1,5 +1,5 @@
 # -------------->
-FROM node:18.15-bullseye as builder
+FROM node:20.11.1-alpine3.18 as builder
 
 USER node
 
@@ -7,11 +7,10 @@ WORKDIR /home/node
 
 COPY --chown=node:node package.json package-lock.json src/infra/repositories/prisma/schema.prisma ./
 
-RUN npm ci
-
+RUN npm ci --legacy-peer-deps
 
 # -------------->
-FROM node:18.15.0-alpine3.17 as runner
+FROM node:20.11.1-alpine3.18 as runner
 
 USER node
 
