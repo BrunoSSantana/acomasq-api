@@ -1,5 +1,3 @@
-import { BadRequestException } from '@nestjs/common';
-
 import { Payment } from '@/domains/payment/entities';
 import { CreatePaymentDTO } from '@/domains/payment/dto';
 import { IPaymentRepositoryPort } from '@/domains/payment/ports';
@@ -17,16 +15,8 @@ export class CreatePaymentService {
       year,
     });
 
-    try {
-      const paymentCreated = await this.repository.create(payment);
+    const paymentCreated = await this.repository.create(payment);
 
-      return paymentCreated;
-    } catch (error) {
-      throw new BadRequestException({
-        message: 'Erro ao tentar criar payment',
-        cause: error,
-        provider: 'CreatePaymentService',
-      });
-    }
+    return paymentCreated;
   }
 }

@@ -21,15 +21,8 @@ export class UpdatePaymentService {
       ...updatePaymentDto,
     });
 
-    try {
-      const userUpdated = await this.repository.update(paymentToUpdate);
+    const userUpdated = await this.repository.update(paymentToUpdate);
 
-      return userUpdated;
-    } catch (error) {
-      throw new BadRequestException({
-        cause: error,
-        message: 'Error ao tentar atualizar um usuário',
-      });
-    }
+    return userUpdated;
   }
 }

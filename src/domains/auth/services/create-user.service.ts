@@ -29,16 +29,8 @@ export class CreateUserService {
       password: passwordHashed,
     });
 
-    try {
-      const user = await this.repository.create(userToCreate);
+    const user = await this.repository.create(userToCreate);
 
-      return user;
-    } catch (error) {
-      throw new BadRequestException({
-        message: 'Erro ao tentar cria um novo usuário',
-        cause: error,
-        provider,
-      });
-    }
+    return user;
   }
 }
