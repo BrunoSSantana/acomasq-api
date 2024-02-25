@@ -4,7 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
-import { HttpExceptionFilter } from '@/infra/http/nest/@config/filter-exceptions';
+import {
+  HttpExceptionFilter,
+  PrismaClientExceptionFilter,
+} from '@/infra/http/nest/@config/filter-exceptions';
 import { ServerVariableObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { Env } from './env';
 
@@ -46,7 +49,10 @@ async function bootstrap() {
   SwaggerModule.setup(SWAGGER_PREFIX, app, document);
 
   /* Set validation config */
-  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(
+    new PrismaClientExceptionFilter(),
+    new HttpExceptionFilter(),
+  );
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.enableCors();
