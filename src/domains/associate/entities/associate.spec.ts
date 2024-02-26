@@ -22,7 +22,7 @@ describe('ASSOCIATE - ENTITY', () => {
     };
 
     expect(() => Associate.create(associateProps)).toThrowError(
-      /^invalid CPF value$/,
+      /^invalid CPF value: 1094355747000$/,
     );
   });
 

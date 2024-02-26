@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PaymentService } from '@/infra/http/nest/modules/payment/payment.provider';
 import { describe, beforeEach, it, expect } from 'vitest';
+import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 describe('PaymentService', () => {
   let service: PaymentService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PaymentService],
+      providers: [PaymentService, PrismaService],
     }).compile();
 
     service = module.get<PaymentService>(PaymentService);
@@ -18,7 +19,7 @@ describe('PaymentService', () => {
   });
 
   it('should be defined', () => {
-    const createPaymentrespose = service.create({
+    service.create({
       year: 2023,
       associateId: 'associate-id',
       month: 1,

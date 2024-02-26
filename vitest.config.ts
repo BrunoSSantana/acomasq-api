@@ -10,6 +10,12 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, '/src'),
     },
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['html', 'text', 'json'],
+      enabled: true,
+      exclude: [...configDefaults.exclude, 'data/**']
+    }
   },
   plugins: [
     swc.vite({
