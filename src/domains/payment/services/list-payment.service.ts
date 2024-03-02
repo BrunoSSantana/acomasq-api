@@ -1,8 +1,8 @@
 import { GetPaymentsDTO } from '@/domains/payment/dto';
-import { IPaymentRepositoryPort } from '@/domains/payment/ports';
+import { IPaymentRepositoryPort } from '@/domains/payment/repositories';
 
 export class ListPaymentService {
-  constructor(private repository: IPaymentRepositoryPort) {}
+  constructor(private repository: IPaymentRepositoryPort) { }
 
   async execute(listPaymentDto: GetPaymentsDTO) {
     const { associateId, month, year } = listPaymentDto;

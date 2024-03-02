@@ -1,12 +1,12 @@
 import {
   FindManyPaymentInput,
   IPaymentRepositoryPort,
-} from '@/domains/payment/ports';
+} from '@/domains/payment/repositories';
 import { Payment } from '@/domains/payment/entities';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 
 export class PaymentRepositoryPrismaAdapter implements IPaymentRepositoryPort {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(payment: Payment): Promise<Payment> {
     const paymentCreated = await this.prisma.payment.create({

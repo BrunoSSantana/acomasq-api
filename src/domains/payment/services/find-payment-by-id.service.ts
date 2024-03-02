@@ -1,5 +1,5 @@
 import { Payment } from '@/domains/payment/entities';
-import { IPaymentRepositoryPort } from '@/domains/payment/ports';
+import { IPaymentRepositoryPort } from '@/domains/payment/repositories';
 
 export class FindPaymentByIdService {
   constructor(private repository: IPaymentRepositoryPort) {}

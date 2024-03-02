@@ -43,8 +43,8 @@ export class Payment {
   }
 
   static create(input: InputPayment): Payment {
-    const id = input.id && uuidValidate(input.id);
-    const associateId = uuidValidate(input.associateId);
+    const id = input.id && uuidValidate(input.id, 'id');
+    const associateId = uuidValidate(input.associateId, 'associateId');
     const month = monthValidate(input.month);
     const year = yearValidate(input.year);
 
@@ -75,8 +75,8 @@ export class Payment {
   }
 }
 
-function uuidValidate(uuid: string) {
-  const schemaUuid = z.string().uuid();
+function uuidValidate(uuid: string, prop: string) {
+  const schemaUuid = z.string().uuid({ message: `UUID invalid to ${prop}` });
 
   return schemaUuid.parse(uuid);
 }

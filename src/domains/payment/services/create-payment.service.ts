@@ -1,6 +1,6 @@
 import { Payment } from '@/domains/payment/entities';
 import { CreatePaymentDTO } from '@/domains/payment/dto';
-import { IPaymentRepositoryPort } from '@/domains/payment/ports';
+import { IPaymentRepositoryPort } from '@/domains/payment/repositories';
 
 export class CreatePaymentService {
   constructor(private readonly repository: IPaymentRepositoryPort) {
@@ -15,8 +15,6 @@ export class CreatePaymentService {
       year,
     });
 
-    const paymentCreated = await this.repository.create(payment);
-
-    return paymentCreated;
+    await this.repository.create(payment);
   }
 }
