@@ -60,4 +60,4 @@ import { JwtAdapter } from '../controllers/auth/jwt.provider';
     },
   ],
 })
-export class AuthModule { }
+export class AuthModule {}

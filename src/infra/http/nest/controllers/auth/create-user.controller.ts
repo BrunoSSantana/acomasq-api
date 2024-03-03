@@ -12,7 +12,7 @@ export class CreateUserController {
   constructor(private readonly userService: CreateUserService) {}
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(204)
   @ApiBody({
     type: User,
     examples: {
@@ -26,6 +26,6 @@ export class CreateUserController {
   })
   @UsePipes(new ZodValidationPipe(createUserSchema))
   async create(@Body() createUserDto: CreateUserDTO) {
-    return this.userService.execute(createUserDto);
+    await this.userService.execute(createUserDto);
   }
 }
