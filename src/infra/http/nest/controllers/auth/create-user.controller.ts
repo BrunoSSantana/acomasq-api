@@ -8,7 +8,7 @@ import { CreateUserService } from '@/domains/auth/services';
 
 @ApiTags('Users')
 @Controller('user')
-export class UserController {
+export class CreateUserController {
   constructor(private readonly userService: CreateUserService) {}
 
   @Post()

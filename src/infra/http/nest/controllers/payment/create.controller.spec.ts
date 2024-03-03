@@ -7,18 +7,13 @@ import { CreatePaymentController } from '@/infra/http/nest/controllers/payment';
 describe('PaymentController', () => {
   let controller: CreatePaymentController;
 
-  const mockCreatePaymentService = {};
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CreatePaymentController],
       providers: [CreatePaymentService],
-    })
-      .overrideProvider(CreatePaymentService)
-      .useValue(mockCreatePaymentService)
-      .compile();
+    }).compile();
 
-    controller = module.get<CreatePaymentController>(CreatePaymentController);
+    controller = await module.resolve(CreatePaymentService);
   });
 
   it('should be defined', () => {

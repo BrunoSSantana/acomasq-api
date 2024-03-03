@@ -1,37 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 
 import { describe, beforeEach, it, expect } from 'vitest';
 import { DeleteAssociateController } from './delete.controller';
-import {
-  CreateAssociateService,
-  UpdateAssociateService,
-  ListAssociateService,
-  DeleteAssociateByIdService,
-  FindAssociateByIdService,
-} from '@/domains/associate/services';
+import { DeleteAssociateByIdService } from '@/domains/associate/services';
 
 describe('AssociateController', () => {
   let controller: DeleteAssociateController;
 
-  const mockDeleteAssociateByIdService = {};
-
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleDeleteAssociateController = await Test.createTestingModule({
       controllers: [DeleteAssociateController],
-      providers: [
-        CreateAssociateService,
-        UpdateAssociateService,
-        ListAssociateService,
-        DeleteAssociateByIdService,
-        FindAssociateByIdService,
-      ],
-    })
-      .overrideProvider(DeleteAssociateByIdService)
-      .useValue(mockDeleteAssociateByIdService)
-      .compile();
+      providers: [DeleteAssociateByIdService],
+    }).compile();
 
-    controller = module.get<DeleteAssociateController>(
-      DeleteAssociateController,
+    controller = await moduleDeleteAssociateController.resolve(
+      DeleteAssociateByIdService,
     );
   });
 

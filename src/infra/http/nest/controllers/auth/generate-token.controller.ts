@@ -9,7 +9,7 @@ import { CreateSessionService } from '@/domains/auth/services/create-session.ser
 
 @ApiTags('Auth')
 @Controller('auth')
-export class AuthController {
+export class GenerateTokenController {
   constructor(private authService: CreateSessionService) {}
 
   @Post('session')
