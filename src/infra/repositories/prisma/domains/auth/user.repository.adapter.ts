@@ -9,7 +9,7 @@ export class UserRepositoryPrismaAdapter implements IUserRepositoryPort {
   async create(params: User): Promise<User> {
     const userCreated = await this.prisma.user.create({
       data: {
-        password: params.password,
+        password: params.password!,
         username: params.username,
       },
     });
@@ -17,7 +17,7 @@ export class UserRepositoryPrismaAdapter implements IUserRepositoryPort {
     return User.create(userCreated);
   }
   async findByUsername(username: User['username']): Promise<User | null> {
-    const userFound = await this.prisma.user.findUniqueOrThrow({
+    const userFound = await this.prisma.user.findUnique({
       where: { username },
     });
 

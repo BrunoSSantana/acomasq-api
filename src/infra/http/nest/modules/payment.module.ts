@@ -1,6 +1,12 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
-import { PaymentController } from '@/infra/http/nest/modules/payment/payment.controller';
+import {
+  CreatePaymentController,
+  DeletePaymentController,
+  FindAllPaymentController,
+  FindByIdPaymentController,
+  UpdatePaymentController,
+} from '@/infra/http/nest/controllers/payment';
 import {
   CreatePaymentService,
   DeletePaymentByIdService,
@@ -11,7 +17,13 @@ import { UpdatePaymentService } from '@/domains/payment/services/update-payment.
 import { PaymentRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/payment/payment.repository.adapter';
 
 @Module({
-  controllers: [PaymentController],
+  controllers: [
+    CreatePaymentController,
+    DeletePaymentController,
+    FindAllPaymentController,
+    FindByIdPaymentController,
+    UpdatePaymentController,
+  ],
   providers: [
     {
       provide: CreatePaymentService,

@@ -10,7 +10,7 @@ const provider = 'CreateUserService.execute';
 export class CreateUserService {
   constructor(private repository: IUserRepositoryPort) {}
 
-  async execute(createUserDto: CreateUserDTO) {
+  async execute(createUserDto: CreateUserDTO): Promise<void> {
     const { username, password } = createUserDto;
 
     const userAlreadyExists = await this.repository.findByUsername(username);
@@ -29,8 +29,6 @@ export class CreateUserService {
       password: passwordHashed,
     });
 
-    const user = await this.repository.create(userToCreate);
-
-    return user;
+    await this.repository.create(userToCreate);
   }
 }

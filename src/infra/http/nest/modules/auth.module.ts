@@ -3,15 +3,13 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Env } from '@/env';
-import { AuthController } from './auth.controller';
-import { UserController } from './user.controller';
-import { UserProvider } from './user.provider';
+import { GenerateTokenController } from '../controllers/auth/generate-token.controller';
+import { CreateUserController } from '../controllers/auth/create-user.controller';
 import { CreateUserService } from '@/domains/auth/services';
 import { UserRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/auth/user.repository.adapter';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
-import { AuthProvider } from './auth.provider';
-import { JwtAdapter } from './jwt.provider';
+import { JwtAdapter } from '../controllers/auth/jwt.provider';
 
 @Module({
   imports: [
@@ -36,10 +34,8 @@ import { JwtAdapter } from './jwt.provider';
       },
     }),
   ],
-  controllers: [AuthController, UserController],
+  controllers: [GenerateTokenController, CreateUserController],
   providers: [
-    UserProvider,
-    AuthProvider,
     PrismaService,
     {
       provide: CreateUserService,

@@ -6,9 +6,11 @@ import {
   HealthCheck,
   MemoryHealthIndicator,
 } from '@nestjs/terminus';
+import { Public } from '@/infra/http/nest/@config/decorators/public.decorator';
 
 @ApiTags('Health')
 @Controller('health')
+@Public()
 export class HealthController {
   constructor(
     private health: HealthCheckService,
