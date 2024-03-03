@@ -1,9 +1,13 @@
-import { Associate } from "@/domains/associate/entities";
-import { CreateAssociateInput, IAssociateRepositoryPort, ListAssociateInput, UpdateAssociateInput } from "@/domains/associate/ports";
+import { Associate } from '@/domains/associate/entities';
+import {
+  CreateAssociateInput,
+  IAssociateRepositoryPort,
+  ListAssociateInput,
+  UpdateAssociateInput,
+} from '@/domains/associate/ports';
 
 export class InMemoryAssociateRepository implements IAssociateRepositoryPort {
-
-  private repository: Record<string, Associate>
+  private repository: Record<string, Associate>;
 
   constructor() {
     this.repository = {};
@@ -14,22 +18,22 @@ export class InMemoryAssociateRepository implements IAssociateRepositoryPort {
   }
 
   async findMany(params: ListAssociateInput): Promise<Associate[]> {
-    return Object.values(this.repository).filter((associate => {
-      const { name, cpf, rg } = params;
+    return Object.values(this.repository)
+      .filter((associate) => {
+        const { name, cpf, rg } = params;
 
-      if (name && associate.name !== name) {
-        return false;
-      }
+        if (name && associate.name !== name) {
+          return false;
+        }
 
-      if (cpf && associate.cpf !== cpf) {
-        return false
-      }
+        if (cpf && associate.cpf !== cpf) {
+          return false;
+        }
 
-      if (rg && associate.rg !== rg) {
-        return false
-      }
-
-    }))
+        if (rg && associate.rg !== rg) {
+          return false;
+        }
+      })
       .slice(params.skip, params.take);
   }
 

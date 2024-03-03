@@ -1,9 +1,11 @@
-import { Payment } from "@/domains/payment/entities";
-import { IPaymentRepositoryPort, FindManyPaymentInput } from "@/domains/payment/repositories";
+import { Payment } from '@/domains/payment/entities';
+import {
+  IPaymentRepositoryPort,
+  FindManyPaymentInput,
+} from '@/domains/payment/repositories';
 
 export class InMemoryPaymentRepository implements IPaymentRepositoryPort {
-
-  private repository: Record<string, Payment>
+  private repository: Record<string, Payment>;
 
   constructor() {
     this.repository = {};
@@ -21,22 +23,23 @@ export class InMemoryPaymentRepository implements IPaymentRepositoryPort {
   findMany(input: FindManyPaymentInput): Promise<Payment[]> {
     const { filters, pagination } = input;
 
-    const payments = Object.values(this.repository).filter((payment => {
+    const payments = Object.values(this.repository)
+      .filter((payment) => {
+        if (
+          filters?.associateId &&
+          payment.associateId !== filters?.associateId
+        ) {
+          return false;
+        }
 
+        if (filters?.month && payment.month !== filters?.month) {
+          return false;
+        }
 
-      if (filters?.associateId && payment.associateId !== filters?.associateId) {
-        return false;
-      }
-
-      if (filters?.month && payment.month !== filters?.month) {
-        return false;
-      }
-
-      if (filters?.year && payment.year !== filters?.year) {
-        return false;
-      }
-
-    }))
+        if (filters?.year && payment.year !== filters?.year) {
+          return false;
+        }
+      })
       .slice(pagination?.skip, pagination?.take);
 
     return Promise.resolve(payments);
@@ -49,6 +52,4 @@ export class InMemoryPaymentRepository implements IPaymentRepositoryPort {
   async delete(paymentId: string): Promise<void> {
     delete this.repository[paymentId];
   }
-
-
 }
