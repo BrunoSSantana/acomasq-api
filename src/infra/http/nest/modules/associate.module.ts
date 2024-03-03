@@ -7,7 +7,7 @@ import {
   FindAllAssociateController,
   FindByIdAssociateController,
   UpdateAssociateController,
-} from '@/infra/http/nest/modules/associate';
+} from '@/infra/http/nest/controllers/associate';
 import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
 import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
 import { ListAssociateService } from '@/domains/associate/services/list-associate.service';

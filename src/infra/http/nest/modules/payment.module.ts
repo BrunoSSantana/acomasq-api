@@ -6,7 +6,7 @@ import {
   FindAllPaymentController,
   FindByIdPaymentController,
   UpdatePaymentController,
-} from '@/infra/http/nest/modules/payment';
+} from '@/infra/http/nest/controllers/payment';
 import {
   CreatePaymentService,
   DeletePaymentByIdService,
