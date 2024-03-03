@@ -27,7 +27,7 @@ export class CreateSessionService {
 
     const passwordIsCorrect = await compare(
       password,
-      userAlreadyExists.password,
+      userAlreadyExists.password!,
     );
 
     if (!passwordIsCorrect) {

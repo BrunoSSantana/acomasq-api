@@ -1,16 +1,16 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { AuthProvider } from '@/infra/http/nest/modules/auth/auth.provider';
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 
 import { Auth } from '@/domains/auth/entities/auth';
 import { CreateSessionDTO, CreateSessionSchema } from '@/domains/auth/dto/auth';
+import { CreateSessionService } from '@/domains/auth/services/create-session.service';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthProvider) {}
+  constructor(private authService: CreateSessionService) {}
 
   @Post('session')
   @ApiResponse({
@@ -31,7 +31,7 @@ export class AuthController {
   })
   @UsePipes(new ZodValidationPipe(CreateSessionSchema))
   async createSession(@Body() params: CreateSessionDTO) {
-    const { access_token } = await this.authService.auth(params);
+    const { access_token } = await this.authService.execute(params);
 
     return {
       access_token,

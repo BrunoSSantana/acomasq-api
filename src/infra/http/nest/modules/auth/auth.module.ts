@@ -5,12 +5,10 @@ import { ConfigService } from '@nestjs/config';
 import { Env } from '@/env';
 import { AuthController } from './auth.controller';
 import { UserController } from './user.controller';
-import { UserProvider } from './user.provider';
 import { CreateUserService } from '@/domains/auth/services';
 import { UserRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/auth/user.repository.adapter';
 import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
-import { AuthProvider } from './auth.provider';
 import { JwtAdapter } from './jwt.provider';
 
 @Module({
@@ -38,8 +36,6 @@ import { JwtAdapter } from './jwt.provider';
   ],
   controllers: [AuthController, UserController],
   providers: [
-    UserProvider,
-    AuthProvider,
     PrismaService,
     {
       provide: CreateUserService,
