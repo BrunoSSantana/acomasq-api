@@ -1,38 +1,58 @@
 import { randomUUID } from 'node:crypto';
 
-type UserType = {
+export type UserType = {
   id: string;
   username: string;
-  password: string;
+  password?: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type InputUser = {
-  id?: string;
+export type UserInput = {
+  id: string;
+  username: string;
+  password?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type UserCreateInput = {
   username: string;
   password: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 };
 
 export class User implements UserType {
   id: string;
   username: string;
-  password: string;
+  password?: string | null;
   createdAt: Date;
   updatedAt: Date;
 
-  private constructor(params: InputUser) {
-    this.id = params.id || randomUUID();
+  private constructor(params: UserInput) {
+    this.id = params.id;
     this.username = params.username;
     this.password = params.password;
-    this.createdAt = params.createdAt || new Date();
-    this.updatedAt = params.updatedAt || new Date();
+    this.createdAt = params.createdAt;
+    this.updatedAt = params.updatedAt;
   }
 
-  static create(params: InputUser) {
-    return new User(params);
+  static create(params: UserCreateInput) {
+    return new User({
+      id: randomUUID(),
+      ...params,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+
+  static toDomain(input: UserInput): User {
+    return new User({
+      id: input.id,
+      username: input.username,
+      password: input.password,
+      createdAt: new Date(input.createdAt),
+      updatedAt: new Date(input.updatedAt),
+    });
   }
 
   toJSON() {
