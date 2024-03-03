@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Param, UsePipes } from '@nestjs/common';
 
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
@@ -12,6 +12,7 @@ const associateByIdValidate = new ZodValidationPipe(findAssociateByIdSchema);
 type AssociateById = z.infer<typeof findAssociateByIdSchema>;
 @ApiTags('Associates')
 @Controller('associate')
+@ApiBearerAuth()
 export class FindByIdAssociateController {
   constructor(
     private readonly findAssociateByIdService: FindAssociateByIdService,

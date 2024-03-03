@@ -2,7 +2,11 @@ import 'module-alias/register';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerCustomOptions,
+} from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
 import {
   HttpExceptionFilter,
@@ -44,9 +48,15 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
+  const customOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  };
+
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup(SWAGGER_PREFIX, app, document);
+  SwaggerModule.setup(SWAGGER_PREFIX, app, document, customOptions);
 
   /* Set validation config */
   app.useGlobalFilters(

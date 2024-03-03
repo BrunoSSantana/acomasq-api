@@ -1,4 +1,9 @@
-import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Controller, Post, Body, UsePipes } from '@nestjs/common';
 
 import { CreatePaymentDTO, createPaymentSchema } from '@/domains/payment/dto';
@@ -8,6 +13,7 @@ import { CreatePaymentService } from '@/domains/payment/services';
 
 @ApiTags('Payments')
 @Controller('payment')
+@ApiBearerAuth()
 export class CreatePaymentController {
   constructor(private readonly createPaymentService: CreatePaymentService) {}
 

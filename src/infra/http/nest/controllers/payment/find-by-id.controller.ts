@@ -1,4 +1,4 @@
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Param, UsePipes } from '@nestjs/common';
 
 import { GetPaymentByIdDTO, getPaymentByIdSchema } from '@/domains/payment/dto';
@@ -9,6 +9,7 @@ import { FindPaymentByIdService } from '@/domains/payment/services/find-payment-
 
 @ApiTags('Payments')
 @Controller('payment')
+@ApiBearerAuth()
 export class FindByIdPaymentController {
   constructor(
     private readonly findPaymentByIdService: FindPaymentByIdService,

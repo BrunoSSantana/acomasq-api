@@ -1,5 +1,5 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
-import { ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 
@@ -13,6 +13,7 @@ const findAssociateValidate = new ZodValidationPipe(getAssociatesRequestSchema);
 
 @ApiTags('Associates')
 @Controller('associate')
+@ApiBearerAuth()
 export class FindAllAssociateController {
   constructor(private readonly listAssociateService: ListAssociateService) {}
 

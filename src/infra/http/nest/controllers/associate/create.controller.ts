@@ -1,5 +1,10 @@
 import { Controller, Post, Body, UsePipes } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiTags,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
 
@@ -14,6 +19,7 @@ const createAssociateValidate = new ZodValidationPipe(createAssociateSchema);
 
 @ApiTags('Associates')
 @Controller('associate')
+@ApiBearerAuth()
 export class CreateAssociateController {
   constructor(
     private readonly createAssociateService: CreateAssociateService,

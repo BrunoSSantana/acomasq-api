@@ -6,9 +6,11 @@ import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validatio
 import { Auth } from '@/domains/auth/entities/auth';
 import { CreateSessionDTO, CreateSessionSchema } from '@/domains/auth/dto/auth';
 import { CreateSessionService } from '@/domains/auth/services/create-session.service';
+import { Public } from '../../@config/decorators/public.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
+@Public()
 export class GenerateTokenController {
   constructor(private authService: CreateSessionService) {}
 
