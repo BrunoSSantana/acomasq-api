@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { describe, beforeEach, it, expect } from 'vitest';
-import { AssociateController } from './delete.controller';
+import { DeleteAssociateController } from './delete.controller';
 import {
   CreateAssociateService,
   UpdateAssociateService,
@@ -11,17 +11,13 @@ import {
 } from '@/domains/associate/services';
 
 describe('AssociateController', () => {
-  let controller: AssociateController;
+  let controller: DeleteAssociateController;
 
-  const mockCreateAssociateService = {};
-  const mockUpdateAssociateService = {};
-  const mockListAssociateService = {};
   const mockDeleteAssociateByIdService = {};
-  const mockFindAssociateByIdService = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [AssociateController],
+      controllers: [DeleteAssociateController],
       providers: [
         CreateAssociateService,
         UpdateAssociateService,
@@ -30,19 +26,13 @@ describe('AssociateController', () => {
         FindAssociateByIdService,
       ],
     })
-      .overrideProvider(CreateAssociateService)
-      .useValue(mockCreateAssociateService)
-      .overrideProvider(UpdateAssociateService)
-      .useValue(mockUpdateAssociateService)
-      .overrideProvider(ListAssociateService)
-      .useValue(mockListAssociateService)
       .overrideProvider(DeleteAssociateByIdService)
       .useValue(mockDeleteAssociateByIdService)
-      .overrideProvider(FindAssociateByIdService)
-      .useValue(mockFindAssociateByIdService)
       .compile();
 
-    controller = module.get<AssociateController>(AssociateController);
+    controller = module.get<DeleteAssociateController>(
+      DeleteAssociateController,
+    );
   });
 
   it('should be defined', () => {
