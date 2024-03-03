@@ -35,7 +35,7 @@ import { FindPaymentByIdService } from '@/domains/payment/services/find-payment-
 
 @ApiTags('Payments')
 @Controller('payment')
-export class PaymentController {
+export class FindByIdPaymentController {
   constructor(
     private readonly createPaymentService: CreatePaymentService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
