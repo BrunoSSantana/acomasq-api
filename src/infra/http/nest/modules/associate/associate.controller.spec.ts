@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { describe, beforeEach, it, expect } from 'vitest';
-import { AssociateController } from './associate.controller';
+import { AssociateController } from './delete.controller';
 import {
   CreateAssociateService,
   UpdateAssociateService,
