@@ -1,1 +1,1 @@
-export * from './associate.repository.adapter';
+export * from "./associate.repository.adapter";

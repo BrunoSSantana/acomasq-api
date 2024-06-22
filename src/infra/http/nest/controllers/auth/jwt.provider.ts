@@ -1,7 +1,7 @@
-import { Auth, Payload } from '@/domains/auth/entities/auth';
-import { IJwtPort } from '@/domains/auth/ports';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { Auth, Payload } from "@/domains/auth/entities/auth";
+import { IJwtPort } from "@/domains/auth/ports";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class JwtAdapter implements IJwtPort {
@@ -13,7 +13,7 @@ export class JwtAdapter implements IJwtPort {
       return new Auth(authToken);
     } catch (error) {
       throw new UnauthorizedException({
-        message: 'Não foi possível gerar o token',
+        message: "Não foi possível gerar o token",
       });
     }
   }
@@ -25,7 +25,7 @@ export class JwtAdapter implements IJwtPort {
       };
     } catch (error) {
       throw new UnauthorizedException({
-        message: 'Não foi possível verificar o token',
+        message: "Não foi possível verificar o token",
       });
     }
   }

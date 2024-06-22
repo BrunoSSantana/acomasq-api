@@ -1,1 +1,1 @@
-export * from './associate';
+export * from "./associate";

@@ -1,11 +1,11 @@
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
+  Catch,
+  ExceptionFilter,
   HttpException,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
+} from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Request, Response } from "express";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -16,13 +16,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
 
-    const DEV_INSTANCE = configService.getOrThrow('NODE_ENV') === 'development';
+    const DEV_INSTANCE = configService.getOrThrow("NODE_ENV") === "development";
 
     const name = exception.name;
     const message =
-      exception['response'].description || exception['response'].message;
-    const cause = exception['response'].cause?.stack;
-    const provider = exception['response'].provider;
+      exception["response"].description || exception["response"].message;
+    const cause = exception["response"].cause?.stack;
+    const provider = exception["response"].provider;
     const path = request.url;
     const timestamp = new Date().toISOString();
 

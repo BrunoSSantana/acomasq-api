@@ -1,5 +1,5 @@
-import { randomUUID } from 'node:crypto';
-import { Payment, OutputPayment } from '@/domains/payment/entities/payment';
+import { randomUUID } from "node:crypto";
+import { OutputPayment, Payment } from "@/domains/payment/entities/payment";
 
 export type InputAssociate = {
   id?: string;
@@ -98,7 +98,7 @@ export class RG {
     const isValidRGValue = RGRegex.test(value);
 
     if (!isValidRGValue) {
-      throw new Error('invalid RG value');
+      throw new Error("invalid RG value");
     }
 
     this._value = value;
@@ -110,11 +110,11 @@ export class RG {
 }
 
 export const isValidCPF = (cpf: string | number[]) => {
-  if (typeof cpf !== 'string') return false;
-  cpf = cpf.replace(/[^\d]+/g, '');
+  if (typeof cpf !== "string") return false;
+  cpf = cpf.replace(/[^\d]+/g, "");
   if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
 
-  cpf = cpf.split('').map((el) => +el);
+  cpf = cpf.split("").map((el) => +el);
 
   const rest = (count: number) =>
     (((cpf as number[])

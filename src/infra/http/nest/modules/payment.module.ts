@@ -1,20 +1,20 @@
-import { Module } from '@nestjs/common';
-import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+import {
+  CreatePaymentService,
+  DeletePaymentByIdService,
+} from "@/domains/payment/services";
+import { FindPaymentByIdService } from "@/domains/payment/services/find-payment-by-id.service";
+import { ListPaymentService } from "@/domains/payment/services/list-payment.service";
+import { UpdatePaymentService } from "@/domains/payment/services/update-payment.service";
 import {
   CreatePaymentController,
   DeletePaymentController,
   FindAllPaymentController,
   FindByIdPaymentController,
   UpdatePaymentController,
-} from '@/infra/http/nest/controllers/payment';
-import {
-  CreatePaymentService,
-  DeletePaymentByIdService,
-} from '@/domains/payment/services';
-import { FindPaymentByIdService } from '@/domains/payment/services/find-payment-by-id.service';
-import { ListPaymentService } from '@/domains/payment/services/list-payment.service';
-import { UpdatePaymentService } from '@/domains/payment/services/update-payment.service';
-import { PaymentRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/payment/payment.repository.adapter';
+} from "@/infra/http/nest/controllers/payment";
+import { PaymentRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/payment/payment.repository.adapter";
+import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
+import { Module } from "@nestjs/common";
 
 @Module({
   controllers: [

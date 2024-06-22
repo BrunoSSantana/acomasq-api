@@ -1,10 +1,10 @@
-import { Test } from '@nestjs/testing';
+import { Test } from "@nestjs/testing";
 
-import { describe, beforeEach, it, expect } from 'vitest';
-import { FindAllAssociateController } from './find-all.controller';
-import { ListAssociateService } from '@/domains/associate/services';
+import { ListAssociateService } from "@/domains/associate/services";
+import { beforeEach, describe, expect, it } from "vitest";
+import { FindAllAssociateController } from "./find-all.controller";
 
-describe('AssociateController', () => {
+describe("AssociateController", () => {
   let controller: FindAllAssociateController;
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('AssociateController', () => {
       await moduleFindAllAssociateController.resolve(ListAssociateService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

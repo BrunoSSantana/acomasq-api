@@ -1,11 +1,11 @@
-import { BadRequestException } from '@nestjs/common';
-import { hash } from 'bcryptjs';
+import { BadRequestException } from "@nestjs/common";
+import { hash } from "bcryptjs";
 
-import { User } from '@/domains/auth/entities';
-import { CreateUserDTO } from '@/domains/auth/dto';
-import { IUserRepositoryPort } from '@/domains/auth/ports';
+import { CreateUserDTO } from "@/domains/auth/dto";
+import { User } from "@/domains/auth/entities";
+import { IUserRepositoryPort } from "@/domains/auth/ports";
 
-const provider = 'CreateUserService.execute';
+const provider = "CreateUserService.execute";
 
 export class CreateUserService {
   constructor(private repository: IUserRepositoryPort) {}
@@ -17,7 +17,7 @@ export class CreateUserService {
 
     if (userAlreadyExists) {
       throw new BadRequestException({
-        message: 'Já existe um usuário com esse username',
+        message: "Já existe um usuário com esse username",
         provider,
       });
     }

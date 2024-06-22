@@ -1,45 +1,45 @@
-import { Controller, Get, Query, UsePipes } from '@nestjs/common';
-import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, Get, Query, UsePipes } from "@nestjs/common";
+import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 
-import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
 import {
   GetAssociatesRequestDTO,
   getAssociatesRequestSchema,
-} from '@/domains/associate/dto';
-import { ListAssociateService } from '@/domains/associate/services/list-associate.service';
+} from "@/domains/associate/dto";
+import { ListAssociateService } from "@/domains/associate/services/list-associate.service";
 
 const findAssociateValidate = new ZodValidationPipe(getAssociatesRequestSchema);
 
-@ApiTags('Associates')
-@Controller('associate')
+@ApiTags("Associates")
+@Controller("associate")
 @ApiBearerAuth()
 export class FindAllAssociateController {
   constructor(private readonly listAssociateService: ListAssociateService) {}
 
   @Get()
   @ApiQuery({
-    name: 'take',
+    name: "take",
     required: false,
     type: Number,
   })
   @ApiQuery({
-    name: 'skip',
+    name: "skip",
     required: false,
     type: Number,
   })
   @ApiQuery({
-    name: 'name',
+    name: "name",
     required: false,
     type: String,
   })
   @ApiQuery({
-    name: 'cpf',
+    name: "cpf",
     required: false,
     type: String,
   })
   @ApiQuery({
-    name: 'rg',
+    name: "rg",
     required: false,
     type: String,
   })

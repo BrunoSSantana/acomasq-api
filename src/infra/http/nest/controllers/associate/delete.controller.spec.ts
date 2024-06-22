@@ -1,10 +1,10 @@
-import { Test } from '@nestjs/testing';
+import { Test } from "@nestjs/testing";
 
-import { describe, beforeEach, it, expect } from 'vitest';
-import { DeleteAssociateController } from './delete.controller';
-import { DeleteAssociateByIdService } from '@/domains/associate/services';
+import { DeleteAssociateByIdService } from "@/domains/associate/services";
+import { beforeEach, describe, expect, it } from "vitest";
+import { DeleteAssociateController } from "./delete.controller";
 
-describe('AssociateController', () => {
+describe("AssociateController", () => {
   let controller: DeleteAssociateController;
 
   beforeEach(async () => {
@@ -18,7 +18,7 @@ describe('AssociateController', () => {
     );
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

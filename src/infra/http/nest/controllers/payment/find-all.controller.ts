@@ -1,14 +1,14 @@
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query, UsePipes } from "@nestjs/common";
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 
-import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
-import { Payment } from '@/domains/payment/entities';
-import { GetPaymentsDTO, getPaymentsSchema } from '@/domains/payment/dto';
-import { ListPaymentService } from '@/domains/payment/services/list-payment.service';
+import { GetPaymentsDTO, getPaymentsSchema } from "@/domains/payment/dto";
+import { Payment } from "@/domains/payment/entities";
+import { ListPaymentService } from "@/domains/payment/services/list-payment.service";
 
-@ApiTags('Payments')
-@Controller('payment')
+@ApiTags("Payments")
+@Controller("payment")
 @ApiBearerAuth()
 export class FindAllPaymentController {
   constructor(private readonly listPaymentService: ListPaymentService) {}

@@ -1,6 +1,6 @@
-import { Payment } from '@/domains/payment/entities';
-import { CreatePaymentDTO } from '@/domains/payment/dto';
-import { IPaymentRepositoryPort } from '@/domains/payment/repositories';
+import { CreatePaymentDTO } from "@/domains/payment/dto";
+import { Payment } from "@/domains/payment/entities";
+import { IPaymentRepositoryPort } from "@/domains/payment/repositories";
 
 export class CreatePaymentService {
   constructor(private readonly repository: IPaymentRepositoryPort) {

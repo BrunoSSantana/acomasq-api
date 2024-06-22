@@ -1,5 +1,5 @@
-import { GetAssociatesRequestDTO } from '@/domains/associate/dto';
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { GetAssociatesRequestDTO } from "@/domains/associate/dto";
+import { IAssociateRepositoryPort } from "@/domains/associate/ports";
 
 export class ListAssociateService {
   constructor(private repository: IAssociateRepositoryPort) {}

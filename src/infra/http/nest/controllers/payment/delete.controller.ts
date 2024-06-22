@@ -1,25 +1,25 @@
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Controller, Param, Delete, UsePipes } from '@nestjs/common';
+import { Controller, Delete, Param, UsePipes } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
-import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
 import {
   DeletePaymentByIdDTO,
   deletePaymentByIdSchema,
-} from '@/domains/payment/dto';
-import { DeletePaymentByIdService } from '@/domains/payment/services';
+} from "@/domains/payment/dto";
+import { DeletePaymentByIdService } from "@/domains/payment/services";
 
-@ApiTags('Payments')
-@Controller('payment')
+@ApiTags("Payments")
+@Controller("payment")
 @ApiBearerAuth()
 export class DeletePaymentController {
   constructor(
     private readonly deletePaymentByIdService: DeletePaymentByIdService,
   ) {}
 
-  @Delete(':id')
+  @Delete(":id")
   @UsePipes(new ZodValidationPipe(deletePaymentByIdSchema))
-  remove(@Param('id') params: DeletePaymentByIdDTO) {
+  remove(@Param("id") params: DeletePaymentByIdDTO) {
     return this.deletePaymentByIdService.execute(params.id);
   }
 }

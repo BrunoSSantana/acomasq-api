@@ -1,4 +1,4 @@
-import { Auth, Payload } from '@/domains/auth/entities/auth';
+import { Auth, Payload } from "@/domains/auth/entities/auth";
 
 export interface IJwtPort {
   sign(payload: Payload<{ sub: string }>): Auth;

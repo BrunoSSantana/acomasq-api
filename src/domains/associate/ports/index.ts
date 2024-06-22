@@ -1,1 +1,1 @@
-export * from './associate.repository.port';
+export * from "./associate.repository.port";

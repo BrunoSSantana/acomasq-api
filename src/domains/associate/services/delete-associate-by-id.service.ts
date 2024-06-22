@@ -1,4 +1,4 @@
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { IAssociateRepositoryPort } from "@/domains/associate/ports";
 
 export class DeleteAssociateByIdService {
   constructor(private repository: IAssociateRepositoryPort) {}

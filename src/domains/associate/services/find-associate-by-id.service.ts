@@ -1,4 +1,4 @@
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { IAssociateRepositoryPort } from "@/domains/associate/ports";
 
 export class FindAssociateByIdService {
   constructor(private repository: IAssociateRepositoryPort) {}

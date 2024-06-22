@@ -1,11 +1,11 @@
-import { compare } from 'bcryptjs';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException } from "@nestjs/common";
+import { compare } from "bcryptjs";
 
-import { IJwtPort } from '@/domains/auth/ports';
-import { CreateUserDTO } from '@/domains/auth/dto';
-import { IUserRepositoryPort } from '@/domains/auth/ports';
+import { CreateUserDTO } from "@/domains/auth/dto";
+import { IJwtPort } from "@/domains/auth/ports";
+import { IUserRepositoryPort } from "@/domains/auth/ports";
 
-const provider = 'CreateSessionService.execute';
+const provider = "CreateSessionService.execute";
 
 export class CreateSessionService {
   constructor(
@@ -20,7 +20,7 @@ export class CreateSessionService {
 
     if (!userAlreadyExists) {
       throw new BadRequestException({
-        message: 'Não existe um usuário com esse username',
+        message: "Não existe um usuário com esse username",
         provider,
       });
     }
@@ -32,7 +32,7 @@ export class CreateSessionService {
 
     if (!passwordIsCorrect) {
       throw new BadRequestException({
-        message: 'Senha incorreta',
+        message: "Senha incorreta",
         provider,
       });
     }

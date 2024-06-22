@@ -1,7 +1,7 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from "crypto";
 
-import { CreateAssociateDTO } from '@/domains/associate/dto';
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { CreateAssociateDTO } from "@/domains/associate/dto";
+import { IAssociateRepositoryPort } from "@/domains/associate/ports";
 
 export class CreateAssociateService {
   constructor(private repository: IAssociateRepositoryPort) {}

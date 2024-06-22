@@ -1,4 +1,4 @@
-import { Associate } from '@/domains/associate/entities/associate';
+import { Associate } from "@/domains/associate/entities/associate";
 
 export type CreateAssociateInput = {
   id: string;

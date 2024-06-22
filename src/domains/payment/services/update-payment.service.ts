@@ -1,18 +1,18 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException } from "@nestjs/common";
 
-import { UpdatePaymentDTO } from '@/domains/payment/dto';
-import { IPaymentRepositoryPort } from '@/domains/payment/repositories';
-import { Payment } from '../entities';
+import { UpdatePaymentDTO } from "@/domains/payment/dto";
+import { IPaymentRepositoryPort } from "@/domains/payment/repositories";
+import { Payment } from "../entities";
 
 export class UpdatePaymentService {
-  constructor(private repository: IPaymentRepositoryPort) { }
+  constructor(private repository: IPaymentRepositoryPort) {}
 
   async execute(paymentId: string, updatePaymentDto: UpdatePaymentDTO) {
     const paymentFromDB = await this.repository.findById(paymentId);
 
     if (!paymentFromDB) {
       throw new BadRequestException({
-        message: 'Pagamento não encontrado',
+        message: "Pagamento não encontrado",
       });
     }
 

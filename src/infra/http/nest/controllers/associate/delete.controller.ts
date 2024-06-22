@@ -1,24 +1,24 @@
-import { z } from 'zod';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Controller, Param, Delete, UsePipes, HttpCode } from '@nestjs/common';
+import { Controller, Delete, HttpCode, Param, UsePipes } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { z } from "zod";
 
-import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
-import { findAssociateByIdSchema } from '@/domains/associate/dto';
-import { DeleteAssociateByIdService } from '@/domains/associate/services/delete-associate-by-id.service';
+import { findAssociateByIdSchema } from "@/domains/associate/dto";
+import { DeleteAssociateByIdService } from "@/domains/associate/services/delete-associate-by-id.service";
 
 const associateByIdValidate = new ZodValidationPipe(findAssociateByIdSchema);
 
 type AssociateById = z.infer<typeof findAssociateByIdSchema>;
-@ApiTags('Associates')
-@Controller('associate')
+@ApiTags("Associates")
+@Controller("associate")
 @ApiBearerAuth()
 export class DeleteAssociateController {
   constructor(
     private readonly deleteAssociateByIdService: DeleteAssociateByIdService,
   ) {}
 
-  @Delete(':id')
+  @Delete(":id")
   @UsePipes(associateByIdValidate)
   @HttpCode(204)
   remove(@Param(associateByIdValidate) associateById: AssociateById) {

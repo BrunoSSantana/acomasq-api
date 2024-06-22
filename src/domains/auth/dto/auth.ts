@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const CreateSessionSchema = z.object({
   username: z.string(),

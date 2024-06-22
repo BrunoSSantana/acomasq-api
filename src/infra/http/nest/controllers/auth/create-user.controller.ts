@@ -1,13 +1,13 @@
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, HttpCode, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
+import { ApiBody, ApiTags } from "@nestjs/swagger";
 
-import { User } from '@/domains/auth/entities';
-import { CreateUserDTO, createUserSchema } from '@/domains/auth/dto';
-import { ZodValidationPipe } from '@/infra/http/nest/@config/pipes/zod-validation-pipe';
-import { CreateUserService } from '@/domains/auth/services';
+import { CreateUserDTO, createUserSchema } from "@/domains/auth/dto";
+import { User } from "@/domains/auth/entities";
+import { CreateUserService } from "@/domains/auth/services";
+import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
-@ApiTags('Users')
-@Controller('user')
+@ApiTags("Users")
+@Controller("user")
 export class CreateUserController {
   constructor(private readonly userService: CreateUserService) {}
 
@@ -16,10 +16,10 @@ export class CreateUserController {
   @ApiBody({
     type: User,
     examples: {
-      'Create User': {
+      "Create User": {
         value: {
-          username: 'username',
-          password: 'password',
+          username: "username",
+          password: "password",
         },
       },
     },

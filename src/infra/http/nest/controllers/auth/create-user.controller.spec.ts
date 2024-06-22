@@ -1,10 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { describe, beforeEach, it, expect } from 'vitest';
+import { Test, TestingModule } from "@nestjs/testing";
+import { beforeEach, describe, expect, it } from "vitest";
 
-import { CreateUserService } from '@/domains/auth/services';
-import { CreateUserController } from '@/infra/http/nest/controllers/auth/create-user.controller';
+import { CreateUserService } from "@/domains/auth/services";
+import { CreateUserController } from "@/infra/http/nest/controllers/auth/create-user.controller";
 
-describe('PaymentController', () => {
+describe("PaymentController", () => {
   let controller: CreateUserService;
 
   beforeEach(async () => {
@@ -16,7 +16,7 @@ describe('PaymentController', () => {
     controller = await module.resolve(CreateUserService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

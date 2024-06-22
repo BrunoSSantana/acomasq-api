@@ -1,8 +1,8 @@
-import { Payment } from '@/domains/payment/entities';
+import { Payment } from "@/domains/payment/entities";
 import {
-  IPaymentRepositoryPort,
   FindManyPaymentInput,
-} from '@/domains/payment/repositories';
+  IPaymentRepositoryPort,
+} from "@/domains/payment/repositories";
 
 export class InMemoryPaymentRepository implements IPaymentRepositoryPort {
   private repository: Record<string, Payment>;

@@ -1,11 +1,11 @@
+import { Associate } from "@/domains/associate/entities/associate";
 import {
-  ListAssociateInput,
-  UpdateAssociateInput,
   CreateAssociateInput,
   IAssociateRepositoryPort,
-} from '@/domains/associate/ports';
-import { Associate } from '@/domains/associate/entities/associate';
-import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+  ListAssociateInput,
+  UpdateAssociateInput,
+} from "@/domains/associate/ports";
+import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 
 export class AssociateRepositoryPrismaAdapter
   implements IAssociateRepositoryPort
@@ -26,7 +26,7 @@ export class AssociateRepositoryPrismaAdapter
         ...restOfWhere,
         name: {
           contains: restOfWhere.name,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
       take,

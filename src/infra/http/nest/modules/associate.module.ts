@@ -1,19 +1,19 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
-import { PrismaService } from '@/infra/repositories/prisma/prisma.service';
+import { CreateAssociateService } from "@/domains/associate/services/create-associate.service";
+import { DeleteAssociateByIdService } from "@/domains/associate/services/delete-associate-by-id.service";
+import { FindAssociateByIdService } from "@/domains/associate/services/find-associate-by-id.service";
+import { ListAssociateService } from "@/domains/associate/services/list-associate.service";
+import { UpdateAssociateService } from "@/domains/associate/services/update-associate.service";
 import {
   CreateAssociateController,
   DeleteAssociateController,
   FindAllAssociateController,
   FindByIdAssociateController,
   UpdateAssociateController,
-} from '@/infra/http/nest/controllers/associate';
-import { CreateAssociateService } from '@/domains/associate/services/create-associate.service';
-import { UpdateAssociateService } from '@/domains/associate/services/update-associate.service';
-import { ListAssociateService } from '@/domains/associate/services/list-associate.service';
-import { FindAssociateByIdService } from '@/domains/associate/services/find-associate-by-id.service';
-import { DeleteAssociateByIdService } from '@/domains/associate/services/delete-associate-by-id.service';
-import { AssociateRepositoryPrismaAdapter } from '@/infra/repositories/prisma/domains/associate';
+} from "@/infra/http/nest/controllers/associate";
+import { AssociateRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/associate";
+import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 
 @Module({
   controllers: [

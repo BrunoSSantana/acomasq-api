@@ -1,9 +1,9 @@
+import { randomUUID } from "crypto";
 import {
   Associate,
   OutputAssociate,
-} from '@/domains/associate/entities/associate';
-import { randomUUID } from 'crypto';
-import { z } from 'zod';
+} from "@/domains/associate/entities/associate";
+import { z } from "zod";
 
 type InputPayment = {
   id?: string;
@@ -43,8 +43,8 @@ export class Payment {
   }
 
   static create(input: InputPayment): Payment {
-    const id = input.id && uuidValidate(input.id, 'id');
-    const associateId = uuidValidate(input.associateId, 'associateId');
+    const id = input.id && uuidValidate(input.id, "id");
+    const associateId = uuidValidate(input.associateId, "associateId");
     const month = monthValidate(input.month);
     const year = yearValidate(input.year);
 

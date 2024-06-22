@@ -1,10 +1,10 @@
-import { Associate } from '@/domains/associate/entities';
+import { Associate } from "@/domains/associate/entities";
 import {
   CreateAssociateInput,
   IAssociateRepositoryPort,
   ListAssociateInput,
   UpdateAssociateInput,
-} from '@/domains/associate/ports';
+} from "@/domains/associate/ports";
 
 export class InMemoryAssociateRepository implements IAssociateRepositoryPort {
   private repository: Record<string, Associate>;

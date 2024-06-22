@@ -1,5 +1,5 @@
-import { UpdateAssociateDTO } from '@/domains/associate/dto';
-import { IAssociateRepositoryPort } from '@/domains/associate/ports';
+import { UpdateAssociateDTO } from "@/domains/associate/dto";
+import { IAssociateRepositoryPort } from "@/domains/associate/ports";
 
 export class UpdateAssociateService {
   constructor(private repository: IAssociateRepositoryPort) {}
