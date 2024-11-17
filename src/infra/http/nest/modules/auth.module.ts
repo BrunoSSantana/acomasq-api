@@ -1,15 +1,17 @@
 import { CreateUserService } from "@/domains/auth/services";
 import { CreateSessionService } from "@/domains/auth/services/create-session.service";
 import { Env } from "@/env";
-import { UserRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/auth/user.repository.adapter";
+import {
+  CreateUserController,
+  GenerateTokenController,
+} from "@/infra/http/nest/controllers/auth";
+import { JwtAdapter } from "@/infra/providers";
+import { UserRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/auth";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { JwtAdapter } from "../../../providers/jwt.provider";
-import { CreateUserController } from "../controllers/auth/create-user.controller";
-import { GenerateTokenController } from "../controllers/auth/generate-token.controller";
 
 @Module({
   imports: [

@@ -18,12 +18,19 @@ export class JwtAdapter implements IJwtPort {
     }
   }
   verify(token: Auth): Payload<{ sub: string }> {
+    const SECRET_KEY = process.env.JWT_PRIVATE_KEY?.replace(/\\n/g, "\n");
+    const PUBLIC_KEY = process.env.JWT_PUBLIC_KEY?.replace(/\\n/g, "\n");
+    console.log({ token, SECRET_KEY, PUBLIC_KEY });
     try {
-      const payload = this.jwtProvider.verify(token.access_token);
+      const payload = this.jwtProvider.verify(token.access_token, {
+        secret: SECRET_KEY,
+        publicKey: PUBLIC_KEY,
+      });
       return {
         sub: payload.sub,
       };
     } catch (error) {
+      console.log(error);
       throw new UnauthorizedException({
         message: "Não foi possível verificar o token",
       });

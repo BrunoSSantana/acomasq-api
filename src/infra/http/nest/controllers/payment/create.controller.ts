@@ -12,7 +12,7 @@ import { CreatePaymentService } from "@/domains/payment/services";
 import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
 
 @ApiTags("Payments")
-@Controller("payment")
+@Controller("payments")
 @ApiBearerAuth()
 export class CreatePaymentController {
   constructor(private readonly createPaymentService: CreatePaymentService) {}
