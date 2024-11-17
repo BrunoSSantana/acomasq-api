@@ -6,7 +6,7 @@ import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validatio
 import { CreateSessionDTO, CreateSessionSchema } from "@/domains/auth/dto/auth";
 import { Auth } from "@/domains/auth/entities/auth";
 import { CreateSessionService } from "@/domains/auth/services/create-session.service";
-import { Public } from "../../@config/decorators/public.decorator";
+import { Public } from "@/infra/http/nest/@config/decorators";
 
 @ApiTags("Auth")
 @Controller("auth")
