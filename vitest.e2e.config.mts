@@ -12,8 +12,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "/src"),
     },
     include: ["**/*.e2e.spec.ts"],
-/*     environmentMatchGlobs: [["src/**", "prisma"]],
- */    coverage: {
+    environmentMatchGlobs: [["src/**", "prisma"]],
+    coverage: {
       provider: "v8",
       exclude: [
         ...configDefaults.exclude,

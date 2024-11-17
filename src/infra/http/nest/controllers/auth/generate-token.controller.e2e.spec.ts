@@ -1,42 +1,25 @@
-import { AppModule } from "@/app.module";
 import { CreateUserService } from "@/domains/auth/services";
-import { Env } from "@/env";
-import {
-  HttpExceptionFilter,
-  PrismaClientExceptionFilter,
-} from "@/infra/http/nest/@config/filter-exceptions";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
-import { INestApplication, ValidationPipe } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { Test, TestingModule } from "@nestjs/testing";
+import { createTestApp } from "@/test-utils/create_test_app";
+import { generateUserData } from "@/test-utils/factories";
+import { INestApplication } from "@nestjs/common";
 import request from "supertest";
 import { beforeEach, describe, it } from "vitest";
 
-describe("Generate Token Route", () => {
+describe("[POST] /api/auth/session", () => {
   let app: INestApplication;
   let createUserService: CreateUserService;
   let prismaService: PrismaService;
+  let userData: { username: string; password: string };
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+    const testSetup = await createTestApp();
 
-    app = moduleFixture.createNestApplication();
-    createUserService = await moduleFixture.get(CreateUserService);
-    prismaService = await moduleFixture.get(PrismaService);
-    const configService: ConfigService<Env, true> = app.get(ConfigService);
-    const GLOBAL_PREFIX = configService.get("GLOBAL_PREFIX");
+    app = testSetup.app;
+    prismaService = testSetup.prismaService;
+    createUserService = app.get(CreateUserService);
 
-    app.setGlobalPrefix(GLOBAL_PREFIX);
-    app.useGlobalFilters(
-      new PrismaClientExceptionFilter(),
-      new HttpExceptionFilter(),
-    );
-
-    app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
-    app.enableCors();
+    userData = generateUserData();
 
     await prismaService.user.deleteMany();
 
@@ -47,28 +30,67 @@ describe("Generate Token Route", () => {
     await prismaService.user.deleteMany();
   });
 
-  it("api/auth (POST)", async () => {
+  it("should authenticate successfully", async () => {
+    const { password, username } = userData;
     await createUserService.execute({
-      username: "test",
-      password: "123456",
+      username,
+      password,
     });
 
-    await request(app.getHttpServer())
-      .post("/api/auth")
+    const response = await request(app.getHttpServer())
+      .post("/api/auth/session")
       .send({
-        username: "test",
-        password: "123456",
+        username,
+        password,
       })
       .expect(201);
+
+    expect(response.body).toHaveProperty("access_token");
   });
 
-  it("api/auth (POST) - error", async () => {
-    await request(app.getHttpServer())
-      .post("/api/auth")
-      .send({
-        username: "test",
-        password: "123456",
-      })
-      .expect(400);
+  describe("Invalid Credentials", async () => {
+    it("should return 401 when user does not exist", async () => {
+      const { password, username } = userData;
+      await request(app.getHttpServer())
+        .post("/api/auth/session")
+        .send({
+          username,
+          password,
+        })
+        .expect(401);
+    });
+
+    it("should return 401 for password mismatch", async () => {
+      const { password, username } = userData;
+
+      await createUserService.execute({
+        username,
+        password,
+      });
+
+      const response = await request(app.getHttpServer())
+        .post("/api/auth/session")
+        .send({
+          username,
+          password: "wrongpassword",
+        })
+        .expect(401);
+
+      expect(response.body.name).toBe("UnauthorizedException");
+      expect(response.body.message).toBe("Credenciais inválidas");
+      expect(response.body.statusCode).toBe(401);
+    });
+
+    it("should return 400 when username is missing", async () => {
+      const { password } = userData;
+      const response = await request(app.getHttpServer())
+        .post("/api/auth/session")
+        .send({ password })
+        .expect(400);
+
+      expect(response.body.message).toContain(
+        'Validation error: Required at "username"',
+      );
+    });
   });
 });

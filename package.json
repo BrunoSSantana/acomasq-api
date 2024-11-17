@@ -25,7 +25,10 @@
     "test:watch": "vitest --watch",
     "test:cov": "vitest --coverage",
     "test:ui": "vitest --ui",
-    "test:e2e": "vitest --config vitest.e2e.config.mts"
+    "test:e2e": "vitest --config vitest.e2e.config.mts",
+    "test:create-prisma-environment": "npm link ./src/infra/repositories/prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "npm link vitest-environment-prisma",
+    "pretest:e2e": "npm run test:create-prisma-environment && npm run test:install-prisma-environment"
   },
   "dependencies": {
     "@anatine/zod-openapi": "2.2.6",
@@ -55,6 +58,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@faker-js/faker": "9.2.0",
     "@nestjs/cli": "10.4.7",
     "@nestjs/schematics": "10.2.3",
     "@nestjs/testing": "10.4.8",

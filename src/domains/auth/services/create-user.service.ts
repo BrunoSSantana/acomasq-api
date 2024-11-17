@@ -1,4 +1,4 @@
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, ConflictException } from "@nestjs/common";
 import { hash } from "bcryptjs";
 
 import { CreateUserDTO } from "@/domains/auth/dto";
@@ -16,7 +16,7 @@ export class CreateUserService {
     const userAlreadyExists = await this.repository.findByUsername(username);
 
     if (userAlreadyExists) {
-      throw new BadRequestException({
+      throw new ConflictException({
         message: "Já existe um usuário com esse username",
         provider,
       });

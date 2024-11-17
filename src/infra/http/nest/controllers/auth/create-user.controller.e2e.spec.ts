@@ -1,39 +1,22 @@
-import { AppModule } from "@/app.module";
-import { Env } from "@/env";
-import {
-  HttpExceptionFilter,
-  PrismaClientExceptionFilter,
-} from "@/infra/http/nest/@config/filter-exceptions";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
-import { INestApplication, ValidationPipe } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { Test, TestingModule } from "@nestjs/testing";
+import { createTestApp } from "@/test-utils";
+import { generateUserData } from "@/test-utils/factories";
+import { INestApplication } from "@nestjs/common";
 import request from "supertest";
 import { beforeEach, describe, expect, it } from "vitest";
 
-describe("Create User Route", () => {
+describe("[POST] /api/users", () => {
   let app: INestApplication;
   let prismaService: PrismaService;
+  let userData: { username: string; password: string };
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+    const testSetup = await createTestApp();
 
-    app = moduleFixture.createNestApplication();
-    prismaService = await moduleFixture.get(PrismaService);
-    const configService: ConfigService<Env, true> = app.get(ConfigService);
-    const GLOBAL_PREFIX = configService.get("GLOBAL_PREFIX");
+    app = testSetup.app;
+    prismaService = testSetup.prismaService;
 
-    app.setGlobalPrefix(GLOBAL_PREFIX);
-    app.useGlobalFilters(
-      new PrismaClientExceptionFilter(),
-      new HttpExceptionFilter(),
-    );
-
-    app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
-    app.enableCors();
+    userData = generateUserData();
 
     await prismaService.user.deleteMany();
 
@@ -44,22 +27,67 @@ describe("Create User Route", () => {
     await prismaService.user.deleteMany();
   });
 
-  it("/api/users (POST)", async () => {
+  it("should create a user successfully", async () => {
+    const { password, username } = userData;
+
     await request(app.getHttpServer())
       .post("/api/users")
-      .send({
-        username: "test",
-        password: "123456",
-      })
+      .send({ username, password })
       .expect(204);
 
     const user = await prismaService.user.findFirst({
-      where: {
-        username: "test",
-      },
+      where: { username },
     });
 
     expect(user).not.toBeNull();
-    expect(user?.username).toBe("test");
+    expect(user?.username).toBe(username);
+
+    expect(user?.password).not.toBe(password);
+    expect(user?.password).toMatch(/^\$2[ayb]\$.{56}$/); // Regex para verificar hash bcrypt
+  });
+
+  describe("Error Cases", () => {
+    it("should return 400 for missing username", async () => {
+      const { password } = userData;
+
+      const response = await request(app.getHttpServer())
+        .post("/api/users")
+        .send({ password })
+        .expect(400);
+
+      expect(response.body.message).toContain(
+        'Validation error: Required at "username"',
+      );
+    });
+
+    it("should return 400 for missing password", async () => {
+      const { username } = userData;
+
+      const response = await request(app.getHttpServer())
+        .post("/api/users")
+        .send({ username })
+        .expect(400);
+
+      expect(response.body.message).toContain(
+        'Validation error: Required at "password"',
+      );
+    });
+
+    it("should return 409 for duplicate username", async () => {
+      const { username, password } = userData;
+
+      await prismaService.user.create({
+        data: { username, password },
+      });
+
+      const response = await request(app.getHttpServer())
+        .post("/api/users")
+        .send({ username, password })
+        .expect(409);
+
+      expect(response.body.message).toBe(
+        "Já existe um usuário com esse username",
+      );
+    });
   });
 });

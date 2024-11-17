@@ -1,4 +1,4 @@
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, UnauthorizedException } from "@nestjs/common";
 import { compare } from "bcryptjs";
 
 import { CreateUserDTO } from "@/domains/auth/dto";
@@ -19,8 +19,8 @@ export class CreateSessionService {
     const userAlreadyExists = await this.repository.findByUsername(username);
 
     if (!userAlreadyExists) {
-      throw new BadRequestException({
-        message: "Não existe um usuário com esse username",
+      throw new UnauthorizedException({
+        message: "Credenciais inválidas",
         provider,
       });
     }
@@ -31,8 +31,8 @@ export class CreateSessionService {
     );
 
     if (!passwordIsCorrect) {
-      throw new BadRequestException({
-        message: "Senha incorreta",
+      throw new UnauthorizedException({
+        message: "Credenciais inválidas",
         provider,
       });
     }
