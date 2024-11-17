@@ -18,10 +18,10 @@ import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 @Module({
   controllers: [
     CreateAssociateController,
-    DeleteAssociateController,
     FindAllAssociateController,
     FindByIdAssociateController,
     UpdateAssociateController,
+    DeleteAssociateController,
   ],
   providers: [
     {

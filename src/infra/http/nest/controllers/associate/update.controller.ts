@@ -11,9 +11,12 @@ import {
 } from "@/domains/associate/dto";
 import { Associate } from "@/domains/associate/entities/associate";
 import { UpdateAssociateService } from "@/domains/associate/services/update-associate.service";
+import { generateSchema } from "@anatine/zod-openapi";
 
 const updateAssociateValidate = new ZodValidationPipe(updateAssociateSchema);
 const associateByIdValidate = new ZodValidationPipe(findAssociateByIdSchema);
+
+const updateAssociateSwaggerSchema = generateSchema(updateAssociateSchema);
 
 type AssociateById = z.infer<typeof findAssociateByIdSchema>;
 @ApiTags("Associates")
@@ -27,18 +30,11 @@ export class UpdateAssociateController {
   @Patch(":id")
   @ApiBody({
     type: Associate,
-    schema: {
-      properties: {
-        name: { type: "string" },
-        cpf: { type: "string" },
-        rg: { type: "string" },
-      },
-      required: ["name", "cpf", "rg"],
-    },
+    schema: updateAssociateSwaggerSchema,
     examples: {
-      "Associate 1": {
+      _default: {
         value: {
-          name: "Associate 1",
+          name: "Associate 2",
           cpf: "12345678901",
           rg: "123456789",
         },

@@ -19,8 +19,8 @@ export class DeleteAssociateController {
   ) {}
 
   @Delete(":id")
-  @UsePipes(associateByIdValidate)
   @HttpCode(204)
+  @UsePipes(associateByIdValidate)
   remove(@Param(associateByIdValidate) associateById: AssociateById) {
     return this.deleteAssociateByIdService.execute(associateById.id);
   }

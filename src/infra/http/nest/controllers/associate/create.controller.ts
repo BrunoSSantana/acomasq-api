@@ -1,8 +1,8 @@
-import { Body, Controller, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiCreatedResponse,
+  ApiNoContentResponse,
   ApiTags,
 } from "@nestjs/swagger";
 
@@ -14,8 +14,10 @@ import {
 } from "@/domains/associate/dto";
 import { Associate } from "@/domains/associate/entities/associate";
 import { CreateAssociateService } from "@/domains/associate/services/create-associate.service";
+import { generateSchema } from "@anatine/zod-openapi";
 
 const createAssociateValidate = new ZodValidationPipe(createAssociateSchema);
+const createAssociateSwaggerSchema = generateSchema(createAssociateSchema);
 
 @ApiTags("Associates")
 @Controller("associate")
@@ -28,16 +30,9 @@ export class CreateAssociateController {
   @Post()
   @ApiBody({
     type: Associate,
-    schema: {
-      properties: {
-        name: { type: "string" },
-        cpf: { type: "string" },
-        rg: { type: "string" },
-      },
-      required: ["name", "cpf", "rg"],
-    },
+    schema: createAssociateSwaggerSchema,
     examples: {
-      "Associate 1": {
+      _default: {
         value: {
           name: "Associate 1",
           cpf: "12345678901",
@@ -46,12 +41,12 @@ export class CreateAssociateController {
       },
     },
   })
-  @ApiCreatedResponse({
-    description: "The record has been successfully created.",
-    type: Associate,
+  @ApiNoContentResponse({
+    description: "The associate has been successfully created.",
   })
+  @HttpCode(204)
   @UsePipes(createAssociateValidate)
-  create(@Body() createAssociateDto: CreateAssociateDTO) {
-    return this.createAssociateService.execute(createAssociateDto);
+  async create(@Body() createAssociateDto: CreateAssociateDTO) {
+    await this.createAssociateService.execute(createAssociateDto);
   }
 }

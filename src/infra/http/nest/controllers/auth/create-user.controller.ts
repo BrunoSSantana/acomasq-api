@@ -5,6 +5,10 @@ import { CreateUserDTO, createUserSchema } from "@/domains/auth/dto";
 import { User } from "@/domains/auth/entities";
 import { CreateUserService } from "@/domains/auth/services";
 import { ZodValidationPipe } from "@/infra/http/nest/@config/pipes/zod-validation-pipe";
+import { generateSchema } from "@anatine/zod-openapi";
+
+const createUserValidate = new ZodValidationPipe(createUserSchema);
+const createUserSwaggerSchema = generateSchema(createUserSchema);
 
 @ApiTags("Users")
 @Controller("user")
@@ -14,9 +18,9 @@ export class CreateUserController {
   @Post()
   @HttpCode(204)
   @ApiBody({
-    type: User,
+    schema: createUserSwaggerSchema,
     examples: {
-      "Create User": {
+      _default: {
         value: {
           username: "username",
           password: "password",
@@ -24,7 +28,7 @@ export class CreateUserController {
       },
     },
   })
-  @UsePipes(new ZodValidationPipe(createUserSchema))
+  @UsePipes(createUserValidate)
   async create(@Body() createUserDto: CreateUserDTO) {
     await this.userService.execute(createUserDto);
   }
