@@ -11,7 +11,7 @@ import {
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { SwaggerModule } from "@nestjs/swagger";
+import { SwaggerCustomOptions, SwaggerModule } from "@nestjs/swagger";
 import { Env } from "./env";
 
 async function bootstrap() {
@@ -22,15 +22,24 @@ async function bootstrap() {
   /* Set constants */
   const GLOBAL_PREFIX = configService.get("GLOBAL_PREFIX");
   const SWAGGER_PREFIX = configService.get("SWAGGER_PREFIX");
+  const JSON_DOCUMENT_URL = "/docs/openapi";
+  const API_PROTOCOL = configService.get("API_PROTOCOL");
+  const API_HOST = configService.get("API_HOST");
   const API_PORT = configService.get("API_PORT");
 
   /* Set endpoint */
   app.setGlobalPrefix(GLOBAL_PREFIX);
 
   /* Swagger Setup */
-  const config = generateSwaggerConfig();
+  const config = generateSwaggerConfig(API_PROTOCOL, API_HOST, API_PORT);
   const document = SwaggerModule.createDocument(app, config);
-  app.use(`/${SWAGGER_PREFIX}`, generateApiReference(document));
+  const customOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+    jsonDocumentUrl: JSON_DOCUMENT_URL,
+  };
+  SwaggerModule.setup(SWAGGER_PREFIX, app, document, customOptions);
 
   /* Set validation config */
   app.useGlobalFilters(
@@ -44,9 +53,9 @@ async function bootstrap() {
 
   /* Running API */
   await app.listen(API_PORT, () => {
-    Logger.log(`Listening at http://localhost:${API_PORT}/${GLOBAL_PREFIX}`);
+    Logger.log(`Listening at ${API_PROTOCOL}://${API_HOST}:${API_PORT}/${GLOBAL_PREFIX}`);
     Logger.log(
-      `Swagger Documentation at http://localhost:${API_PORT}/${SWAGGER_PREFIX}`,
+      `Swagger Documentation at ${API_PROTOCOL}://${API_HOST}:${API_PORT}/${SWAGGER_PREFIX}`,
     );
   });
 }

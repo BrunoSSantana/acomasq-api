@@ -3,6 +3,8 @@ import { z } from "zod";
 export const envSchema = z.object({
   NODE_ENV: z.string().default("development"),
   API_PORT: z.coerce.number().optional().default(3003),
+  API_HOST: z.string().optional().default("localhost"),
+  API_PROTOCOL: z.string().optional().default("http"),
   DATABASE_PORT: z.coerce.number().optional().default(5432),
   DATABASE_NAME: z.string().optional().default("acomasq-db"),
   DATABASE_HOST: z.string().optional().default("db"),
