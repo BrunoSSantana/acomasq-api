@@ -7,7 +7,7 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 
-import { JwtAdapter } from "@/infra/http/nest/controllers/auth/jwt.provider";
+import { JwtAdapter } from "@/infra/providers/jwt.provider";
 
 @Injectable()
 export class AppAuthGuard implements CanActivate {

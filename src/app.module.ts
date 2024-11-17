@@ -8,7 +8,7 @@ import { AuthModule } from "@/infra/http/nest/modules/auth.module";
 import { PaymentModule } from "@/infra/http/nest/modules/payment.module";
 import { APP_GUARD } from "@nestjs/core";
 import { envSchema } from "./env";
-import { JwtAdapter } from "./infra/http/nest/controllers/auth/jwt.provider";
+import { JwtAdapter } from "./infra/providers/jwt.provider";
 
 @Module({
   imports: [

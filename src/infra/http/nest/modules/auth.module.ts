@@ -7,9 +7,9 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { JwtAdapter } from "../../../providers/jwt.provider";
 import { CreateUserController } from "../controllers/auth/create-user.controller";
 import { GenerateTokenController } from "../controllers/auth/generate-token.controller";
-import { JwtAdapter } from "../controllers/auth/jwt.provider";
 
 @Module({
   imports: [
