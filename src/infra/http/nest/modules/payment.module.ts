@@ -12,7 +12,7 @@ import {
   FindByIdPaymentController,
   UpdatePaymentController,
 } from "@/infra/http/nest/controllers/payment";
-import { PaymentRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/payment/payment.repository.adapter";
+import { PaymentRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/payments/payment.repository.adapter";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 import { Module } from "@nestjs/common";
 

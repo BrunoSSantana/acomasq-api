@@ -6,7 +6,7 @@ import {
   GenerateTokenController,
 } from "@/infra/http/nest/controllers/auth";
 import { JwtAdapter } from "@/infra/providers";
-import { UserRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/auth";
+import { UserRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/users";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";

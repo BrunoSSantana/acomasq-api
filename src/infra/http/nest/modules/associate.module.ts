@@ -12,7 +12,7 @@ import {
   FindByIdAssociateController,
   UpdateAssociateController,
 } from "@/infra/http/nest/controllers/associate";
-import { AssociateRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/associate";
+import { AssociateRepositoryPrismaAdapter } from "@/infra/repositories/prisma/domains/associates";
 import { PrismaService } from "@/infra/repositories/prisma/prisma.service";
 
 @Module({
