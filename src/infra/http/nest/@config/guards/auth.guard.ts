@@ -29,12 +29,10 @@ export class AppAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authorizationHeader =
       request.headers["authorization"] || request.headers["Authorization"];
-    const token = authorizationHeader?.split(" ")[1];
+    const token: string = authorizationHeader?.split(" ")[1];
 
-    console.log({ token });
     if (token) {
-      const tokenMatch = this.authProvider.verify(token);
-      console.log({ tokenMatch });
+      const tokenMatch = this.authProvider.verify({ access_token: token });
 
       return tokenMatch;
     } else {
