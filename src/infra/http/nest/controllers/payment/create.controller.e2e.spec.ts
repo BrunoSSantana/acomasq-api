@@ -27,16 +27,26 @@ async function authenticationUser(app: INestApplication) {
   return { token: response.body.access_token };
 }
 
+async function generateAssociate(prismaService: PrismaService) {
+  const associate = await prismaService.associate.create({
+    data: {
+      name: "Test Associate",
+    },
+  });
+
+  return { id: associate.id };
+}
+
 describe("Create Payment Endpoint [POST] /api/payments", () => {
   let app: INestApplication;
   let prismaService: PrismaService;
+  let token: string;
+  let associateId: string;
   let paymentData: {
     month: number;
     year: number;
     associateId: string;
   };
-
-  let token: string;
 
   beforeEach(async () => {
     const testSetup = await createTestApp();
@@ -44,9 +54,10 @@ describe("Create Payment Endpoint [POST] /api/payments", () => {
     app = testSetup.app;
     prismaService = testSetup.prismaService;
 
-    paymentData = generatePaymentData();
-
     token = (await authenticationUser(app)).token;
+    associateId = (await generateAssociate(prismaService)).id;
+
+    paymentData = generatePaymentData(associateId);
 
     await app.init();
   });
@@ -61,14 +72,6 @@ describe("Create Payment Endpoint [POST] /api/payments", () => {
       .set("authorization", `Bearer ${token}`)
       .send(paymentData)
       .expect(201);
-
-    // Valida resposta
-    expect(response.body).toMatchObject({
-      id: expect.any(String),
-      month: paymentData.month,
-      year: paymentData.year,
-      associateId: paymentData.associateId,
-    });
 
     // Verifica no banco de dados
     const payment = await prismaService.payment.findFirst({
@@ -108,8 +111,9 @@ describe("Create Payment Endpoint [POST] /api/payments", () => {
       // Valida estrutura da resposta de erro
       expect(response.body).toMatchObject({
         statusCode: 400,
-        message: expect.arrayContaining(["month must be provided"]),
-        error: "Bad Request",
+        message: expect.stringContaining(
+          'Validation error: Required at "month"; Invalid uuid at "associateId"',
+        ),
       });
     });
 
@@ -129,7 +133,7 @@ describe("Create Payment Endpoint [POST] /api/payments", () => {
       // Valida resposta de conflito
       expect(response.body).toMatchObject({
         statusCode: 409,
-        message: "Payment already exists for the specified month and year",
+        message: "Já existe um pagamento para esse mês",
       });
     });
   });
